@@ -317,6 +317,13 @@ button.danger,
     overflow:auto;
     padding-bottom:8px;
 }
+body.exportingImage .appGrid{
+    padding:18px;
+    background:#070519;
+}
+body.exportingImage .trackerGrid{
+    overflow:visible;
+}
 .gridHeader,
 .spriteRow{
     display:grid;

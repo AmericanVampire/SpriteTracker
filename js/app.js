@@ -368,6 +368,44 @@ function exportCsv(){
     downloadFile(`Sprite Tracker - ${state.profile.profileName}.csv`,"text/csv;charset=utf-8",csv);
 }
 
+async function exportImage(){
+    if(!state.profile){
+        showDialog("Export Image","Open a profile first.",[{label:"OK"}]);
+        return;
+    }
+    if(!window.htmlToImage){
+        showDialog(
+            "Export Image",
+            "Image export is still loading. Try again in a moment.",
+            [{label:"OK"}]
+        );
+        return;
+    }
+    try{
+        const exportTarget = document.querySelector(".appGrid");
+        document.body.classList.add("exportingImage");
+        await new Promise(resolve=>requestAnimationFrame(resolve));
+        const imageData = await window.htmlToImage.toPng(exportTarget,{
+            pixelRatio:2,
+            cacheBust:true,
+            backgroundColor:"#070519"
+        });
+        const link = document.createElement("a");
+        link.href = imageData;
+        link.download = `Sprite Tracker - ${state.profile.profileName}.png`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+    catch(error){
+        console.error(error);
+        showDialog("Export Image","The image export failed. Please try again.",[{label:"OK"}]);
+    }
+    finally{
+        document.body.classList.remove("exportingImage");
+    }
+}
+
 async function openProfileChooser(){
     const profiles = await SpriteStore.getProfiles();
     if(!profiles.length){
@@ -452,6 +490,7 @@ function bindControls(){
             JSON.stringify(state.profile,null,2)
         );
     });
+    document.getElementById("exportImageButton").addEventListener("click",exportImage);
     document.getElementById("exportCsvButton").addEventListener("click",exportCsv);
     document.getElementById("importProfileButton").addEventListener("click",()=>{
         els.importFileInput.click();
