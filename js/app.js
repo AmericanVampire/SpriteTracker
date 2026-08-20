@@ -210,10 +210,12 @@ function renderTracker(){
         const row = document.createElement("div");
         row.className = "spriteRow";
         const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
+        const familyComplete = isFamilyComplete(family);
         row.innerHTML = `
-            <button class="familyCell" data-disabled="${familyDisabled}">
+            <button class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <span class="familyName">${family.name}</span>
                 <span class="familyMeta">${family.rarity}</span>
+                <span class="familyMastered">MASTERED</span>
                 <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 <img class="setStar" src="assets/set-complete-star.webp" alt="Completed set">
             </button>
@@ -235,7 +237,7 @@ function renderTracker(){
             row.appendChild(createSpriteCard(sprite,family));
         });
         els.trackerGrid.appendChild(row);
-        row.querySelector(".setStar").hidden = !isFamilyComplete(family);
+        row.querySelector(".setStar").hidden = !familyComplete;
     });
 }
 
