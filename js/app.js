@@ -10,6 +10,7 @@ const els = {
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
+    profileProgressBadge:document.getElementById("profileProgressBadge"),
     seasonTabs:document.getElementById("seasonTabs"),
     seasonTitle:document.getElementById("seasonTitle"),
     seasonDescription:document.getElementById("seasonDescription"),
@@ -134,6 +135,9 @@ function renderStats(){
 
 function renderProfile(){
     els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
+    els.profileProgressBadge.textContent = state.profile
+        ? `Profile: ${state.profile.profileName}`
+        : "Profile: No profile loaded";
     els.storageNote.textContent = state.profile
         ? "Autosaved locally in this browser"
         : "Create or open a local profile";
@@ -189,7 +193,8 @@ function renderTracker(){
     header.className = "gridHeader";
     header.innerHTML = `<div>Sprite</div>${season.variants.map(variant=>
         `<button class="variantToggle" data-variant="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
-            ${variant.label}
+            <span>${variant.label}</span>
+            <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
     ).join("")}`;
     els.trackerGrid.appendChild(header);
@@ -209,7 +214,8 @@ function renderTracker(){
         row.innerHTML = `
             <button class="familyCell" data-disabled="${familyDisabled}">
                 <span class="familyName">${family.name}</span>
-                <span class="familyMeta">${family.rarity}${family.status ? ` // ${family.status}` : ""}</span>
+                <span class="familyMeta">${family.rarity}</span>
+                <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 <img class="setStar" src="assets/set-complete-star.webp" alt="Completed set">
             </button>
         `;
@@ -350,6 +356,7 @@ function downloadFile(filename,type,content){
 
 function exportCsv(){
     if(!state.profile){
+        showDialog("Export CSV","Open a profile first.",[{label:"OK"}]);
         return;
     }
     const season = activeSeason();
@@ -370,6 +377,61 @@ function exportCsv(){
         row.map(value=>`"${String(value).replace(/"/g,'""')}"`).join(",")
     ).join("\r\n");
     downloadFile(`Sprite Tracker - ${state.profile.profileName}.csv`,"text/csv;charset=utf-8",csv);
+}
+
+function buildTextExport(){
+    const season = activeSeason();
+    const stats = calculateStats();
+    const progress = seasonProgress(state.profile,state.seasonId);
+    const lines = [
+        "Sprite Tracker",
+        `Profile: ${state.profile.profileName}`,
+        `Season: ${season.title} (${season.chapter} ${season.season})`,
+        "",
+        `Found: ${stats.found} / ${stats.totalSprites}`,
+        `Mastered: ${stats.mastered} / ${stats.totalSprites}`,
+        `Completed Sets: ${stats.completedSets} / ${stats.totalSets}`,
+        `Overall Progress: ${stats.percent}%`,
+        "",
+        "Collection"
+    ];
+    season.families.forEach(family=>{
+        const familyDisabled =
+            progress.disabledFamilies[slug(family.name)] === true;
+        lines.push("");
+        lines.push(`${family.name} - ${family.rarity} - ${familyDisabled ? "DISABLED" : "ENABLED"}`);
+        season.variants.forEach(variant=>{
+            const sprite = season.sprites.find(item=>
+                item.family === family.name &&
+                item.variantId === variant.id
+            );
+            if(!sprite || !sprite.available){
+                lines.push(`  ${variant.label}: N/A`);
+                return;
+            }
+            const status = isDisabled(sprite)
+                ? "Disabled"
+                : progress.sprites[sprite.id] === "mastered"
+                    ? "Mastered"
+                    : progress.sprites[sprite.id] === "found"
+                        ? "Found"
+                        : "Not Found";
+            lines.push(`  ${variant.label}: ${status}`);
+        });
+    });
+    return lines.join("\r\n");
+}
+
+function exportText(){
+    if(!state.profile){
+        showDialog("Export Text","Open a profile first.",[{label:"OK"}]);
+        return;
+    }
+    downloadFile(
+        `Sprite Tracker - ${state.profile.profileName}.txt`,
+        "text/plain;charset=utf-8",
+        buildTextExport()
+    );
 }
 
 async function exportImage(){
@@ -495,6 +557,7 @@ function bindControls(){
         );
     });
     document.getElementById("exportImageButton").addEventListener("click",exportImage);
+    document.getElementById("exportTextButton").addEventListener("click",exportText);
     document.getElementById("exportCsvButton").addEventListener("click",exportCsv);
     document.getElementById("importProfileButton").addEventListener("click",()=>{
         els.importFileInput.click();

@@ -29,13 +29,19 @@
                 <details class="profileMenu">
                     <summary>Profile Menu</summary>
                     <div class="profileMenuPanel">
+                        <div class="menuGroupLabel">Profiles</div>
                         <button id="newProfileButton" type="button">New Profile</button>
                         <button id="openProfileButton" type="button">Open Profile</button>
                         <button id="renameProfileButton" type="button">Rename Profile</button>
+                        <div class="menuDivider"></div>
+                        <div class="menuGroupLabel">Import / Export</div>
                         <button id="importProfileButton" type="button">Import Profile</button>
                         <button id="exportProfileButton" type="button">Export Profile</button>
                         <button id="exportImageButton" type="button">Export Image</button>
+                        <button id="exportTextButton" type="button">Export Text</button>
                         <button id="exportCsvButton" type="button">Export CSV</button>
+                        <div class="menuDivider"></div>
+                        <div class="menuGroupLabel">Danger Zone</div>
                         <button id="deleteProfileButton" type="button" class="danger">Delete Profile</button>
                     </div>
                 </details>
@@ -47,7 +53,7 @@
             <section class="statsDeck" aria-label="Collection statistics">
                 <div class="statsHeader">
                     <h2>Collection Progress</h2>
-                    <span class="seasonBadge">Local Browser Profile</span>
+                    <span id="profileProgressBadge" class="seasonBadge">Profile: No profile loaded</span>
                 </div>
                 <div class="statsGrid">
                     <div class="statBox">
@@ -69,16 +75,15 @@
                 </div>
             </section>
 
-            <section class="seasonDeck" aria-label="Season selector">
-                <div>
-                    <span class="sectionLabel">Season Library</span>
-                    <h2 id="seasonTitle">Override</h2>
-                    <p id="seasonDescription"></p>
-                </div>
-                <div id="seasonTabs" class="seasonTabs"></div>
-            </section>
-
             <section class="trackerDeck" aria-label="Sprite tracker">
+                <div class="seasonDeck" aria-label="Season selector">
+                    <div>
+                        <span class="sectionLabel">Season</span>
+                        <h2 id="seasonTitle">Override</h2>
+                        <p id="seasonDescription"></p>
+                    </div>
+                    <div id="seasonTabs" class="seasonTabs"></div>
+                </div>
                 <div class="trackerToolbar">
                     <div>
                         <span class="sectionLabel">Tracker Grid</span>
