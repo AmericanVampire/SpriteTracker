@@ -16,7 +16,6 @@ const els = {
     seasonDescription:document.getElementById("seasonDescription"),
     trackerHeading:document.getElementById("trackerHeading"),
     trackerGrid:document.getElementById("trackerGrid"),
-    trackerEmpty:document.getElementById("trackerEmpty"),
     dialog:document.getElementById("dialog"),
     dialogTitle:document.getElementById("dialogTitle"),
     dialogContent:document.getElementById("dialogContent"),
@@ -36,6 +35,15 @@ function seasonProgress(profile,seasonId){
         disabledVariants:{}
     };
     return profile.seasons[seasonId];
+}
+
+function emptySeasonProgress(){
+    return {
+        sprites:{},
+        disabledSprites:{},
+        disabledFamilies:{},
+        disabledVariants:{}
+    };
 }
 
 function profileLoaded(){
@@ -183,12 +191,9 @@ function renderTracker(){
         "--variant-count",
         season.variants.length
     );
-    els.trackerEmpty.hidden = profileLoaded();
-    els.trackerGrid.hidden = !profileLoaded();
-    if(!profileLoaded()){
-        return;
-    }
-    const progress = seasonProgress(state.profile,state.seasonId);
+    const progress = profileLoaded()
+        ? seasonProgress(state.profile,state.seasonId)
+        : emptySeasonProgress();
     const header = document.createElement("div");
     header.className = "gridHeader";
     header.innerHTML = `<div>Sprite</div>${season.variants.map(variant=>
@@ -200,6 +205,9 @@ function renderTracker(){
     els.trackerGrid.appendChild(header);
     header.querySelectorAll(".variantToggle").forEach(button=>{
         button.addEventListener("click",async()=>{
+            if(!profileLoaded()){
+                return;
+            }
             const id = button.dataset.variant;
             progress.disabledVariants[id] = progress.disabledVariants[id] !== true;
             await persist();
@@ -221,6 +229,9 @@ function renderTracker(){
         `;
         const familyButton = row.querySelector(".familyCell");
         familyButton.addEventListener("click",async()=>{
+            if(!profileLoaded()){
+                return;
+            }
             progress.disabledFamilies[slug(family.name)] = !familyDisabled;
             await persist();
             render();

@@ -366,20 +366,11 @@ button.danger,
 .dot.found{background:var(--green);}
 .dot.mastered{background:var(--yellow);}
 .dot.disabled{background:var(--danger);}
-.emptyState{
-    display:grid;
-    min-height:280px;
-    place-items:center;
-    color:var(--muted);
-    border:1px dashed rgba(255,255,255,.2);
-    border-radius:var(--radius);
-    font-size:20px;
-    font-weight:800;
-}
 .trackerGrid{
-    overflow:auto;
-    padding-bottom:8px;
-    max-height:calc(100vh - 170px);
+    overflow-x:visible;
+    overflow-y:visible;
+    padding:0 12px 8px 0;
+    max-height:none;
 }
 body.exportingImage .appGrid{
     padding:18px;
@@ -391,14 +382,14 @@ body.exportingImage .trackerGrid{
 .gridHeader,
 .spriteRow{
     display:grid;
-    grid-template-columns:220px repeat(var(--variant-count, 8), 150px);
+    grid-template-columns:minmax(168px, 210px) repeat(var(--variant-count, 8), minmax(104px, 1fr));
     gap:10px;
-    min-width:max-content;
+    min-width:0;
     align-items:center;
 }
 .gridHeader{
     position:sticky;
-    top:0;
+    top:8px;
     z-index:12;
     padding-bottom:10px;
     padding-top:6px;
@@ -484,8 +475,9 @@ body.exportingImage .trackerGrid{
 }
 .spriteCard{
     position:relative;
-    width:150px;
-    height:150px;
+    width:100%;
+    aspect-ratio:1;
+    min-height:112px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -498,8 +490,8 @@ body.exportingImage .trackerGrid{
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .spriteCard img{
-    width:108px;
-    height:108px;
+    width:min(108px, 78%);
+    height:min(108px, 78%);
     object-fit:contain;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
