@@ -11,6 +11,7 @@ const els = {
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
     profileProgressBadge:document.getElementById("profileProgressBadge"),
+    trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
     dialog:document.getElementById("dialog"),
@@ -45,6 +46,10 @@ function emptySeasonProgress(){
 
 function profileLoaded(){
     return Boolean(state.profile);
+}
+
+function seasonPickerLabel(season){
+    return season.season;
 }
 
 function spriteState(sprite){
@@ -160,6 +165,7 @@ function renderTracker(){
         "--variant-count",
         season.variants.length
     );
+    els.trackerDeck.dataset.variantCount = String(season.variants.length);
     const progress = profileLoaded()
         ? seasonProgress(state.profile,state.seasonId)
         : emptySeasonProgress();
@@ -169,13 +175,13 @@ function renderTracker(){
             <select id="seasonSelect" aria-label="Season picker">
                 ${SEASONS.map(item=>`
                     <option value="${item.id}" ${item.id === state.seasonId ? "selected" : ""}>
-                        ${item.label} - ${item.chapter} ${item.season}
+                        ${seasonPickerLabel(item)}
                     </option>
                 `).join("")}
             </select>
         </div>
         ${season.variants.map(variant=>
-        `<button class="variantToggle" data-variant="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
+        `<button class="variantToggle" data-variant="${variant.id}" data-variant-type="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
             <span>${variant.label}</span>
             <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
@@ -235,7 +241,16 @@ function renderTracker(){
 
 function createSpriteCard(sprite,family){
     const button = document.createElement("button");
-    const disabled = !sprite.available || isDisabled(sprite);
+    if(!sprite.available){
+        button.type = "button";
+        button.className = "spriteCard spriteCardEmpty";
+        button.dataset.state = "unavailable";
+        button.dataset.available = "false";
+        button.title = "Not available in this generation.";
+        button.disabled = true;
+        return button;
+    }
+    const disabled = isDisabled(sprite);
     const current = spriteState(sprite);
     button.type = "button";
     button.className = "spriteCard";
