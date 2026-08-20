@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sprite Tracker is a browser-based Fortnite Sprite collection tracker with local profiles, archived seasons, and import/export backups.">
+    <title>Sprite Tracker</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="siteShell">
+        <header class="hero">
+            <div class="heroCopy">
+                <p class="eyebrow">Chapter 7 Season 4 // Override</p>
+                <h1>Sprite Tracker</h1>
+                <p class="heroText">
+                    Track current-generation Sprites, preserve archived collections,
+                    and keep your progress local in your browser.
+                </p>
+            </div>
+            <div class="heroPanel" aria-label="Season style preview">
+                <div class="pixelScreen">
+                    <div class="screenHeader">
+                        <span>BREAK THE RULES</span>
+                        <span>CHANGE THE GAME</span>
+                    </div>
+                    <div class="pixelArena">
+                        <span class="pixelSprite one"></span>
+                        <span class="pixelSprite two"></span>
+                        <span class="pixelSprite three"></span>
+                        <span class="pixelRing"></span>
+                        <span class="tetromino t1"></span>
+                        <span class="tetromino t2"></span>
+                        <span class="ghostBlock"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="appGrid">
+            <section class="controlDeck" aria-label="Profile controls">
+                <div class="profileCard">
+                    <span class="sectionLabel">Current Profile</span>
+                    <strong id="currentProfileName">No profile loaded</strong>
+                    <small id="storageNote">Saved locally with IndexedDB</small>
+                </div>
+                <div class="buttonCluster">
+                    <button id="newProfileButton" type="button">New</button>
+                    <button id="openProfileButton" type="button">Open</button>
+                    <button id="renameProfileButton" type="button">Rename</button>
+                    <button id="deleteProfileButton" type="button" class="danger">Delete</button>
+                </div>
+                <div class="buttonCluster">
+                    <button id="importProfileButton" type="button">Import JSON</button>
+                    <button id="exportProfileButton" type="button">Export JSON</button>
+                    <button id="exportCsvButton" type="button">Export CSV</button>
+                </div>
+                <input id="importFileInput" type="file" accept="application/json,.json" hidden>
+            </section>
+
+            <section class="statsDeck" aria-label="Collection statistics">
+                <div class="statBox">
+                    <span>Found</span>
+                    <strong id="foundStat">0 / 0</strong>
+                </div>
+                <div class="statBox">
+                    <span>Mastered</span>
+                    <strong id="masteredStat">0 / 0</strong>
+                </div>
+                <div class="statBox">
+                    <span>Completed Sets</span>
+                    <strong id="setsStat">0 / 0</strong>
+                </div>
+                <div class="statBox">
+                    <span>Overall</span>
+                    <strong id="overallStat">0%</strong>
+                </div>
+            </section>
+
+            <section class="seasonDeck" aria-label="Season selector">
+                <div>
+                    <span class="sectionLabel">Season Library</span>
+                    <h2 id="seasonTitle">Override</h2>
+                    <p id="seasonDescription"></p>
+                </div>
+                <div id="seasonTabs" class="seasonTabs"></div>
+            </section>
+
+            <section class="trackerDeck" aria-label="Sprite tracker">
+                <div class="trackerToolbar">
+                    <div>
+                        <span class="sectionLabel">Tracker Grid</span>
+                        <h2 id="trackerHeading">Current Season</h2>
+                    </div>
+                    <div class="legend">
+                        <span><i class="dot notFound"></i>Not found</span>
+                        <span><i class="dot found"></i>Found</span>
+                        <span><i class="dot mastered"></i>Mastered</span>
+                        <span><i class="dot disabled"></i>Disabled</span>
+                    </div>
+                </div>
+                <div id="trackerEmpty" class="emptyState">
+                    Create or open a profile to start tracking.
+                </div>
+                <div id="trackerGrid" class="trackerGrid" hidden></div>
+            </section>
+        </main>
+    </div>
+
+    <dialog id="dialog">
+        <form method="dialog" class="dialogBody">
+            <h2 id="dialogTitle"></h2>
+            <div id="dialogContent"></div>
+            <div id="dialogActions" class="dialogActions"></div>
+        </form>
+    </dialog>
+
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
