@@ -50,51 +50,36 @@
         </header>
 
         <main class="appGrid">
-            <section class="statsDeck" aria-label="Collection statistics">
-                <div class="statsHeader">
-                    <h2>Collection Progress</h2>
-                    <span id="profileProgressBadge" class="seasonBadge">Profile: No profile loaded</span>
-                </div>
-                <div class="statsGrid">
-                    <div class="statBox">
-                        <span>Found</span>
-                        <strong id="foundStat">0 / 0</strong>
-                    </div>
-                    <div class="statBox">
-                        <span>Completed Sets</span>
-                        <strong id="setsStat">0 / 0</strong>
-                    </div>
-                    <div class="statBox">
-                        <span>Mastered</span>
-                        <strong id="masteredStat">0 / 0</strong>
-                    </div>
-                    <div class="statBox">
-                        <span>Overall Progress</span>
-                        <strong id="overallStat">0%</strong>
-                    </div>
-                </div>
-            </section>
-
             <section class="trackerDeck" aria-label="Sprite tracker">
-                <div class="seasonDeck" aria-label="Season selector">
-                    <div>
-                        <span class="sectionLabel">Season</span>
-                        <h2 id="seasonTitle">Override</h2>
-                        <p id="seasonDescription"></p>
+                <div class="trackerSticky">
+                    <section class="statsDeck" aria-label="Collection statistics">
+                        <div class="statsHeader">
+                            <h2>Collection Progress</h2>
+                            <span id="profileProgressBadge" class="seasonBadge">Profile: No profile loaded</span>
+                        </div>
+                        <div class="statsGrid">
+                            <div class="statBox">
+                                <span>Found</span>
+                                <strong id="foundStat">0 / 0</strong>
+                            </div>
+                            <div class="statBox">
+                                <span>Completed Sets</span>
+                                <strong id="setsStat">0 / 0</strong>
+                            </div>
+                            <div class="statBox">
+                                <span>Mastered</span>
+                                <strong id="masteredStat">0 / 0</strong>
+                            </div>
+                            <div class="statBox">
+                                <span>Overall Progress</span>
+                                <strong id="overallStat">0%</strong>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="seasonStrip" aria-label="Season selector">
+                        <div id="seasonTabs" class="seasonTabs"></div>
                     </div>
-                    <div id="seasonTabs" class="seasonTabs"></div>
-                </div>
-                <div class="trackerToolbar">
-                    <div>
-                        <span class="sectionLabel">Tracker Grid</span>
-                        <h2 id="trackerHeading">Current Season</h2>
-                    </div>
-                    <div class="legend">
-                        <span><i class="dot notFound"></i>Not found</span>
-                        <span><i class="dot found"></i>Found</span>
-                        <span><i class="dot mastered"></i>Mastered</span>
-                        <span><i class="dot disabled"></i>Disabled</span>
-                    </div>
+                    <div id="gridHeader" class="gridHeader"></div>
                 </div>
                 <div id="trackerGrid" class="trackerGrid"></div>
             </section>

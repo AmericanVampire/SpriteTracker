@@ -12,9 +12,7 @@ const els = {
     overallStat:document.getElementById("overallStat"),
     profileProgressBadge:document.getElementById("profileProgressBadge"),
     seasonTabs:document.getElementById("seasonTabs"),
-    seasonTitle:document.getElementById("seasonTitle"),
-    seasonDescription:document.getElementById("seasonDescription"),
-    trackerHeading:document.getElementById("trackerHeading"),
+    gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
     dialog:document.getElementById("dialog"),
     dialogTitle:document.getElementById("dialogTitle"),
@@ -175,35 +173,28 @@ function renderSeasonTabs(){
     });
 }
 
-function renderSeasonDetails(){
-    const season = activeSeason();
-    els.seasonTitle.textContent = season.title;
-    els.seasonDescription.textContent = season.summary;
-    els.trackerHeading.textContent = season.kind === "archive"
-        ? "Archived Sprite Generation"
-        : "Current Sprite Generation";
-}
-
 function renderTracker(){
     const season = activeSeason();
     els.trackerGrid.innerHTML = "";
+    els.gridHeader.innerHTML = "";
     els.trackerGrid.style.setProperty(
+        "--variant-count",
+        season.variants.length
+    );
+    els.gridHeader.style.setProperty(
         "--variant-count",
         season.variants.length
     );
     const progress = profileLoaded()
         ? seasonProgress(state.profile,state.seasonId)
         : emptySeasonProgress();
-    const header = document.createElement("div");
-    header.className = "gridHeader";
-    header.innerHTML = `<div>Sprite</div>${season.variants.map(variant=>
+    els.gridHeader.innerHTML = `<div>Sprite</div>${season.variants.map(variant=>
         `<button class="variantToggle" data-variant="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
             <span>${variant.label}</span>
             <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
     ).join("")}`;
-    els.trackerGrid.appendChild(header);
-    header.querySelectorAll(".variantToggle").forEach(button=>{
+    els.gridHeader.querySelectorAll(".variantToggle").forEach(button=>{
         button.addEventListener("click",async()=>{
             if(!profileLoaded()){
                 return;
@@ -304,7 +295,6 @@ function isFamilyComplete(family){
 function render(){
     renderProfile();
     renderSeasonTabs();
-    renderSeasonDetails();
     renderStats();
     renderTracker();
 }
