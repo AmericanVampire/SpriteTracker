@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sprite Tracker is a browser-based Fortnite Sprite collection tracker with local profiles, archived seasons, and import/export backups.">
     <title>Sprite Tracker</title>
+    <link rel="icon" href="assets/favicon.ico">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -25,18 +26,19 @@
                     <strong id="currentProfileName">No profile loaded</strong>
                     <small id="storageNote">Saved locally with IndexedDB</small>
                 </div>
-                <div class="buttonCluster">
-                    <button id="newProfileButton" type="button">New</button>
-                    <button id="openProfileButton" type="button">Open</button>
-                    <button id="renameProfileButton" type="button">Rename</button>
-                    <button id="deleteProfileButton" type="button" class="danger">Delete</button>
-                </div>
-                <div class="buttonCluster">
-                    <button id="importProfileButton" type="button">Import Profile</button>
-                    <button id="exportProfileButton" type="button">Export Profile</button>
-                    <button id="exportImageButton" type="button">Export Image</button>
-                    <button id="exportCsvButton" type="button">Export CSV</button>
-                </div>
+                <details class="profileMenu">
+                    <summary>Profile Menu</summary>
+                    <div class="profileMenuPanel">
+                        <button id="newProfileButton" type="button">New Profile</button>
+                        <button id="openProfileButton" type="button">Open Profile</button>
+                        <button id="renameProfileButton" type="button">Rename Profile</button>
+                        <button id="importProfileButton" type="button">Import Profile</button>
+                        <button id="exportProfileButton" type="button">Export Profile</button>
+                        <button id="exportImageButton" type="button">Export Image</button>
+                        <button id="exportCsvButton" type="button">Export CSV</button>
+                        <button id="deleteProfileButton" type="button" class="danger">Delete Profile</button>
+                    </div>
+                </details>
                 <input id="importFileInput" type="file" accept="application/json,.json" hidden>
             </section>
         </header>

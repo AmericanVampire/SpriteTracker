@@ -146,7 +146,11 @@ function renderSeasonTabs(){
         button.type = "button";
         button.className = "seasonTab";
         button.dataset.active = String(season.id === state.seasonId);
-        button.innerHTML = `<strong>${season.label}</strong><span>${season.kind}</span>`;
+        button.innerHTML = `
+            <strong>${season.label}</strong>
+            <span>${season.chapter}</span>
+            <span>${season.season}</span>
+        `;
         button.addEventListener("click",async()=>{
             state.seasonId = season.id;
             if(state.profile){

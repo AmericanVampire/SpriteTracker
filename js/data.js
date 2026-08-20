@@ -41,54 +41,23 @@ const LEGACY_FAMILIES = [
 
 const OVERRIDE_VARIANTS = [
     { id:"base", label:"Base" },
-    { id:"power", label:"Power" },
-    { id:"glitch", label:"Glitch" },
-    { id:"master", label:"Master" }
+    { id:"gold", label:"Gold", prefix:"gold-" },
+    { id:"cheatmaster", label:"Cheat Master", prefix:"cheatmaster-" }
 ];
 
 const OVERRIDE_FAMILIES = [
-    {
-        name:"8-Bit Sprite",
-        rarity:"Rare",
-        variants:["base","power","glitch","master"],
-        status:"scouting",
-        accent:"#00e7ff"
-    },
-    {
-        name:"Bullet Sprite",
-        rarity:"Epic",
-        variants:["base"],
-        status:"announced",
-        accent:"#ffef5a"
-    },
-    {
-        name:"Dumpster Dive Sprite",
-        rarity:"Rare",
-        variants:["base"],
-        status:"announced",
-        accent:"#6dff72"
-    },
-    {
-        name:"Honey Sprite",
-        rarity:"Epic",
-        variants:["base"],
-        status:"announced",
-        accent:"#ffb62d"
-    },
-    {
-        name:"Pond Sprite",
-        rarity:"Rare",
-        variants:["base"],
-        status:"announced",
-        accent:"#50d7ff"
-    },
-    {
-        name:"X-Ray Sprite",
-        rarity:"Legendary",
-        variants:["base"],
-        status:"announced",
-        accent:"#f64cff"
-    }
+    { name:"Jackrabbit", rarity:"Legendary", variants:["base","gold","cheatmaster"] },
+    { name:"Shadow", rarity:"Epic", variants:["base","gold","cheatmaster"] },
+    { name:"Bush", rarity:"Rare", variants:["base","gold","cheatmaster"] },
+    { name:"Tails", rarity:"Epic", variants:["base","gold","cheatmaster"] },
+    { name:"Killswitch", rarity:"Epic", variants:["base","gold","cheatmaster"] },
+    { name:"Adventure", rarity:"Rare", variants:["base","gold","cheatmaster"] },
+    { name:"Klombo", rarity:"Mythic", variants:["base","gold","cheatmaster"] },
+    { name:"Jonesy", rarity:"Rare", variants:["base","gold","cheatmaster"] },
+    { name:"Sonic", rarity:"Epic", variants:["base","gold","cheatmaster"] },
+    { name:"Crown", rarity:"Mythic", variants:["base","gold","cheatmaster"] },
+    { name:"8-Bit", rarity:"Rare", variants:["base","gold","cheatmaster"] },
+    { name:"Storm Scout", rarity:"Rare", variants:["base","gold","cheatmaster"] }
 ];
 
 function slug(text){
@@ -107,8 +76,8 @@ function buildLegacySprites(){
                 rarity:available && variant.id === "normal" ? family.rarity : available ? "Special" : "N/A",
                 available,
                 image:available
-                    ? `sprites/${variant.prefix}${slug(family.name)}-sprite.webp`
-                    : `sprites/blank-${slug(family.name)}-sprite.webp`
+                    ? `sprites/S3/${variant.prefix}${slug(family.name)}-sprite.webp`
+                    : `sprites/S3/blank-${slug(family.name)}-sprite.webp`
             };
         })
     );
@@ -125,8 +94,9 @@ function buildOverrideSprites(){
                 variant:variant.label,
                 rarity:available && variant.id === "base" ? family.rarity : available ? "Special" : "N/A",
                 available,
-                status:family.status,
-                accent:family.accent
+                image:available
+                    ? `sprites/S4/${variant.prefix ?? ""}${slug(family.name)}-sprite.webp`
+                    : ""
             };
         })
     );
@@ -136,9 +106,11 @@ const SEASONS = [
     {
         id:"override",
         label:"Override",
+        chapter:"Chapter 7",
+        season:"Season 4",
         title:"Override",
         kind:"current",
-        summary:"Current-season workspace inspired by Chapter 7 Season 4's glitchy gaming-icon theme. Placeholder rows are ready for confirmed launch and mid-season Sprite data.",
+        summary:"Chapter 7 Season 4: Override's new generation of retro gaming-inspired Sprites, separated from the archived Runners collection.",
         variants:OVERRIDE_VARIANTS,
         families:OVERRIDE_FAMILIES,
         sprites:buildOverrideSprites()
@@ -146,6 +118,8 @@ const SEASONS = [
     {
         id:"runners-archive",
         label:"Runners Archive",
+        chapter:"Chapter 7",
+        season:"Season 3",
         title:"Runners Archive",
         kind:"archive",
         summary:"Archived previous-generation Sprite collection, preserved separately so older progress can survive the new season.",
