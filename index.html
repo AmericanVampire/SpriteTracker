@@ -11,18 +11,14 @@
 <body>
     <div class="scanlines" aria-hidden="true"></div>
     <div class="siteShell">
-        <header class="hero">
-            <div class="heroCopy">
-                <p class="eyebrow">Chapter 7 Season 4 // Override</p>
-                <h1>Sprite Tracker</h1>
-                <p class="heroText">
-                    Track current-generation Sprites, preserve archived collections,
-                    and keep your progress local in your browser.
-                </p>
-            </div>
-            <section class="controlDeck" aria-label="Profile controls">
-                <div class="profileCard">
-                    <span class="sectionLabel">Current Profile</span>
+        <header class="topBar">
+            <a class="brandMark" href="#" aria-label="Sprite Tracker top">
+                <img src="assets/favicon.ico" alt="">
+                <strong>Sprite Tracker</strong>
+            </a>
+            <section class="topProfile" aria-label="Profile controls">
+                <div class="profileStatus">
+                    <span>Profile</span>
                     <strong id="currentProfileName">No profile loaded</strong>
                     <small id="storageNote">Saved locally with IndexedDB</small>
                 </div>
@@ -76,15 +72,16 @@
                             </div>
                         </div>
                     </section>
-                    <div class="seasonStrip" aria-label="Season selector">
-                        <div id="seasonTabs" class="seasonTabs"></div>
-                    </div>
                     <div id="gridHeader" class="gridHeader"></div>
                 </div>
                 <div id="trackerGrid" class="trackerGrid"></div>
             </section>
         </main>
     </div>
+
+    <button id="backToTopButton" class="backToTop" type="button" aria-label="Back to top">
+        <span aria-hidden="true"></span>
+    </button>
 
     <dialog id="dialog">
         <form method="dialog" class="dialogBody">

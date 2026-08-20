@@ -11,7 +11,6 @@ const els = {
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
     profileProgressBadge:document.getElementById("profileProgressBadge"),
-    seasonTabs:document.getElementById("seasonTabs"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
     dialog:document.getElementById("dialog"),
@@ -149,30 +148,6 @@ function renderProfile(){
         : "Create or open a local profile";
 }
 
-function renderSeasonTabs(){
-    els.seasonTabs.innerHTML = "";
-    SEASONS.forEach(season=>{
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "seasonTab";
-        button.dataset.active = String(season.id === state.seasonId);
-        button.innerHTML = `
-            <strong>${season.label}</strong>
-            <span>${season.chapter}</span>
-            <span>${season.season}</span>
-        `;
-        button.addEventListener("click",async()=>{
-            state.seasonId = season.id;
-            if(state.profile){
-                state.profile.activeSeasonId = season.id;
-                await persist();
-            }
-            render();
-        });
-        els.seasonTabs.appendChild(button);
-    });
-}
-
 function renderTracker(){
     const season = activeSeason();
     els.trackerGrid.innerHTML = "";
@@ -188,12 +163,31 @@ function renderTracker(){
     const progress = profileLoaded()
         ? seasonProgress(state.profile,state.seasonId)
         : emptySeasonProgress();
-    els.gridHeader.innerHTML = `<div>Sprite</div>${season.variants.map(variant=>
+    els.gridHeader.innerHTML = `
+        <div class="seasonPickerCell">
+            <span>Season</span>
+            <select id="seasonSelect" aria-label="Season picker">
+                ${SEASONS.map(item=>`
+                    <option value="${item.id}" ${item.id === state.seasonId ? "selected" : ""}>
+                        ${item.label} - ${item.chapter} ${item.season}
+                    </option>
+                `).join("")}
+            </select>
+        </div>
+        ${season.variants.map(variant=>
         `<button class="variantToggle" data-variant="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
             <span>${variant.label}</span>
             <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
     ).join("")}`;
+    document.getElementById("seasonSelect").addEventListener("change",async(event)=>{
+        state.seasonId = event.target.value;
+        if(state.profile){
+            state.profile.activeSeasonId = state.seasonId;
+            await persist();
+        }
+        render();
+    });
     els.gridHeader.querySelectorAll(".variantToggle").forEach(button=>{
         button.addEventListener("click",async()=>{
             if(!profileLoaded()){
@@ -294,7 +288,6 @@ function isFamilyComplete(family){
 
 function render(){
     renderProfile();
-    renderSeasonTabs();
     renderStats();
     renderTracker();
 }
@@ -569,6 +562,9 @@ function bindControls(){
             await importProfile(file);
         }
         els.importFileInput.value = "";
+    });
+    document.getElementById("backToTopButton").addEventListener("click",()=>{
+        window.scrollTo({top:0,behavior:"smooth"});
     });
 }
 
