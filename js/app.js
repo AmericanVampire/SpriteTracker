@@ -965,6 +965,22 @@ function buildMobileImageExportSprite(sprite,family){
     return card;
 }
 
+async function waitForExportImages(root){
+    const images = Array.from(root.querySelectorAll("img"));
+    await Promise.all(images.map(image=>{
+        if(image.complete && image.naturalWidth > 0){
+            return Promise.resolve();
+        }
+        if(image.decode){
+            return image.decode().catch(()=>{});
+        }
+        return new Promise(resolve=>{
+            image.addEventListener("load",resolve,{once:true});
+            image.addEventListener("error",resolve,{once:true});
+        });
+    }));
+}
+
 async function exportImage(){
     if(!state.profile){
         showDialog("Export Image","Open a profile first.",[{label:"OK"}]);
@@ -997,6 +1013,7 @@ async function exportImage(){
         exportTarget = buildImageExportSheet();
         window.scrollTo(0,0);
         document.body.classList.add("exportingImage");
+        await waitForExportImages(exportTarget);
         await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
         const exportOptions = {
             pixelRatio:mobileViewport() ? 1.25 : 2,
