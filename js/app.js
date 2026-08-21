@@ -466,7 +466,6 @@ function showTrackerInfo(){
         <div class="legalInfo">
             <div class="legalIntro">
                 <strong>Sprite Tracker</strong>
-                <span>Version ${APP_VERSION}</span>
                 <span>Developed by <b>AmericanVampire</b></span>
                 <span>&copy; 2026 All Rights Reserved.</span>
             </div>
@@ -499,27 +498,27 @@ function showLicenseInfo(){
                 All Rights Reserved.
             </p>
             <p>
-                This software is proprietary and is protected by copyright law.
-                Subject to your purchase, if applicable, you are granted a
-                limited, non-exclusive, non-transferable license to install and
-                use this software for your own personal, non-commercial use.
+                This website and its related code, assets, design, and content
+                are proprietary and protected by copyright law. You are granted
+                a limited, non-exclusive, non-transferable license to access
+                and use this website for your own personal, non-commercial use.
             </p>
             <p><strong>You may not:</strong></p>
             <ul>
-                <li>Copy or redistribute this software.</li>
+                <li>Copy or redistribute this website, its code, or its assets.</li>
                 <li>Modify, adapt, or create derivative works.</li>
-                <li>Sell, rent, lease, sublicense, or transfer this software.</li>
+                <li>Sell, rent, lease, sublicense, or transfer this website or its content.</li>
                 <li>Remove or alter any copyright, trademark, or branding.</li>
-                <li>Represent this software, in whole or in part, as your own work.</li>
-                <li>Reverse engineer, decompile, or disassemble the software except where expressly permitted by applicable law.</li>
+                <li>Represent this website, in whole or in part, as your own work.</li>
+                <li>Reverse engineer, decompile, or disassemble the site code except where expressly permitted by applicable law.</li>
             </ul>
             <p>
-                The software is provided "as is", without warranty of any kind,
+                This website is provided "as is", without warranty of any kind,
                 express or implied, including but not limited to the warranties
                 of merchantability, fitness for a particular purpose, and
                 non-infringement. In no event shall the author be liable for
                 any claim, damages, or other liability arising from the use of
-                this software.
+                this website.
             </p>
         </div>
     `,[{label:"Close"}]);
