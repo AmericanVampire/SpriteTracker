@@ -641,6 +641,36 @@ body.exportingImage .appGrid{
     padding:18px;
     background:#063da5;
 }
+body.exportingImage .siteShell{
+    padding:18px;
+    background:#063da5;
+}
+body.exportingImage .topBar{
+    position:relative;
+    top:auto;
+    justify-content:center;
+}
+body.exportingImage .brandMark{
+    flex:0 1 auto;
+    justify-content:center;
+}
+body.exportingImage .brandMark img{
+    object-position:center;
+}
+body.exportingImage .topProfile,
+body.exportingImage .footerLinks,
+body.exportingImage .backToTop,
+body.exportingImage .abilityPreview,
+body.exportingImage .noProfileNotice{
+    display:none !important;
+}
+body.exportingImage .siteFooter{
+    justify-content:center;
+    padding:16px 0 0;
+}
+body.exportingImage .footerCopyright{
+    font-size:15px;
+}
 body.exportingImage .trackerGrid{
     overflow:visible;
 }

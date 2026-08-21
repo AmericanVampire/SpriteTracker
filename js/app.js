@@ -818,7 +818,7 @@ async function exportImage(){
         return;
     }
     try{
-        const exportTarget = document.querySelector(".appGrid");
+        const exportTarget = document.querySelector(".siteShell");
         document.body.classList.add("exportingImage");
         await new Promise(resolve=>requestAnimationFrame(resolve));
         const imageData = await window.htmlToImage.toPng(exportTarget,{
