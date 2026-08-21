@@ -2019,13 +2019,30 @@ dialog::backdrop{
     }
     .familyCell{
         grid-column:1 / -1;
-        min-height:86px;
+        min-height:64px;
+        background:linear-gradient(180deg, rgba(7,68,171,.82), rgba(4,41,126,.9));
+        box-shadow:
+            0 4px 0 rgba(0,30,96,.24),
+            inset 0 1px rgba(255,255,255,.22),
+            inset 0 0 0 1px rgba(161,234,255,.22);
     }
     .familyMain{
-        padding:28px 42px;
+        padding:16px 92px 16px 54px;
     }
     .familyName{
-        font-size:22px;
+        font-size:23px;
+        -webkit-text-stroke:1.45px #00091f;
+        paint-order:stroke fill;
+        text-shadow:none;
+    }
+    .familyStatus{
+        right:10px;
+        bottom:50%;
+        transform:translateY(50%);
+    }
+    .abilityButton{
+        bottom:50%;
+        transform:translateY(50%);
     }
     .abilityPreview{
         width:min(326px, calc(100vw - 40px));
