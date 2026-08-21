@@ -52,6 +52,10 @@ function seasonPickerLabel(season){
     return season.season.toUpperCase();
 }
 
+function rarityClass(rarity){
+    return slug(rarity || "unknown");
+}
+
 function spriteState(sprite){
     if(!profileLoaded()){
         return "not-found";
@@ -219,7 +223,7 @@ function renderTracker(){
         row.innerHTML = `
             <button class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <span class="familyName">${family.name}</span>
-                <span class="familyMeta">${family.rarity}</span>
+                <span class="familyMeta ${rarityClass(family.rarity)}">${family.rarity}</span>
                 <span class="familyMastered">MASTERED</span>
                 <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 <img class="setStar" src="assets/set-complete-star.webp" alt="Completed set">
@@ -607,6 +611,13 @@ function bindControls(){
     });
     document.getElementById("backToTopButton").addEventListener("click",()=>{
         window.scrollTo({top:0,behavior:"smooth"});
+    });
+    document.addEventListener("click",event=>{
+        document.querySelectorAll("details[open]").forEach(menu=>{
+            if(!menu.contains(event.target)){
+                menu.removeAttribute("open");
+            }
+        });
     });
 }
 
