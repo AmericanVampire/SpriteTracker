@@ -115,6 +115,49 @@ button{
         linear-gradient(90deg, rgba(0,73,178,.96), rgba(0,104,211,.92) 18%, rgba(3,151,244,.92) 50%, rgba(0,104,211,.92) 82%, rgba(0,73,178,.96)),
         linear-gradient(180deg, #0b5ec5, #0397f4);
 }
+.siteFooter{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin:18px auto 0;
+    padding:14px 4px 2px;
+    color:#fff;
+    font-size:13px;
+    font-weight:900;
+    text-shadow:0 2px 6px rgba(0,40,120,.45);
+}
+.footerCopyright{
+    letter-spacing:.02em;
+}
+.footerLinks{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.footerLinks button{
+    padding:8px 10px;
+    border-radius:var(--radius);
+    background:rgba(0,72,176,.42);
+    color:#fff;
+    font-size:12px;
+    font-weight:950;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    box-shadow:
+        inset 0 0 0 1px rgba(163,238,255,.34),
+        0 8px 18px rgba(0,42,120,.18);
+    cursor:pointer;
+    transition:transform .14s ease, filter .14s ease, background .14s ease;
+}
+.footerLinks button:hover{
+    background:rgba(0,116,235,.62);
+    filter:brightness(1.08);
+    transform:translateY(-1px);
+}
+.footerLinks button:active{
+    transform:translateY(1px);
+}
 .topBar,
 .trackerDeck{
     border:1px solid rgba(155,234,255,.42);
@@ -1146,6 +1189,41 @@ dialog::backdrop{
     justify-content:flex-end;
     gap:10px;
 }
+.legalInfo{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    color:#fff;
+    font-size:14px;
+    line-height:1.55;
+}
+.legalInfo p{
+    margin:0;
+}
+.legalInfo ul{
+    margin:0;
+    padding-left:20px;
+}
+.legalIntro{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    padding:12px;
+    border-radius:var(--radius);
+    background:rgba(0,80,190,.38);
+    box-shadow:inset 0 0 0 1px rgba(168,238,255,.24);
+}
+.legalIntro strong{
+    font-size:22px;
+}
+.legalIntro span{
+    color:#e7f6ff;
+}
+.legalScroll{
+    max-height:min(56vh,430px);
+    overflow:auto;
+    padding-right:6px;
+}
 .field{
     display:flex;
     flex-direction:column;
@@ -1229,6 +1307,17 @@ dialog::backdrop{
     }
     .siteShell{
         padding:10px;
+    }
+    .siteFooter{
+        flex-direction:column;
+        justify-content:center;
+        gap:10px;
+        padding:14px 0 4px;
+        text-align:center;
+    }
+    .footerLinks{
+        justify-content:center;
+        flex-wrap:wrap;
     }
     .topBar{
         gap:10px;

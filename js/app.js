@@ -10,6 +10,8 @@ const els = {
     topBar:document.querySelector(".topBar"),
     donateButton:document.getElementById("donateButton"),
     discordButton:document.getElementById("discordButton"),
+    footerInfoButton:document.getElementById("footerInfoButton"),
+    footerLicenseButton:document.getElementById("footerLicenseButton"),
     currentProfileName:document.getElementById("currentProfileName"),
     foundStat:document.getElementById("foundStat"),
     masteredStat:document.getElementById("masteredStat"),
@@ -459,6 +461,70 @@ function promptDialog(title,label,defaultValue,onSubmit){
     setTimeout(()=>wrapper.querySelector("input").focus(),50);
 }
 
+function showTrackerInfo(){
+    showDialog("Sprite Tracker Info",`
+        <div class="legalInfo">
+            <div class="legalIntro">
+                <strong>Sprite Tracker</strong>
+                <span>Version ${APP_VERSION}</span>
+                <span>Developed by <b>AmericanVampire</b></span>
+                <span>&copy; 2026 All Rights Reserved.</span>
+            </div>
+            <p>
+                Sprite Tracker gives players a simple and intuitive way to
+                organize, track, and monitor their Fortnite Sprite collection
+                and overall collection progress.
+            </p>
+            <p>
+                Fortnite&reg;, all related artwork, character and item names,
+                logos, trademarks, and other intellectual property are owned by
+                Epic Games, Inc. and are protected by applicable copyright and
+                trademark laws.
+            </p>
+            <p>
+                Sprite Tracker is not affiliated with, endorsed by, sponsored
+                by, or approved by Epic Games, Inc.
+            </p>
+        </div>
+    `,[{label:"Close"}]);
+}
+
+function showLicenseInfo(){
+    showDialog("License",`
+        <div class="legalInfo legalScroll">
+            <p>
+                <strong>Sprite Tracker</strong><br>
+                Developed by <b>AmericanVampire</b><br>
+                Copyright &copy; 2026 AmericanVampire<br>
+                All Rights Reserved.
+            </p>
+            <p>
+                This software is proprietary and is protected by copyright law.
+                Subject to your purchase, if applicable, you are granted a
+                limited, non-exclusive, non-transferable license to install and
+                use this software for your own personal, non-commercial use.
+            </p>
+            <p><strong>You may not:</strong></p>
+            <ul>
+                <li>Copy or redistribute this software.</li>
+                <li>Modify, adapt, or create derivative works.</li>
+                <li>Sell, rent, lease, sublicense, or transfer this software.</li>
+                <li>Remove or alter any copyright, trademark, or branding.</li>
+                <li>Represent this software, in whole or in part, as your own work.</li>
+                <li>Reverse engineer, decompile, or disassemble the software except where expressly permitted by applicable law.</li>
+            </ul>
+            <p>
+                The software is provided "as is", without warranty of any kind,
+                express or implied, including but not limited to the warranties
+                of merchantability, fitness for a particular purpose, and
+                non-infringement. In no event shall the author be liable for
+                any claim, damages, or other liability arising from the use of
+                this software.
+            </p>
+        </div>
+    `,[{label:"Close"}]);
+}
+
 function downloadFile(filename,type,content){
     const blob = new Blob([content],{type});
     const url = URL.createObjectURL(blob);
@@ -764,6 +830,8 @@ function bindControls(){
     document.getElementById("importProfileButton").addEventListener("click",()=>{
         els.importFileInput.click();
     });
+    els.footerInfoButton.addEventListener("click",showTrackerInfo);
+    els.footerLicenseButton.addEventListener("click",showLicenseInfo);
     els.importFileInput.addEventListener("change",async()=>{
         const file = els.importFileInput.files[0];
         if(file){
