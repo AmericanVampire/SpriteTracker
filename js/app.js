@@ -659,6 +659,62 @@ function downloadFile(filename,type,content){
     URL.revokeObjectURL(url);
 }
 
+function safeFilename(value){
+    return String(value || "Profile")
+        .replace(/[<>:"/\\|?*]+/g,"")
+        .replace(/\s+/g," ")
+        .trim() || "Profile";
+}
+
+async function saveImageBlob(blob,filename){
+    const file = new File([blob],filename,{type:"image/png"});
+    if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+        try{
+            await navigator.share({
+                files:[file],
+                title:"Sprite Tracker",
+                text:"Sprite Tracker export"
+            });
+            return;
+        }
+        catch(error){
+            if(error?.name === "AbortError"){
+                return;
+            }
+        }
+    }
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.target = "_blank";
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    if(mobileViewport()){
+        const preview = document.createElement("div");
+        preview.className = "imageExportPreview";
+        preview.innerHTML = `
+            <p>If the PNG did not save automatically, press and hold the image below and choose Save Image.</p>
+            <img src="${url}" alt="Sprite Tracker export preview">
+        `;
+        showDialog("Export Image",preview,[
+            {
+                label:"Open Image",
+                close:false,
+                onClick:()=>window.open(url,"_blank","noopener")
+            },
+            {
+                label:"Done",
+                onClick:()=>setTimeout(()=>URL.revokeObjectURL(url),1000)
+            }
+        ]);
+        return;
+    }
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+
 function exportCsv(){
     if(!state.profile){
         showDialog("Export CSV","Open a profile first.",[{label:"OK"}]);
@@ -821,23 +877,27 @@ async function exportImage(){
         const exportTarget = document.querySelector(".siteShell");
         document.body.classList.add("exportingImage");
         await new Promise(resolve=>requestAnimationFrame(resolve));
-        const imageData = await window.htmlToImage.toPng(exportTarget,{
-            pixelRatio:2,
+        const exportOptions = {
+            pixelRatio:mobileViewport() ? 1.5 : 2,
             cacheBust:true,
             backgroundColor:"#070519"
-        });
-        const link = document.createElement("a");
-        link.href = imageData;
-        link.download = `Sprite Tracker - ${state.profile.profileName}.png`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        };
+        const imageBlob = window.htmlToImage.toBlob
+            ? await window.htmlToImage.toBlob(exportTarget,exportOptions)
+            : await fetch(await window.htmlToImage.toPng(exportTarget,exportOptions)).then(response=>response.blob());
+        if(!imageBlob){
+            throw new Error("Image export did not create a file.");
+        }
+        await saveImageBlob(
+            imageBlob,
+            `Sprite Tracker - ${safeFilename(state.profile.profileName)}.png`
+        );
     }
     catch(error){
         console.error(error);
         showDialog(
             "Export Image",
-            "The image export failed. Refresh the page and try again from the local preview or hosted website.",
+            "The image export failed. Refresh the page and try again. On mobile, use the Share or Save Image option if your browser asks where to send the PNG.",
             [{label:"OK"}]
         );
     }
