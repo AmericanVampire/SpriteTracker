@@ -728,6 +728,7 @@ async function chooseDesktopImageFile(filename){
     try{
         return await window.showSaveFilePicker({
             suggestedName:filename,
+            startIn:"desktop",
             types:[
                 {
                     description:"PNG Image",
