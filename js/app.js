@@ -340,7 +340,7 @@ function renderTracker(){
             <div class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <button class="familyMain" type="button">
                     <span class="familyName">${family.name}</span>
-                    <span class="familyMastered">SET MASTERED</span>
+                    <span class="familyMastered">SET COMPLETE</span>
                     <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 </button>
                 ${abilityButton(family,abilitySprite)}
@@ -926,7 +926,7 @@ function buildMobileImageExportGrid(season){
             <div class="mobileExportFamily" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <span class="mobileExportAbility">i</span>
                 <span class="mobileExportName">${escapeHtml(family.name)}</span>
-                <span class="mobileExportMastered">SET MASTERED</span>
+                <span class="mobileExportMastered">SET COMPLETE</span>
                 <span class="mobileExportStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
             </div>
         `;
@@ -1206,7 +1206,7 @@ async function renderMobileExportCanvasBlob(){
         drawText(ctx,familyDisabled ? "DISABLED" : "ENABLED",448,y + 76,{size:10,align:"center",color:familyDisabled ? "#ff4d6d" : "#dbffe5"});
         if(familyComplete){
             fillRoundRect(ctx,42,y + 10,108,20,5,"rgba(255,224,92,.16)",null);
-            drawText(ctx,"SET MASTERED",96,y + 20,{size:9,align:"center",color:"#ffe45c"});
+            drawText(ctx,"SET COMPLETE",96,y + 20,{size:9,align:"center",color:"#ffe45c"});
         }
         season.variants.forEach((variant,index)=>{
             const sprite = season.sprites.find(item=>

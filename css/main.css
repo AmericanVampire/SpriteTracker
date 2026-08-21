@@ -2041,8 +2041,8 @@ dialog::backdrop{
         transform:translateY(50%);
     }
     .abilityButton{
-        bottom:50%;
-        transform:translateY(50%);
+        bottom:10px;
+        transform:none;
     }
     .abilityPreview{
         width:min(326px, calc(100vw - 40px));
