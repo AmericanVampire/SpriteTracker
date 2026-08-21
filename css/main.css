@@ -356,24 +356,29 @@ button.danger,
     gap:18px;
     padding:5px 0;
     border-bottom:1px solid rgba(145,229,255,.24);
+    color:#fff;
     background:transparent;
 }
 .statBox span{
     display:inline-flex;
     align-items:center;
-    color:var(--text);
-    font-size:15px;
-    font-weight:900;
+    color:#fff;
+    font-size:16px;
+    font-weight:950;
     text-transform:none;
     letter-spacing:0;
+    text-shadow:0 1px 0 rgba(0,43,132,.28);
 }
 .statBox strong{
     display:inline-block;
     margin-top:0;
+    color:#fff;
     font-size:22px;
+    font-weight:950;
     line-height:1;
     text-align:right;
     white-space:nowrap;
+    text-shadow:0 1px 0 rgba(0,43,132,.28);
 }
 .trackerDeck{
     min-height:420px;
