@@ -3,9 +3,8 @@ const APP_VERSION = "0.1.0-web";
 const SPRITE_DROP_TIMER = {
     enabled:true,
     label:"Next Sprite Drop",
-    cadence:"daily-reset",
-    resetHourEt:9,
-    note:"Fortnite reset"
+    target:"2026-08-27T09:00:00-04:00",
+    note:"In-game release"
 };
 
 const VARIANTS = [
