@@ -257,8 +257,8 @@ function createSpriteCard(sprite,family){
         button.dataset.available = "false";
         button.title = "Not available in this generation.";
         button.innerHTML = sprite.image
-            ? `<img src="${sprite.image}" alt="${sprite.family} unavailable ${sprite.variant}">`
-            : `<span class="pixelIcon" style="--accent:${family.accent || "#00e7ff"}"></span>`;
+            ? `${spriteVariantName(sprite)}<img src="${sprite.image}" alt="${sprite.family} unavailable ${sprite.variant}">`
+            : `${spriteVariantName(sprite)}<span class="pixelIcon" style="--accent:${family.accent || "#00e7ff"}"></span>`;
         button.disabled = true;
         return button;
     }
@@ -272,8 +272,8 @@ function createSpriteCard(sprite,family){
         ? "Left-click to cycle progress. Right-click to disable this sprite."
         : "Not available in this generation.";
     button.innerHTML = sprite.image
-        ? `${spriteBadges()}<img src="${sprite.image}" alt="${sprite.family} ${sprite.variant}">${spriteRarity(sprite.rarity)}`
-        : `${spriteBadges()}<span class="pixelIcon" style="--accent:${sprite.accent || family.accent || "#00e7ff"}"></span>${spriteRarity(sprite.rarity)}`;
+        ? `${spriteBadges()}${spriteVariantName(sprite)}<img src="${sprite.image}" alt="${sprite.family} ${sprite.variant}">${spriteRarity(sprite.rarity)}`
+        : `${spriteBadges()}${spriteVariantName(sprite)}<span class="pixelIcon" style="--accent:${sprite.accent || family.accent || "#00e7ff"}"></span>${spriteRarity(sprite.rarity)}`;
     if(!sprite.available){
         button.disabled = true;
     }
@@ -305,7 +305,7 @@ function abilityButton(family,sprite){
     const image = sprite?.image || "";
     const rarity = sprite?.rarity || family.rarity || "";
     return `
-        <button class="abilityButton" type="button" aria-label="${family.name} ability">
+        <button class="abilityButton" type="button" aria-label="${family.name} ability" aria-haspopup="true">
             <span class="abilityIcon" aria-hidden="true">i</span>
             <span class="abilityDataCard" role="tooltip">
                 ${image ? `<img src="${image}" alt="${family.name}">` : ""}
@@ -317,6 +317,10 @@ function abilityButton(family,sprite){
             </span>
         </button>
     `;
+}
+
+function spriteVariantName(sprite){
+    return `<span class="spriteVariantName">${sprite.variant}</span>`;
 }
 
 function spriteRarity(rarity){

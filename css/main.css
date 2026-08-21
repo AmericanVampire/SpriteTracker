@@ -550,7 +550,7 @@ body.exportingImage .trackerGrid{
     border-radius:var(--radius);
     background:linear-gradient(180deg, rgba(30,115,219,.34), rgba(11,59,150,.42));
     color:var(--text);
-    text-align:left;
+    text-align:center;
     box-shadow:
         0 5px 0 rgba(0,30,96,.24),
         inset 0 1px rgba(255,255,255,.18),
@@ -564,13 +564,13 @@ body.exportingImage .trackerGrid{
     display:flex;
     flex-direction:column;
     justify-content:center;
-    align-items:flex-start;
+    align-items:center;
     gap:6px;
     padding:42px 14px 40px;
     border-radius:var(--radius);
     background:transparent;
     color:inherit;
-    text-align:left;
+    text-align:center;
     cursor:pointer;
 }
 .familyCell:hover{
@@ -597,7 +597,8 @@ body.exportingImage .trackerGrid{
 .familyName{
     font-size:21px;
     font-weight:950;
-    padding-right:34px;
+    padding:0 30px;
+    text-align:center;
 }
 .familyStatus{
     position:absolute;
@@ -656,6 +657,7 @@ body.exportingImage .trackerGrid{
         inset 0 1px rgba(255,255,255,.34);
 }
 .abilityButton:hover,
+.abilityButton:focus,
 .abilityButton:focus-visible{
     filter:brightness(1.16);
 }
@@ -698,6 +700,7 @@ body.exportingImage .trackerGrid{
         inset 0 1px rgba(255,255,255,.32);
 }
 .abilityButton:hover .abilityDataCard,
+.abilityButton:focus .abilityDataCard,
 .abilityButton:focus-visible .abilityDataCard{
     opacity:1;
     transform:translateY(0) scale(1);
@@ -783,6 +786,9 @@ body.exportingImage .trackerGrid{
 .spriteCard[data-available="true"]:active img{
     animation:none;
     transform:scale(.98) translateY(2px);
+}
+.spriteVariantName{
+    display:none;
 }
 .spriteRarity{
     position:relative;
@@ -1039,20 +1045,155 @@ dialog::backdrop{
     .profileStatus{
         flex:1;
     }
-    .statsHeader{
-        flex-direction:column;
-        align-items:stretch;
+    .trackerSticky{
+        top:0;
     }
 }
 @media (max-width:620px){
     .siteShell{
-        padding:14px;
+        padding:10px;
+    }
+    .topBar{
+        gap:10px;
+        min-height:0;
+        padding:8px;
+    }
+    .brandMark{
+        min-width:0;
+        justify-content:center;
+    }
+    .brandMark img{
+        width:min(100%, 520px);
+        max-height:66px;
+        object-position:center;
+    }
+    .topProfile{
+        flex-direction:row;
+        gap:8px;
+    }
+    .profileStatus{
+        min-width:0;
+        padding:7px 9px;
+    }
+    .profileStatus strong{
+        max-width:42vw;
+    }
+    .profileMenu summary{
+        min-width:96px;
+        min-height:44px;
+        padding:10px 14px;
+    }
+    .trackerDeck{
+        padding:10px;
+    }
+    .trackerSticky{
+        margin:-10px -10px 0;
+        padding:10px;
+    }
+    .trackerSticky::before{
+        top:-10px;
+        height:10px;
+    }
+    .trackerSticky::after{
+        bottom:-12px;
+        height:12px;
     }
     .statsGrid{
         grid-template-columns:1fr;
+        row-gap:0;
     }
-    .topProfile{
-        flex-direction:column;
+    .statBox{
+        min-height:34px;
+        padding:5px 0;
+    }
+    .statBox span{
+        font-size:13px;
+    }
+    .statBox strong{
+        font-size:18px;
+    }
+    .gridHeader{
+        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+        gap:8px;
+        padding-top:10px;
+    }
+    .seasonPickerCell{
+        grid-column:1 / -1;
+        min-height:50px;
+        padding:5px;
+    }
+    .seasonMenu,
+    .seasonMenu summary{
+        width:100%;
+    }
+    .seasonMenu summary{
+        min-width:0;
+    }
+    .variantToggle{
+        min-height:48px;
+    }
+    .variantToggle span{
+        font-size:13px;
+    }
+    .spriteRow{
+        grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+        gap:8px;
+        padding:8px 0;
+    }
+    .familyCell{
+        grid-column:1 / -1;
+        min-height:86px;
+    }
+    .familyMain{
+        padding:28px 42px;
+    }
+    .familyName{
+        font-size:22px;
+    }
+    .abilityDataCard{
+        width:min(280px, calc(100vw - 40px));
+        grid-template-columns:66px 1fr;
+    }
+    .abilityDataCard img{
+        width:62px;
+        height:76px;
+    }
+    .abilityDataText strong{
+        font-size:17px;
+    }
+    .abilityDataText span{
+        font-size:11.5px;
+    }
+    .spriteCard{
+        min-height:134px;
+        padding:24px 6px 6px;
+    }
+    .spriteCard img{
+        height:86px;
+        max-height:86px;
+    }
+    .spriteVariantName{
+        position:absolute;
+        left:6px;
+        top:6px;
+        z-index:1;
+        max-width:calc(100% - 38px);
+        display:block;
+        overflow:hidden;
+        color:#dff9ff;
+        font-size:9px;
+        font-weight:950;
+        line-height:1;
+        text-overflow:ellipsis;
+        text-transform:uppercase;
+        white-space:nowrap;
+        text-shadow:0 1px 0 rgba(0,0,0,.45);
+    }
+    .spriteRarity{
+        min-width:0;
+        width:100%;
+        font-size:9px;
+        padding:3px 4px;
     }
     .profileMenu,
     .profileMenuPanel{
