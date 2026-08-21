@@ -215,15 +215,20 @@ function renderTracker(){
         row.className = "spriteRow";
         const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
         const familyComplete = isFamilyComplete(family);
+        const abilitySprite = season.sprites.find(sprite=>
+            sprite.family === family.name && sprite.available
+        );
         row.innerHTML = `
-            <button class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
-                <span class="familyName">${family.name}</span>
-                <span class="familyAbility">${family.ability || ""}</span>
-                <span class="familyMastered">MASTERED</span>
-                <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
-            </button>
+            <div class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
+                <button class="familyMain" type="button">
+                    <span class="familyName">${family.name}</span>
+                    <span class="familyMastered">MASTERED</span>
+                    <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
+                </button>
+                ${abilityButton(family,abilitySprite)}
+            </div>
         `;
-        const familyButton = row.querySelector(".familyCell");
+        const familyButton = row.querySelector(".familyMain");
         familyButton.addEventListener("click",async()=>{
             if(!profileLoaded()){
                 return;
@@ -291,6 +296,27 @@ function createSpriteCard(sprite,family){
         render();
     });
     return button;
+}
+
+function abilityButton(family,sprite){
+    if(!family.ability){
+        return "";
+    }
+    const image = sprite?.image || "";
+    const rarity = sprite?.rarity || family.rarity || "";
+    return `
+        <button class="abilityButton" type="button" aria-label="${family.name} ability">
+            <span class="abilityIcon" aria-hidden="true">i</span>
+            <span class="abilityDataCard" role="tooltip">
+                ${image ? `<img src="${image}" alt="${family.name}">` : ""}
+                <span class="abilityDataText">
+                    <strong>${family.name}</strong>
+                    ${rarity ? `<em>${rarity}</em>` : ""}
+                    <span>${family.ability}</span>
+                </span>
+            </span>
+        </button>
+    `;
 }
 
 function spriteRarity(rarity){

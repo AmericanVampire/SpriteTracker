@@ -547,22 +547,31 @@ body.exportingImage .trackerGrid{
 .familyCell{
     position:relative;
     min-height:167px;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    align-items:flex-start;
-    gap:6px;
-    padding:42px 14px 40px;
     border-radius:var(--radius);
     background:linear-gradient(180deg, rgba(30,115,219,.34), rgba(11,59,150,.42));
     color:var(--text);
     text-align:left;
-    cursor:pointer;
     box-shadow:
         0 5px 0 rgba(0,30,96,.24),
         inset 0 1px rgba(255,255,255,.18),
         inset 0 0 0 1px rgba(161,234,255,.14);
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.familyMain{
+    position:absolute;
+    inset:0;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    gap:6px;
+    padding:42px 14px 40px;
+    border-radius:var(--radius);
+    background:transparent;
+    color:inherit;
+    text-align:left;
+    cursor:pointer;
 }
 .familyCell:hover{
     filter:brightness(1.1);
@@ -589,18 +598,6 @@ body.exportingImage .trackerGrid{
     font-size:21px;
     font-weight:950;
     padding-right:34px;
-}
-.familyAbility{
-    max-width:100%;
-    color:#08285f;
-    font-size:10.5px;
-    line-height:1.22;
-    font-weight:750;
-    opacity:1;
-    display:-webkit-box;
-    -webkit-line-clamp:5;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
 }
 .familyStatus{
     position:absolute;
@@ -639,6 +636,104 @@ body.exportingImage .trackerGrid{
 }
 .familyCell[data-complete="true"] .familyMastered{
     display:inline-flex;
+}
+.abilityButton{
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    z-index:4;
+    width:28px;
+    height:24px;
+    display:grid;
+    place-items:center;
+    border-radius:6px;
+    background:linear-gradient(180deg, #2dd7ff, #086ed9);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:
+        0 3px 0 rgba(0,44,130,.48),
+        0 8px 16px rgba(0,91,214,.28),
+        inset 0 1px rgba(255,255,255,.34);
+}
+.abilityButton:hover,
+.abilityButton:focus-visible{
+    filter:brightness(1.16);
+}
+.abilityIcon{
+    width:16px;
+    height:16px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:#fff;
+    color:#0756c4;
+    font-size:12px;
+    font-weight:950;
+    line-height:1;
+    font-style:italic;
+}
+.abilityDataCard{
+    position:absolute;
+    left:0;
+    bottom:calc(100% + 10px);
+    width:260px;
+    min-height:112px;
+    display:grid;
+    grid-template-columns:74px 1fr;
+    gap:10px;
+    align-items:center;
+    padding:10px;
+    border:1px solid rgba(155,234,255,.5);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, #0f8def, #0750bf);
+    color:#061438;
+    text-align:left;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(6px) scale(.98);
+    transform-origin:left bottom;
+    transition:opacity .14s ease, transform .14s ease;
+    box-shadow:
+        0 18px 34px rgba(0,31,94,.42),
+        inset 0 1px rgba(255,255,255,.32);
+}
+.abilityButton:hover .abilityDataCard,
+.abilityButton:focus-visible .abilityDataCard{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+.abilityDataCard img{
+    width:70px;
+    height:88px;
+    object-fit:contain;
+    filter:drop-shadow(0 8px 10px rgba(0,0,0,.28));
+}
+.abilityDataText{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+}
+.abilityDataText strong{
+    color:#fff;
+    font-size:18px;
+    line-height:1;
+    font-weight:950;
+    text-shadow:0 2px 0 rgba(0,45,132,.38);
+}
+.abilityDataText em{
+    color:#07235d;
+    font-size:11px;
+    font-style:normal;
+    font-weight:950;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+.abilityDataText span{
+    color:#061438;
+    font-size:12px;
+    line-height:1.2;
+    font-weight:850;
 }
 .spriteCard{
     position:relative;
