@@ -571,28 +571,6 @@ body.exportingImage .trackerGrid{
     font-size:21px;
     font-weight:950;
 }
-.familyMeta{
-    color:var(--muted);
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-}
-.familyMeta.rare{
-    color:var(--rare);
-}
-.familyMeta.epic{
-    color:var(--epic);
-}
-.familyMeta.legendary{
-    color:var(--legendary);
-}
-.familyMeta.mythic{
-    color:var(--mythic);
-}
-.familyMeta.special{
-    color:var(--special);
-}
 .familyStatus{
     position:absolute;
     right:10px;
@@ -666,11 +644,41 @@ body.exportingImage .trackerGrid{
     object-fit:contain;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
-.spriteCard span:last-child{
-    color:var(--muted);
-    font-size:11px;
-    font-weight:900;
+.spriteRarity{
+    position:absolute;
+    left:8px;
+    bottom:8px;
+    min-width:70px;
+    min-height:21px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:3px 7px;
+    border-radius:6px;
+    color:#fff;
+    font-size:10px;
+    font-weight:950;
+    letter-spacing:.05em;
     text-transform:uppercase;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+.spriteRarity.rare{
+    background:linear-gradient(15deg, #5AB8FF 0%, #3D9CFF 45%, #256DFF 100%);
+}
+.spriteRarity.epic{
+    background:linear-gradient(15deg, #C57CFF 0%, #A04DFF 45%, #6E28FF 100%);
+}
+.spriteRarity.legendary{
+    background:linear-gradient(15deg, #FFD36A 0%, #FFB129 45%, #F28400 100%);
+    color:#1b1b1b;
+}
+.spriteRarity.mythic{
+    background:linear-gradient(15deg, #FFF0A8 0%, #FFD95E 45%, #D8A300 100%);
+    color:#1b1b1b;
+}
+.spriteRarity.special{
+    background:linear-gradient(15deg, #5dffe4 0%, #8dff9a 20%, #fff36a 40%, #ffc45f 60%, #ff7af1 80%, #8e7cff 100%);
+    color:#101932;
 }
 .spriteCard[data-state="disabled"]::after{
     content:"DISABLED";

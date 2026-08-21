@@ -53,7 +53,7 @@ function seasonPickerLabel(season){
 }
 
 function rarityClass(rarity){
-    return slug(rarity || "unknown");
+    return slug(rarity || "n-a");
 }
 
 function spriteState(sprite){
@@ -223,7 +223,6 @@ function renderTracker(){
         row.innerHTML = `
             <button class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <span class="familyName">${family.name}</span>
-                <span class="familyMeta ${rarityClass(family.rarity)}">${family.rarity}</span>
                 <span class="familyMastered">MASTERED</span>
                 <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 <img class="setStar" src="assets/set-complete-star.webp" alt="Completed set">
@@ -259,8 +258,8 @@ function createSpriteCard(sprite,family){
         button.dataset.available = "false";
         button.title = "Not available in this generation.";
         button.innerHTML = sprite.image
-            ? `<img src="${sprite.image}" alt="${sprite.family} unavailable ${sprite.variant}"><span>${sprite.variant}</span>`
-            : `<span class="pixelIcon" style="--accent:${family.accent || "#00e7ff"}"></span><span>${sprite.variant}</span>`;
+            ? `<img src="${sprite.image}" alt="${sprite.family} unavailable ${sprite.variant}">`
+            : `<span class="pixelIcon" style="--accent:${family.accent || "#00e7ff"}"></span>`;
         button.disabled = true;
         return button;
     }
@@ -274,8 +273,8 @@ function createSpriteCard(sprite,family){
         ? "Left-click to cycle progress. Right-click to disable this sprite."
         : "Not available in this generation.";
     button.innerHTML = sprite.image
-        ? `${spriteBadges()}<img src="${sprite.image}" alt="${sprite.family} ${sprite.variant}"><span>${sprite.variant}</span>`
-        : `${spriteBadges()}<span class="pixelIcon" style="--accent:${sprite.accent || family.accent || "#00e7ff"}"></span><span>${sprite.variant}</span>`;
+        ? `${spriteBadges()}<img src="${sprite.image}" alt="${sprite.family} ${sprite.variant}">${spriteRarity(sprite.rarity)}`
+        : `${spriteBadges()}<span class="pixelIcon" style="--accent:${sprite.accent || family.accent || "#00e7ff"}"></span>${spriteRarity(sprite.rarity)}`;
     if(!sprite.available){
         button.disabled = true;
     }
@@ -298,6 +297,13 @@ function createSpriteCard(sprite,family){
         render();
     });
     return button;
+}
+
+function spriteRarity(rarity){
+    if(!rarity || rarity === "N/A"){
+        return "";
+    }
+    return `<span class="spriteRarity ${rarityClass(rarity)}">${rarity}</span>`;
 }
 
 function spriteBadges(){
