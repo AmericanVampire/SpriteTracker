@@ -897,12 +897,8 @@ body.exportingImage .trackerGrid{
     position:relative;
     overflow:hidden;
     border-radius:var(--radius);
-    background:linear-gradient(180deg, rgba(31,111,216,.28), rgba(9,49,139,.34));
-    box-shadow:
-        0 5px 0 rgba(0,30,96,.24),
-        0 10px 18px rgba(0,42,132,.18),
-        inset 0 1px rgba(255,255,255,.18),
-        inset 0 0 0 1px rgba(161,234,255,.14);
+    border:1px solid rgba(145,229,255,.34);
+    background:#0b55bf;
 }
 .mobileExportFamily{
     grid-column:1 / -1;
@@ -966,16 +962,13 @@ body.exportingImage .trackerGrid{
     color:var(--yellow);
 }
 .mobileExportFamily[data-complete="true"]{
-    box-shadow:
-        0 5px 0 rgba(0,0,0,.22),
-        inset 0 0 0 2px var(--yellow),
-        inset 0 1px rgba(255,255,255,.12);
+    border-color:var(--yellow);
 }
 .mobileExportFamily[data-complete="true"] .mobileExportMastered{
     display:inline-flex;
 }
 .mobileExportFamily[data-disabled="true"]{
-    background:rgba(125,130,150,.12);
+    background:#31537f;
 }
 .mobileExportFamily[data-disabled="true"] .mobileExportStatus{
     background:rgba(255,77,109,.14);
@@ -998,16 +991,10 @@ body.exportingImage .trackerGrid{
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
 .mobileExportSprite[data-state="found"]{
-    box-shadow:
-        0 5px 0 rgba(0,0,0,.22),
-        0 10px 18px rgba(0,0,0,.2),
-        inset 0 0 0 2px var(--green);
+    border-color:var(--green);
 }
 .mobileExportSprite[data-state="mastered"]{
-    box-shadow:
-        0 5px 0 rgba(0,0,0,.22),
-        0 10px 18px rgba(0,0,0,.2),
-        inset 0 0 0 2px var(--yellow);
+    border-color:var(--yellow);
 }
 .mobileExportSprite[data-state="found"] .spriteBadge,
 .mobileExportSprite[data-state="mastered"] .masteredBadge{
@@ -1018,7 +1005,7 @@ body.exportingImage .trackerGrid{
     filter:drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
 .mobileExportSprite[data-state="disabled"]{
-    background:rgba(255,77,109,.12);
+    background:#42376d;
     filter:grayscale(.65) brightness(.72);
 }
 .mobileExportSprite[data-state="disabled"]::after{
@@ -1038,7 +1025,7 @@ body.exportingImage .trackerGrid{
     letter-spacing:.12em;
 }
 .mobileExportSprite[data-state="unavailable"]{
-    background:rgba(255,255,255,.018);
+    background:#0a48a6;
     justify-content:center;
 }
 .mobileExportSprite[data-state="unavailable"] img{
