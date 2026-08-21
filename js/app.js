@@ -348,7 +348,7 @@ function showAbilityPreview(familySlug){
         ${details.image ? `<img src="${escapeHtml(details.image)}" alt="${escapeHtml(details.name)}">` : ""}
         <span class="abilityDataText">
             <strong>${escapeHtml(details.name)}</strong>
-            ${details.rarity ? `<em>${escapeHtml(details.rarity)}</em>` : ""}
+            ${details.rarity ? `<em class="abilityRarity ${rarityClass(details.rarity)}">${escapeHtml(details.rarity)}</em>` : ""}
             <span>${escapeHtml(details.ability)}</span>
         </span>
     `;

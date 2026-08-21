@@ -787,12 +787,37 @@ body.exportingImage .trackerGrid{
     text-shadow:0 2px 0 rgba(0,45,132,.38);
 }
 .abilityDataText em{
-    color:#07235d;
+    width:max-content;
+    min-width:82px;
+    display:inline-flex;
+    justify-content:center;
+    padding:4px 9px;
+    border-radius:6px;
+    color:#fff;
     font-size:14px;
     font-style:normal;
     font-weight:950;
     letter-spacing:.08em;
     text-transform:uppercase;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+.abilityRarity.rare{
+    background:linear-gradient(15deg, #5AB8FF 0%, #3D9CFF 45%, #256DFF 100%);
+}
+.abilityRarity.epic{
+    background:linear-gradient(15deg, #C57CFF 0%, #A04DFF 45%, #6E28FF 100%);
+}
+.abilityRarity.legendary{
+    background:linear-gradient(15deg, #FFD36A 0%, #FFB129 45%, #F28400 100%);
+    color:#1b1b1b;
+}
+.abilityRarity.mythic{
+    background:linear-gradient(15deg, #FFF0A8 0%, #FFD95E 45%, #D8A300 100%);
+    color:#1b1b1b;
+}
+.abilityRarity.special{
+    background:linear-gradient(15deg, #5dffe4 0%, #8dff9a 20%, #fff36a 40%, #ffc45f 60%, #ff7af1 80%, #8e7cff 100%);
+    color:#101932;
 }
 .abilityDataText span{
     color:#061438;
