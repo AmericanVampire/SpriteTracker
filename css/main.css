@@ -371,18 +371,18 @@ body.exportingImage .trackerGrid{
 .gridHeader,
 .spriteRow{
     display:grid;
-    grid-template-columns:minmax(168px, 210px) repeat(var(--variant-count, 8), minmax(118px, 1fr));
+    grid-template-columns:minmax(190px, 240px) repeat(var(--variant-count, 8), minmax(118px, 1fr));
     gap:8px;
     min-width:0;
     align-items:stretch;
 }
 .trackerDeck[data-variant-count="3"] .gridHeader,
 .trackerDeck[data-variant-count="3"] .spriteRow{
-    grid-template-columns:minmax(168px, 210px) repeat(3, minmax(112px, calc((100% - 210px - 64px) / 8)));
+    grid-template-columns:minmax(190px, 240px) repeat(3, minmax(112px, calc((100% - 240px - 64px) / 8)));
 }
 .trackerDeck[data-variant-count="8"] .gridHeader,
 .trackerDeck[data-variant-count="8"] .spriteRow{
-    grid-template-columns:minmax(168px, 210px) repeat(8, minmax(112px, 1fr));
+    grid-template-columns:minmax(190px, 240px) repeat(8, minmax(112px, 1fr));
 }
 .gridHeader{
     padding-top:14px;
