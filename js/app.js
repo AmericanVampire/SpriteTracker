@@ -10,7 +10,6 @@ const els = {
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
-    profileProgressBadge:document.getElementById("profileProgressBadge"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
@@ -149,9 +148,6 @@ function renderStats(){
 
 function renderProfile(){
     els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
-    els.profileProgressBadge.textContent = state.profile
-        ? `Profile: ${state.profile.profileName}`
-        : "Profile: No profile loaded";
     els.storageNote.textContent = state.profile
         ? "Autosaved locally in this browser"
         : "Create or open a local profile";
