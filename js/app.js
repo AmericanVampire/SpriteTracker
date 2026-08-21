@@ -494,44 +494,101 @@ function exportCsv(){
 function buildTextExport(){
     const season = activeSeason();
     const stats = calculateStats();
-    const progress = seasonProgress(state.profile,state.seasonId);
+    const rows = buildCollectionMatrix();
+    const columnWidths = [
+        Math.max(
+            "Sprite".length,
+            ...rows.map(row=>row[0].length)
+        ),
+        ...season.variants.map((variant,index)=>
+            Math.max(
+                variant.label.length,
+                ...rows.map(row=>row[index + 1].length)
+            )
+        )
+    ];
+    const formatRow = row=>
+        row
+            .map((cell,index)=>
+                cell.padEnd(columnWidths[index]," ")
+            )
+            .join("  ")
+            .trimEnd();
     const lines = [
         "Sprite Tracker",
-        `Profile: ${state.profile.profileName}`,
-        `Season: ${season.title} (${season.chapter} ${season.season})`,
+        `Profile - ${state.profile.profileName}`,
         "",
         `Found: ${stats.found} / ${stats.totalSprites}`,
         `Mastered: ${stats.mastered} / ${stats.totalSprites}`,
         `Completed Sets: ${stats.completedSets} / ${stats.totalSets}`,
-        `Overall Progress: ${stats.percent}%`,
+        `Overall Progress: ${stats.percent.toFixed(1)}%`,
         "",
         "Collection"
     ];
-    season.families.forEach(family=>{
-        const familyDisabled =
-            progress.disabledFamilies[slug(family.name)] === true;
+    if(rows.length === 0){
         lines.push("");
-        lines.push(`${family.name} - ${family.rarity} - ${familyDisabled ? "DISABLED" : "ENABLED"}`);
-        season.variants.forEach(variant=>{
-            const sprite = season.sprites.find(item=>
-                item.family === family.name &&
-                item.variantId === variant.id
-            );
-            if(!sprite || !sprite.available){
-                lines.push(`  ${variant.label}: N/A`);
-                return;
-            }
-            const status = isDisabled(sprite)
-                ? "Disabled"
-                : progress.sprites[sprite.id] === "mastered"
-                    ? "Mastered"
-                    : progress.sprites[sprite.id] === "found"
-                        ? "Found"
-                        : "Not Found";
-            lines.push(`  ${variant.label}: ${status}`);
-        });
+        lines.push("No active sprites are enabled for this profile.");
+        return lines.join("\r\n");
+    }
+    lines.push("");
+    lines.push(
+        formatRow([
+            "Sprite",
+            ...season.variants.map(variant=>variant.label)
+        ])
+    );
+    lines.push(
+        columnWidths
+            .map(width=>"-".repeat(width))
+            .join("  ")
+    );
+    rows.forEach(row=>{
+        lines.push(formatRow(row));
     });
     return lines.join("\r\n");
+}
+
+function buildCollectionMatrix(){
+    const season = activeSeason();
+    const progress = seasonProgress(state.profile,state.seasonId);
+    const rowMap = new Map(
+        season.sprites
+            .filter(sprite=>
+                sprite.available &&
+                progress.disabledSprites[sprite.id] !== true &&
+                progress.disabledFamilies[slug(sprite.family)] !== true &&
+                progress.disabledVariants[sprite.variantId] !== true
+            )
+            .map(sprite=>[
+                `${sprite.family}-${sprite.variant}`,
+                sprite
+            ])
+    );
+    const stateLabel = sprite=>{
+        if(!sprite){
+            return "";
+        }
+        const current = progress.sprites[sprite.id];
+        return current === "mastered"
+            ? "Mastered"
+            : current === "found"
+                ? "Found"
+                : "Not Found";
+    };
+    return season.families
+        .filter(family=>
+            season.variants.some(variant=>
+                rowMap.has(`${family.name}-${variant.label}`)
+            )
+        )
+        .map(family=>[
+            family.name,
+            ...season.variants.map(variant=>
+                stateLabel(
+                    rowMap.get(`${family.name}-${variant.label}`)
+                )
+            )
+        ]);
 }
 
 function exportText(){
