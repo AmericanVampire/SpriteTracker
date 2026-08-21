@@ -903,7 +903,7 @@ function buildImageExportSheet(){
     sticky.appendChild(document.querySelector(".statsDeck").cloneNode(true));
     sticky.appendChild(els.gridHeader.cloneNode(true));
     deck.appendChild(sticky);
-    deck.appendChild(els.trackerGrid.cloneNode(true));
+    deck.appendChild(mobile ? buildMobileImageExportGrid(season) : els.trackerGrid.cloneNode(true));
     sheet.appendChild(deck);
     const footer = document.createElement("footer");
     footer.className = "siteFooter";
@@ -911,6 +911,58 @@ function buildImageExportSheet(){
     sheet.appendChild(footer);
     document.body.appendChild(sheet);
     return sheet;
+}
+
+function buildMobileImageExportGrid(season){
+    const progress = seasonProgress(state.profile,state.seasonId);
+    const grid = document.createElement("div");
+    grid.className = "mobileExportGrid";
+    season.families.forEach(family=>{
+        const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
+        const familyComplete = isFamilyComplete(family);
+        const row = document.createElement("div");
+        row.className = "mobileExportRow";
+        row.innerHTML = `
+            <div class="mobileExportFamily" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
+                <span class="mobileExportAbility">i</span>
+                <span class="mobileExportName">${escapeHtml(family.name)}</span>
+                <span class="mobileExportMastered">SET MASTERED</span>
+                <span class="mobileExportStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
+            </div>
+        `;
+        season.variants.forEach(variant=>{
+            const sprite = season.sprites.find(item=>
+                item.family === family.name && item.variantId === variant.id
+            );
+            row.appendChild(buildMobileImageExportSprite(sprite,family));
+        });
+        grid.appendChild(row);
+    });
+    return grid;
+}
+
+function buildMobileImageExportSprite(sprite,family){
+    const card = document.createElement("div");
+    if(!sprite){
+        card.className = "mobileExportSprite";
+        card.dataset.state = "unavailable";
+        return card;
+    }
+    const disabled = sprite.available ? isDisabled(sprite) : false;
+    const current = sprite.available ? spriteState(sprite) : "unavailable";
+    card.className = "mobileExportSprite";
+    card.dataset.state = disabled ? "disabled" : current;
+    card.dataset.available = String(sprite.available);
+    card.dataset.variantType = variantType({id:sprite.variantId,label:sprite.variant});
+    card.innerHTML = `
+        ${spriteBadges()}
+        <span class="mobileExportVariant">${escapeHtml(sprite.variant)}</span>
+        ${sprite.image
+            ? `<img src="${escapeHtml(sprite.image)}" alt="${escapeHtml(sprite.family)} ${escapeHtml(sprite.variant)}">`
+            : `<span class="pixelIcon" style="--accent:${escapeHtml(sprite.accent || family.accent || "#00e7ff")}"></span>`}
+        ${sprite.available ? spriteRarity(sprite.rarity) : ""}
+    `;
+    return card;
 }
 
 async function exportImage(){
