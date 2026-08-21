@@ -163,10 +163,12 @@ h2{
     font-size:11px;
     font-weight:800;
 }
-.profileMenu{
+.profileMenu,
+.seasonMenu{
     position:relative;
 }
-.profileMenu summary{
+.profileMenu summary,
+.seasonMenu summary{
     min-height:48px;
     display:flex;
     align-items:center;
@@ -185,10 +187,12 @@ h2{
         inset 0 1px rgba(255,255,255,.22),
         inset 0 0 0 1px rgba(255,255,255,.14);
 }
-.profileMenu summary::-webkit-details-marker{
+.profileMenu summary::-webkit-details-marker,
+.seasonMenu summary::-webkit-details-marker{
     display:none;
 }
-.profileMenu summary::after{
+.profileMenu summary::after,
+.seasonMenu summary::after{
     content:"";
     width:10px;
     height:10px;
@@ -197,10 +201,12 @@ h2{
     transform:rotate(45deg) translateY(-2px);
     transition:transform .16s ease;
 }
-.profileMenu[open] summary::after{
+.profileMenu[open] summary::after,
+.seasonMenu[open] summary::after{
     transform:rotate(225deg) translate(-1px,-1px);
 }
-.profileMenuPanel{
+.profileMenuPanel,
+.seasonMenuPanel{
     position:absolute;
     top:calc(100% + 8px);
     right:0;
@@ -216,6 +222,12 @@ h2{
     background:#14193d;
     box-shadow:0 20px 50px rgba(0,0,0,.44);
 }
+.seasonMenuPanel{
+    left:0;
+    right:auto;
+    width:100%;
+    min-width:0;
+}
 .menuGroupLabel{
     padding:2px 4px 0;
     color:var(--cyan);
@@ -230,6 +242,7 @@ h2{
     background:linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
 }
 .profileMenuPanel button,
+.seasonMenuPanel button,
 .dialogActions button,
 .profileList button{
     min-height:44px;
@@ -245,13 +258,16 @@ h2{
         inset 0 0 0 1px rgba(255,255,255,.12);
 }
 .profileMenuPanel button:hover,
+.seasonMenuPanel button:hover,
 .dialogActions button:hover,
 .profileList button:hover{
     transform:translateY(-1px);
     filter:brightness(1.13);
 }
 .profileMenu summary:active,
+.seasonMenu summary:active,
 .profileMenuPanel button:active,
+.seasonMenuPanel button:active,
 .dialogActions button:active,
 .profileList button:active{
     transform:translateY(2px);
@@ -448,20 +464,19 @@ body.exportingImage .trackerGrid{
     letter-spacing:.16em;
     text-transform:uppercase;
 }
-.seasonPickerCell select{
-    width:100%;
+.seasonMenu summary{
+    min-width:0;
     min-height:30px;
-    border:1px solid rgba(255,255,255,.14);
-    border-radius:6px;
-    padding:5px 8px;
-    background:#151a44;
-    color:var(--text);
+    padding:6px 10px;
     font-size:12px;
-    font-weight:900;
-    cursor:pointer;
-    box-shadow:
-        0 3px 0 rgba(0,0,0,.24),
-        inset 0 1px rgba(255,255,255,.14);
+}
+.seasonMenuPanel button{
+    min-height:34px;
+    padding:8px 10px;
+    text-align:left;
+}
+.seasonMenuPanel button[data-active="true"]{
+    background:linear-gradient(90deg, var(--pink), #673dff 50%, var(--cyan));
 }
 .variantToggle small{
     font-size:9px;

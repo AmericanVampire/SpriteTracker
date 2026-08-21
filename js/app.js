@@ -172,13 +172,16 @@ function renderTracker(){
     els.gridHeader.innerHTML = `
         <div class="seasonPickerCell">
             <span>${season.chapter}</span>
-            <select id="seasonSelect" aria-label="Season picker">
-                ${SEASONS.map(item=>`
-                    <option value="${item.id}" ${item.id === state.seasonId ? "selected" : ""}>
-                        ${seasonPickerLabel(item)}
-                    </option>
-                `).join("")}
-            </select>
+            <details class="seasonMenu">
+                <summary>${seasonPickerLabel(season)}</summary>
+                <div class="seasonMenuPanel">
+                    ${SEASONS.map(item=>`
+                        <button type="button" data-season="${item.id}" data-active="${item.id === state.seasonId}">
+                            ${seasonPickerLabel(item)}
+                        </button>
+                    `).join("")}
+                </div>
+            </details>
         </div>
         ${season.variants.map(variant=>
         `<button class="variantToggle" data-variant="${variant.id}" data-variant-type="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
@@ -186,13 +189,15 @@ function renderTracker(){
             <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
     ).join("")}`;
-    document.getElementById("seasonSelect").addEventListener("change",async(event)=>{
-        state.seasonId = event.target.value;
-        if(state.profile){
-            state.profile.activeSeasonId = state.seasonId;
-            await persist();
-        }
-        render();
+    els.gridHeader.querySelectorAll("[data-season]").forEach(button=>{
+        button.addEventListener("click",async()=>{
+            state.seasonId = button.dataset.season;
+            if(state.profile){
+                state.profile.activeSeasonId = state.seasonId;
+                await persist();
+            }
+            render();
+        });
     });
     els.gridHeader.querySelectorAll(".variantToggle").forEach(button=>{
         button.addEventListener("click",async()=>{
