@@ -644,6 +644,7 @@ body.exportingImage .appGrid{
 body.exportingImage .siteShell{
     padding:18px;
     background:#063da5;
+    visibility:hidden;
 }
 body.exportingImage .siteShell::before{
     display:none;
@@ -696,6 +697,7 @@ body.exportingImage .trackerGrid{
     background:#063da5;
     color:var(--text);
     pointer-events:none;
+    visibility:visible;
 }
 .imageExportSheet .exportBrand{
     display:flex;
@@ -759,6 +761,7 @@ body.exportingImage .trackerGrid{
     grid-template-columns:minmax(190px, 240px) repeat(3, minmax(138px, 1fr));
 }
 .imageExportSheetMobile{
+    position:absolute;
     width:430px;
     padding:12px;
 }
