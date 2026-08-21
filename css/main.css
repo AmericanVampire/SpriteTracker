@@ -592,12 +592,12 @@ body.exportingImage .trackerGrid{
 }
 .familyAbility{
     max-width:100%;
-    color:#08285f;
+    color:#020d2e;
     font-size:10.5px;
     line-height:1.22;
-    font-weight:650;
-    text-shadow:0 1px 0 rgba(255,255,255,.28);
-    opacity:.96;
+    font-weight:750;
+    text-shadow:0 1px 0 rgba(255,255,255,.38);
+    opacity:1;
     display:-webkit-box;
     -webkit-line-clamp:5;
     -webkit-box-orient:vertical;
