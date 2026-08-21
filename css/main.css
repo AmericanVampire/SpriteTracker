@@ -297,8 +297,8 @@ h2{
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
 }
 .discordButton img{
-    width:24px;
-    height:24px;
+    width:30px;
+    height:30px;
     display:block;
     object-fit:contain;
     filter:drop-shadow(0 3px 4px rgba(0,35,100,.3));
@@ -839,12 +839,9 @@ body.exportingImage .trackerGrid{
     font-weight:950;
     padding:0 30px;
     text-align:center;
-    text-shadow:
-        -1px -1px 0 #00123f,
-        1px -1px 0 #00123f,
-        -1px 1px 0 #00123f,
-        1px 1px 0 #00123f,
-        0 3px 6px rgba(0,22,74,.58);
+    -webkit-text-stroke:1px #00123f;
+    paint-order:stroke fill;
+    text-shadow:none;
 }
 .familyStatus{
     position:absolute;
@@ -1412,6 +1409,10 @@ dialog::backdrop{
         justify-content:center;
         padding:6px;
     }
+    .discordButton img{
+        width:30px;
+        height:30px;
+    }
     .discordButton > span:last-child{
         display:none;
     }
@@ -1587,40 +1588,37 @@ dialog::backdrop{
         text-overflow:ellipsis;
         text-transform:uppercase;
         white-space:nowrap;
-        text-shadow:
-            -1px -1px 0 #00123f,
-            1px -1px 0 #00123f,
-            -1px 1px 0 #00123f,
-            1px 1px 0 #00123f,
-            0 2px 5px rgba(0,18,63,.8);
+        -webkit-text-stroke:.55px #00123f;
+        paint-order:stroke fill;
+        text-shadow:none;
     }
     .spriteCard[data-variant-type="normal"] .spriteVariantName,
     .spriteCard[data-variant-type="base"] .spriteVariantName{
-        color:#d9e1f0;
+        color:#eef4ff;
     }
     .spriteCard[data-variant-type="gold"] .spriteVariantName{
-        color:#ffd75a;
+        color:#ffdc3f;
     }
     .spriteCard[data-variant-type="gummy"] .spriteVariantName{
-        color:#ff9ce7;
+        color:#ff77df;
     }
     .spriteCard[data-variant-type="galaxy"] .spriteVariantName{
-        color:#9b86ff;
+        color:#8d72ff;
     }
     .spriteCard[data-variant-type="holofoil"] .spriteVariantName{
-        color:#bdfcff;
+        color:#9ff9ff;
     }
     .spriteCard[data-variant-type="cube"] .spriteVariantName{
-        color:#c58cff;
+        color:#bd74ff;
     }
     .spriteCard[data-variant-type="gem"] .spriteVariantName{
-        color:#e5f7ff;
+        color:#d7f0ff;
     }
     .spriteCard[data-variant-type="quack"] .spriteVariantName{
-        color:#fff06d;
+        color:#fff04a;
     }
     .spriteCard[data-variant-type="cheatmaster"] .spriteVariantName{
-        color:#88ff9c;
+        color:#72ff8c;
     }
     .spriteRarity{
         min-width:0;
