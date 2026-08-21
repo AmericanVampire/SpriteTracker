@@ -387,7 +387,7 @@ body.exportingImage .trackerGrid{
     grid-template-columns:minmax(168px, 210px) repeat(var(--variant-count, 8), minmax(118px, 1fr));
     gap:10px;
     min-width:0;
-    align-items:center;
+    align-items:stretch;
 }
 .trackerDeck[data-variant-count="3"] .gridHeader,
 .trackerDeck[data-variant-count="3"] .spriteRow{
@@ -627,7 +627,8 @@ body.exportingImage .trackerGrid{
 .spriteCard{
     position:relative;
     width:100%;
-    aspect-ratio:1;
+    min-height:150px;
+    height:100%;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -657,8 +658,8 @@ body.exportingImage .trackerGrid{
         inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .spriteCard img{
-    width:min(112px, 82%);
-    height:min(104px, 74%);
+    width:min(126px, 86%);
+    height:min(112px, 76%);
     object-fit:contain;
     margin-top:3px;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
