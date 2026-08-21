@@ -298,8 +298,8 @@ h2{
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
 }
 .discordButton img{
-    width:30px;
-    height:30px;
+    width:34px;
+    height:34px;
     display:block;
     object-fit:contain;
     filter:drop-shadow(0 3px 4px rgba(0,35,100,.3));
@@ -1411,8 +1411,8 @@ dialog::backdrop{
         padding:6px;
     }
     .discordButton img{
-        width:30px;
-        height:30px;
+        width:34px;
+        height:34px;
     }
     .discordButton > span:last-child{
         display:none;
