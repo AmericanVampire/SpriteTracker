@@ -502,7 +502,7 @@ body.exportingImage .trackerGrid{
     justify-content:center !important;
 }
 .seasonMenu summary{
-    min-width:154px;
+    min-width:192px;
     min-height:42px;
     justify-content:center;
     gap:14px;
