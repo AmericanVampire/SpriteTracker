@@ -1346,9 +1346,13 @@ dialog::backdrop{
 @media (max-width:620px){
     :root{
         --page-gutter:10px;
+        --topbar-height:0px;
     }
     .siteShell{
         padding:10px;
+    }
+    .siteShell::before{
+        display:none;
     }
     .siteFooter{
         flex-direction:column;
@@ -1362,6 +1366,8 @@ dialog::backdrop{
         flex-wrap:wrap;
     }
     .topBar{
+        position:relative;
+        top:auto;
         gap:10px;
         min-height:0;
         padding:8px;
@@ -1372,15 +1378,18 @@ dialog::backdrop{
     }
     .brandMark img{
         width:min(100%, 520px);
-        max-height:66px;
+        max-height:56px;
         object-position:center;
     }
     .topProfile{
-        flex-direction:row;
+        display:grid;
+        grid-template-columns:48px 48px minmax(0, 1fr) 106px;
+        align-items:stretch;
         gap:8px;
     }
     .redbullButton{
-        min-width:48px;
+        min-width:0;
+        min-height:44px;
         justify-content:center;
         padding:6px;
     }
@@ -1392,7 +1401,8 @@ dialog::backdrop{
         height:34px;
     }
     .discordButton{
-        min-width:48px;
+        min-width:0;
+        min-height:44px;
         justify-content:center;
         padding:6px;
     }
@@ -1401,26 +1411,48 @@ dialog::backdrop{
     }
     .profileStatus{
         min-width:0;
-        padding:7px 9px;
+        width:100%;
+        padding:6px 8px;
+    }
+    .profileStatus span{
+        font-size:9px;
+        letter-spacing:.12em;
     }
     .profileStatus strong{
-        max-width:42vw;
+        max-width:100%;
+        font-size:15px;
     }
     .profileMenu summary{
-        min-width:96px;
+        min-width:0;
+        width:100%;
         min-height:44px;
-        padding:10px 14px;
+        padding:10px 12px;
     }
     .trackerDeck{
         padding:10px;
     }
     .trackerSticky{
+        position:relative;
+        top:auto;
+        z-index:10;
         margin:-10px -10px 0;
         padding:10px;
     }
     .noProfileNotice{
-        top:58%;
+        position:absolute;
+        top:242px;
+        left:50%;
+        z-index:18;
+        width:calc(100% - 28px);
+        max-width:420px;
+        transform:translateX(-50%);
         padding:16px 14px;
+        background:linear-gradient(180deg, #19a7ff 0%, #0c6fe0 55%, #0847b4 100%);
+        box-shadow:
+            0 12px 28px rgba(0,37,112,.44),
+            0 4px 0 rgba(0,44,130,.38),
+            inset 0 1px rgba(255,255,255,.42),
+            inset 0 0 0 1px rgba(196,249,255,.34);
     }
     .noProfileNotice strong{
         font-size:17px;
@@ -1429,39 +1461,48 @@ dialog::backdrop{
         font-size:12px;
     }
     .trackerSticky::before{
-        top:-10px;
-        height:10px;
+        display:none;
     }
     .trackerSticky::after{
-        bottom:-12px;
-        height:12px;
+        display:none;
     }
     .statsDeck{
         grid-template-columns:1fr;
         gap:8px;
     }
     .statsGrid{
-        grid-template-columns:1fr;
+        grid-template-columns:1fr 1fr;
+        column-gap:12px;
         row-gap:0;
     }
     .statBox{
-        min-height:34px;
+        min-height:30px;
         padding:5px 0;
     }
     .statBox span{
-        font-size:13px;
+        font-size:12px;
     }
     .statBox strong{
-        font-size:18px;
+        font-size:16px;
     }
     .spriteTimer{
-        min-height:54px;
-        padding:9px 10px;
+        min-height:46px;
+        display:grid;
+        grid-template-columns:1fr auto;
+        column-gap:10px;
+        row-gap:2px;
+        padding:8px 10px;
         align-items:center;
-        text-align:center;
+        text-align:left;
+    }
+    .spriteTimer span,
+    .spriteTimer small{
+        font-size:9px;
     }
     .spriteTimer strong{
-        font-size:22px;
+        grid-row:1 / span 2;
+        grid-column:2;
+        font-size:18px;
     }
     .gridHeader{
         grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
@@ -1552,8 +1593,13 @@ dialog::backdrop{
         font-size:9px;
         padding:3px 4px;
     }
-    .profileMenu,
+    .profileMenu{
+        width:auto;
+        min-width:0;
+    }
     .profileMenuPanel{
-        width:100%;
+        width:min(280px, calc(100vw - 28px));
+        min-width:0;
+        right:0;
     }
 }
