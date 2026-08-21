@@ -657,9 +657,10 @@ body.exportingImage .trackerGrid{
         inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .spriteCard img{
-    width:min(120px, 88%);
-    height:112px;
-    max-height:calc(100% - 42px);
+    width:calc(100% - 4px);
+    height:122px;
+    max-height:calc(100% - 37px);
+    flex:0 1 auto;
     object-fit:contain;
     margin-top:3px;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
