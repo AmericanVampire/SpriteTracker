@@ -371,7 +371,7 @@ button.danger,
 .trackerGrid{
     overflow-x:visible;
     overflow-y:visible;
-    padding:10px 12px 8px 0;
+    padding:10px 0 8px 0;
     max-height:none;
 }
 body.exportingImage .appGrid{
@@ -385,7 +385,7 @@ body.exportingImage .trackerGrid{
 .spriteRow{
     display:grid;
     grid-template-columns:minmax(168px, 210px) repeat(var(--variant-count, 8), minmax(118px, 1fr));
-    gap:10px;
+    gap:8px;
     min-width:0;
     align-items:stretch;
 }
@@ -658,8 +658,8 @@ body.exportingImage .trackerGrid{
         inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .spriteCard img{
-    width:min(126px, 86%);
-    height:min(112px, 76%);
+    width:min(132px, 88%);
+    height:min(120px, 78%);
     object-fit:contain;
     margin-top:3px;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
