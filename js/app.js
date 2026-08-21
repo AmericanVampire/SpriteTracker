@@ -6,7 +6,6 @@ const state = {
 const els = {
     topBar:document.querySelector(".topBar"),
     currentProfileName:document.getElementById("currentProfileName"),
-    storageNote:document.getElementById("storageNote"),
     foundStat:document.getElementById("foundStat"),
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
@@ -150,9 +149,6 @@ function renderStats(){
 
 function renderProfile(){
     els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
-    els.storageNote.textContent = state.profile
-        ? "Autosaved locally in this browser"
-        : "Create or open a local profile";
 }
 
 function renderTracker(){
