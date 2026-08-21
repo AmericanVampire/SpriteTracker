@@ -477,11 +477,11 @@ function hideAbilityPreview(){
 }
 
 function mobileAbilityPreviewOpen(){
-    return window.matchMedia("(max-width: 620px)").matches && !els.abilityPreview.hidden;
+    return mobileViewport() && !els.abilityPreview.hidden;
 }
 
 function mobileViewport(){
-    return window.matchMedia("(max-width: 620px)").matches;
+    return window.matchMedia("(max-width: 620px), (max-width: 980px) and (max-height: 620px) and (orientation: landscape) and (pointer: coarse)").matches;
 }
 
 function spriteVariantName(sprite){

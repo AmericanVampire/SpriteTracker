@@ -1828,7 +1828,7 @@ dialog::backdrop{
         flex:1;
     }
 }
-@media (max-width:620px){
+@media (max-width:620px), (max-width:980px) and (max-height:620px) and (orientation:landscape) and (pointer:coarse){
     :root{
         --page-gutter:10px;
         --topbar-height:0px;
