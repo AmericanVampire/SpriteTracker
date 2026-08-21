@@ -632,8 +632,8 @@ body.exportingImage .trackerGrid{
     flex-direction:column;
     align-items:center;
     justify-content:space-between;
-    gap:5px;
-    padding:10px 8px 8px;
+    gap:3px;
+    padding:8px 8px 6px;
     border-radius:var(--radius);
     color:var(--text);
     background:rgba(255,255,255,.04);
@@ -643,27 +643,34 @@ body.exportingImage .trackerGrid{
         0 10px 18px rgba(0,0,0,.2),
         inset 0 1px rgba(255,255,255,.11),
         inset 0 0 0 1px rgba(255,255,255,.08);
-    transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+    transition:filter .14s ease, box-shadow .14s ease;
 }
 .spriteCard:hover{
     filter:brightness(1.12);
-    transform:translateY(-1px);
 }
 .spriteCard:active{
-    transform:translateY(2px);
     box-shadow:
         0 2px 0 rgba(0,0,0,.28),
         inset 0 1px rgba(255,255,255,.08),
         inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .spriteCard img{
-    width:calc(100% - 4px);
-    height:122px;
-    max-height:calc(100% - 37px);
+    width:100%;
+    height:126px;
+    max-height:calc(100% - 34px);
     flex:0 1 auto;
     object-fit:contain;
-    margin-top:3px;
+    margin-top:1px;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
+    transform-origin:50% 70%;
+    transition:filter .14s ease;
+}
+.spriteCard[data-available="true"]:hover img{
+    animation:spriteHoverPop .46s cubic-bezier(.2,.82,.3,1) both;
+}
+.spriteCard[data-available="true"]:active img{
+    animation:none;
+    transform:scale(.98) translateY(2px);
 }
 .spriteRarity{
     position:relative;
@@ -788,10 +795,23 @@ body.exportingImage .trackerGrid{
 }
 .spriteCard[data-state="unavailable"]:hover{
     filter:none;
-    transform:none;
 }
 .spriteCard[data-state="unavailable"] img{
     filter:brightness(.34) contrast(1.15) drop-shadow(0 7px 8px rgba(0,0,0,.3));
+}
+@keyframes spriteHoverPop{
+    0%{
+        transform:scale(1) rotate(0deg) translateY(0);
+    }
+    36%{
+        transform:scale(1.1) rotate(-2deg) translateY(-4px);
+    }
+    62%{
+        transform:scale(1.07) rotate(1.5deg) translateY(-3px);
+    }
+    100%{
+        transform:scale(1.08) rotate(0deg) translateY(-3px);
+    }
 }
 .pixelIcon{
     width:62px;
