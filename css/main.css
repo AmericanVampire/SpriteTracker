@@ -190,6 +190,48 @@ h2{
     gap:12px;
     min-width:0;
 }
+.redbullButton{
+    min-height:48px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 12px 7px 8px;
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, #eefaff 0%, #55cdfb 42%, #0771dc 100%);
+    color:#d40931;
+    font-size:13px;
+    font-weight:950;
+    line-height:1;
+    text-decoration:none;
+    white-space:nowrap;
+    box-shadow:
+        0 5px 0 rgba(0,44,130,.36),
+        0 12px 22px rgba(0,54,148,.24),
+        inset 0 1px rgba(255,255,255,.58),
+        inset 0 0 0 1px rgba(255,255,255,.28);
+    transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.redbullButton img{
+    width:22px;
+    height:36px;
+    object-fit:contain;
+    filter:drop-shadow(0 3px 4px rgba(0,35,100,.35));
+}
+.redbullButton:hover{
+    filter:brightness(1.1);
+    transform:translateY(-1px);
+}
+.redbullButton:active{
+    transform:translateY(2px);
+    box-shadow:
+        0 2px 0 rgba(0,44,130,.4),
+        inset 0 1px rgba(255,255,255,.35);
+}
+.redbullButton[aria-disabled="true"]{
+    cursor:not-allowed;
+    filter:grayscale(.2) brightness(.92);
+    opacity:.75;
+}
 .profileStatus{
     display:flex;
     flex-direction:column;
@@ -1162,6 +1204,18 @@ dialog::backdrop{
     .topProfile{
         flex-direction:row;
         gap:8px;
+    }
+    .redbullButton{
+        min-width:48px;
+        justify-content:center;
+        padding:6px;
+    }
+    .redbullButton span{
+        display:none;
+    }
+    .redbullButton img{
+        width:20px;
+        height:34px;
     }
     .profileStatus{
         min-width:0;

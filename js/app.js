@@ -3,8 +3,11 @@ const state = {
     seasonId:"override"
 };
 
+const PAYPAL_DONATE_URL = "";
+
 const els = {
     topBar:document.querySelector(".topBar"),
+    donateButton:document.getElementById("donateButton"),
     currentProfileName:document.getElementById("currentProfileName"),
     foundStat:document.getElementById("foundStat"),
     masteredStat:document.getElementById("masteredStat"),
@@ -689,6 +692,14 @@ async function importProfile(file){
 }
 
 function bindControls(){
+    if(PAYPAL_DONATE_URL){
+        els.donateButton.href = PAYPAL_DONATE_URL;
+    }
+    else{
+        els.donateButton.removeAttribute("href");
+        els.donateButton.setAttribute("aria-disabled","true");
+        els.donateButton.title = "PayPal donate link coming soon.";
+    }
     document.getElementById("newProfileButton").addEventListener("click",()=>{
         promptDialog("New Profile","Profile name","",async(name)=>{
             state.profile = await SpriteStore.createProfile(name);
