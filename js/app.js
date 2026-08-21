@@ -3,7 +3,7 @@ const state = {
     seasonId:"override"
 };
 
-const PAYPAL_DONATE_URL = "";
+const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 
 const els = {
     topBar:document.querySelector(".topBar"),
