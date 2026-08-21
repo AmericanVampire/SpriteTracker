@@ -834,8 +834,13 @@ body.exportingImage .trackerGrid{
 .imageExportSheetMobile .familyCell{
     grid-column:1 / -1;
     min-height:86px;
+    display:grid;
+    overflow:hidden;
 }
 .imageExportSheetMobile .familyMain{
+    position:relative;
+    inset:auto;
+    min-height:86px;
     padding:28px 42px;
 }
 .imageExportSheetMobile .familyName{
