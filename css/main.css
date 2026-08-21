@@ -1218,8 +1218,8 @@ body.exportingImage .trackerGrid{
     background:#1e79ec;
     box-shadow:
         0 4px 0 rgba(0,0,0,.28),
-        0 0 0 2px var(--green),
-        0 0 18px rgba(103,255,80,.26),
+        0 0 0 2px #7df4ff,
+        0 0 18px rgba(125,244,255,.36),
         inset 0 1px rgba(255,255,255,.2);
 }
 .variantToggle small{
