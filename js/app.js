@@ -882,6 +882,37 @@ function exportText(){
     );
 }
 
+function buildImageExportSheet(){
+    const season = activeSeason();
+    const mobile = mobileViewport();
+    const sheet = document.createElement("div");
+    sheet.className = `imageExportSheet ${mobile ? "imageExportSheetMobile" : "imageExportSheetDesktop"}`;
+    sheet.dataset.variantCount = String(season.variants.length);
+    sheet.style.setProperty("--variant-count", season.variants.length);
+    sheet.innerHTML = `
+        <div class="exportBrand">
+            <img src="assets/sprite-tracker-title.png" alt="Sprite Tracker">
+        </div>
+    `;
+    const deck = document.createElement("section");
+    deck.className = "trackerDeck";
+    deck.dataset.variantCount = String(season.variants.length);
+    deck.dataset.profileLoaded = "true";
+    const sticky = document.createElement("div");
+    sticky.className = "trackerSticky";
+    sticky.appendChild(document.querySelector(".statsDeck").cloneNode(true));
+    sticky.appendChild(els.gridHeader.cloneNode(true));
+    deck.appendChild(sticky);
+    deck.appendChild(els.trackerGrid.cloneNode(true));
+    sheet.appendChild(deck);
+    const footer = document.createElement("footer");
+    footer.className = "siteFooter";
+    footer.innerHTML = `<div class="footerCopyright">AmericanVampire &copy; 2026</div>`;
+    sheet.appendChild(footer);
+    document.body.appendChild(sheet);
+    return sheet;
+}
+
 async function exportImage(){
     if(!state.profile){
         showDialog("Export Image","Open a profile first.",[{label:"OK"}]);
@@ -909,13 +940,14 @@ async function exportImage(){
         return;
     }
     const restoreScroll = {x:window.scrollX,y:window.scrollY};
+    let exportTarget = null;
     try{
-        const exportTarget = document.querySelector(".siteShell");
+        exportTarget = buildImageExportSheet();
         window.scrollTo(0,0);
         document.body.classList.add("exportingImage");
         await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
         const exportOptions = {
-            pixelRatio:mobileViewport() ? 1.5 : 2,
+            pixelRatio:mobileViewport() ? 1.25 : 2,
             cacheBust:true,
             backgroundColor:"#070519"
         };
@@ -941,6 +973,7 @@ async function exportImage(){
     }
     finally{
         document.body.classList.remove("exportingImage");
+        exportTarget?.remove();
         window.scrollTo(restoreScroll.x,restoreScroll.y);
     }
 }

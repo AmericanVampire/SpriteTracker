@@ -687,6 +687,190 @@ body.exportingImage .footerCopyright{
 body.exportingImage .trackerGrid{
     overflow:visible;
 }
+.imageExportSheet{
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:999999;
+    padding:18px;
+    background:#063da5;
+    color:var(--text);
+    pointer-events:none;
+}
+.imageExportSheet .exportBrand{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100px;
+    margin-bottom:14px;
+    border:1px solid rgba(155,234,255,.42);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, #0756c4, #062b81);
+    box-shadow:
+        0 20px 50px rgba(0,42,120,.34),
+        inset 0 1px rgba(255,255,255,.2),
+        inset 0 0 34px rgba(0,231,255,.08);
+}
+.imageExportSheet .exportBrand img{
+    width:min(760px, 100%);
+    max-height:92px;
+    object-fit:contain;
+    object-position:center;
+    display:block;
+}
+.imageExportSheet .trackerDeck{
+    min-height:0;
+    padding:0 18px 18px;
+}
+.imageExportSheet .trackerSticky{
+    position:relative;
+    top:auto;
+    z-index:1;
+    margin:0 -18px;
+}
+.imageExportSheet .trackerSticky::before,
+.imageExportSheet .trackerSticky::after{
+    display:none;
+}
+.imageExportSheet .trackerGrid{
+    overflow:visible;
+}
+.imageExportSheet .seasonMenu summary{
+    pointer-events:none;
+}
+.imageExportSheet .seasonMenuPanel{
+    display:none;
+}
+.imageExportSheet .siteFooter{
+    justify-content:center;
+    padding:16px 0 0;
+}
+.imageExportSheet .footerCopyright{
+    font-size:15px;
+}
+.imageExportSheetDesktop{
+    width:1520px;
+}
+.imageExportSheetDesktop[data-variant-count="3"]{
+    width:920px;
+}
+.imageExportSheetDesktop .trackerDeck[data-variant-count="3"] .gridHeader,
+.imageExportSheetDesktop .trackerDeck[data-variant-count="3"] .spriteRow{
+    grid-template-columns:minmax(190px, 240px) repeat(3, minmax(138px, 1fr));
+}
+.imageExportSheetMobile{
+    width:430px;
+    padding:12px;
+}
+.imageExportSheetMobile .exportBrand{
+    min-height:72px;
+    margin-bottom:10px;
+    padding:6px;
+}
+.imageExportSheetMobile .exportBrand img{
+    max-height:58px;
+}
+.imageExportSheetMobile .trackerDeck{
+    padding:10px;
+}
+.imageExportSheetMobile .trackerSticky{
+    margin:-10px -10px 0;
+    padding:10px;
+}
+.imageExportSheetMobile .statsDeck{
+    grid-template-columns:1fr;
+    gap:8px;
+}
+.imageExportSheetMobile .statsGrid{
+    grid-template-columns:1fr 1fr;
+    column-gap:12px;
+    row-gap:0;
+}
+.imageExportSheetMobile .statBox{
+    min-height:30px;
+    padding:5px 0;
+}
+.imageExportSheetMobile .statBox span{
+    font-size:12px;
+}
+.imageExportSheetMobile .statBox strong{
+    font-size:16px;
+}
+.imageExportSheetMobile .spriteTimer{
+    min-height:46px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    column-gap:10px;
+    row-gap:2px;
+    padding:8px 10px;
+    align-items:center;
+    text-align:left;
+}
+.imageExportSheetMobile .spriteTimer span,
+.imageExportSheetMobile .spriteTimer small{
+    font-size:9px;
+}
+.imageExportSheetMobile .spriteTimer strong{
+    grid-row:1 / span 2;
+    grid-column:2;
+    font-size:18px;
+}
+.imageExportSheetMobile .gridHeader{
+    grid-template-columns:1fr !important;
+    gap:8px;
+    padding-top:10px;
+}
+.imageExportSheetMobile .variantToggle{
+    display:none;
+}
+.imageExportSheetMobile .spriteRow{
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:8px;
+    padding:8px 0;
+}
+.imageExportSheetMobile .familyCell{
+    grid-column:1 / -1;
+    min-height:86px;
+}
+.imageExportSheetMobile .familyMain{
+    padding:28px 42px;
+}
+.imageExportSheetMobile .familyName{
+    font-size:22px;
+}
+.imageExportSheetMobile .spriteCard{
+    min-height:134px;
+    padding:24px 6px 6px;
+}
+.imageExportSheetMobile .spriteCard img{
+    height:86px;
+    max-height:86px;
+}
+.imageExportSheetMobile .spriteVariantName{
+    position:absolute;
+    left:6px;
+    top:6px;
+    z-index:1;
+    max-width:calc(100% - 38px);
+    display:block;
+    overflow:hidden;
+    color:#dff9ff;
+    font-size:9px;
+    font-weight:950;
+    line-height:1;
+    text-overflow:ellipsis;
+    text-transform:uppercase;
+    white-space:nowrap;
+    -webkit-text-stroke:.55px #00123f;
+    paint-order:stroke fill;
+    text-shadow:none;
+}
+.imageExportSheetMobile .spriteRarity{
+    min-width:0;
+    width:100%;
+    font-size:9px;
+    padding:3px 4px;
+}
 .gridHeader,
 .spriteRow{
     display:grid;
