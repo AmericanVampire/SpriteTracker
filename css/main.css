@@ -25,22 +25,27 @@
     box-sizing:border-box;
 }
 body{
+    position:relative;
     min-height:100vh;
     margin:0;
     color:var(--text);
+    background:linear-gradient(180deg, #090726 0%, #050511 48%, #12051f 100%);
+}
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    height:100%;
+    min-height:100vh;
+    pointer-events:none;
     background:
-        radial-gradient(circle at 18% 16%, rgba(255,46,234,.26), transparent 26rem),
-        radial-gradient(circle at 82% 12%, rgba(0,231,255,.22), transparent 24rem),
-        radial-gradient(circle at 16% 84%, rgba(255,139,45,.12), transparent 22rem),
-        radial-gradient(circle at 84% 78%, rgba(103,255,80,.10), transparent 21rem),
-        linear-gradient(180deg, #090726 0%, #050511 46%, #12051f 100%);
-    background-size:
-        100% 1120px,
-        100% 1120px,
-        100% 1120px,
-        100% 1120px,
-        100% 1120px;
-    background-repeat:repeat-y;
+        radial-gradient(circle at 18% 10%, rgba(255,46,234,.28), transparent 28rem),
+        radial-gradient(circle at 82% 8%, rgba(0,231,255,.23), transparent 26rem),
+        radial-gradient(circle at 14% 38%, rgba(255,139,45,.12), transparent 25rem),
+        radial-gradient(circle at 86% 44%, rgba(103,255,80,.10), transparent 24rem),
+        radial-gradient(circle at 20% 72%, rgba(255,46,234,.16), transparent 28rem),
+        radial-gradient(circle at 80% 86%, rgba(0,231,255,.14), transparent 30rem);
+    background-repeat:no-repeat;
 }
 button,
 input,
