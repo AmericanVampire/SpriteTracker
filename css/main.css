@@ -322,13 +322,6 @@ button.danger,
 .statsDeck{
     padding:0;
 }
-.statsHeader{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:18px;
-    margin-bottom:14px;
-}
 .statsGrid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -367,15 +360,25 @@ button.danger,
 }
 .trackerSticky{
     position:sticky;
-    top:122px;
+    top:112px;
     z-index:40;
     margin:-18px -18px 0;
-    padding:18px 30px 12px 18px;
+    padding:14px 30px 12px 18px;
     border-bottom:1px solid rgba(155,234,255,.32);
     background:linear-gradient(180deg, #0749b2, #062a80);
     box-shadow:
         0 14px 22px rgba(0,43,132,.62),
         0 0 0 1px rgba(155,234,255,.08);
+}
+.trackerSticky::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:-18px;
+    height:18px;
+    pointer-events:none;
+    background:#0749b2;
 }
 .trackerSticky::after{
     content:"";
