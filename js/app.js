@@ -4,7 +4,7 @@ const state = {
 };
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
-const DISCORD_INVITE_URL = "";
+const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 
 const els = {
     topBar:document.querySelector(".topBar"),

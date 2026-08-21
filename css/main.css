@@ -253,31 +253,12 @@ h2{
         inset 0 0 0 1px rgba(255,255,255,.14);
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
 }
-.discordIcon{
-    width:20px;
-    height:15px;
-    display:inline-block;
-    border-radius:7px 7px 5px 5px;
-    background:#fff;
-    box-shadow:inset 0 -4px rgba(88,101,242,.16);
-}
-.discordIcon::before,
-.discordIcon::after{
-    content:"";
-    position:relative;
-    top:5px;
-    width:4px;
-    height:4px;
+.discordButton img{
+    width:24px;
+    height:24px;
     display:block;
-    border-radius:50%;
-    background:#5865f2;
-}
-.discordIcon::before{
-    left:5px;
-}
-.discordIcon::after{
-    left:12px;
-    top:1px;
+    object-fit:contain;
+    filter:drop-shadow(0 3px 4px rgba(0,35,100,.3));
 }
 .discordButton:hover{
     filter:brightness(1.12);
