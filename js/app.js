@@ -981,6 +981,277 @@ async function waitForExportImages(root){
     }));
 }
 
+function canvasBlob(canvas){
+    return new Promise((resolve,reject)=>{
+        canvas.toBlob(blob=>{
+            if(blob){
+                resolve(blob);
+            }
+            else{
+                reject(new Error("Image export did not create a file."));
+            }
+        },"image/png");
+    });
+}
+
+function loadCanvasImage(src){
+    return new Promise(resolve=>{
+        if(!src){
+            resolve(null);
+            return;
+        }
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => resolve(null);
+        image.src = src;
+    });
+}
+
+function roundRectPath(ctx,x,y,width,height,radius){
+    const r = Math.min(radius,width / 2,height / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r,y);
+    ctx.lineTo(x + width - r,y);
+    ctx.quadraticCurveTo(x + width,y,x + width,y + r);
+    ctx.lineTo(x + width,y + height - r);
+    ctx.quadraticCurveTo(x + width,y + height,x + width - r,y + height);
+    ctx.lineTo(x + r,y + height);
+    ctx.quadraticCurveTo(x,y + height,x,y + height - r);
+    ctx.lineTo(x,y + r);
+    ctx.quadraticCurveTo(x,y,x + r,y);
+    ctx.closePath();
+}
+
+function fillRoundRect(ctx,x,y,width,height,radius,fill,stroke){
+    roundRectPath(ctx,x,y,width,height,radius);
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if(stroke){
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
+}
+
+function drawText(ctx,text,x,y,options = {}){
+    ctx.save();
+    ctx.font = `${options.weight || 900} ${options.size || 14}px Arial, sans-serif`;
+    ctx.textAlign = options.align || "left";
+    ctx.textBaseline = options.baseline || "middle";
+    if(options.stroke){
+        ctx.lineWidth = options.strokeWidth || 3;
+        ctx.strokeStyle = options.stroke;
+        ctx.strokeText(text,x,y);
+    }
+    ctx.fillStyle = options.color || "#fff";
+    ctx.fillText(text,x,y);
+    ctx.restore();
+}
+
+function drawCenteredImage(ctx,image,x,y,width,height){
+    if(!image){
+        return;
+    }
+    const scale = Math.min(width / image.naturalWidth,height / image.naturalHeight);
+    const drawWidth = image.naturalWidth * scale;
+    const drawHeight = image.naturalHeight * scale;
+    ctx.drawImage(
+        image,
+        x + ((width - drawWidth) / 2),
+        y + ((height - drawHeight) / 2),
+        drawWidth,
+        drawHeight
+    );
+}
+
+function rarityColors(rarity){
+    const key = rarityClass(rarity);
+    if(key === "rare"){
+        return ["#5ab8ff","#2f85ff","#ffffff"];
+    }
+    if(key === "epic"){
+        return ["#c57cff","#742bff","#ffffff"];
+    }
+    if(key === "legendary"){
+        return ["#ffd36a","#f28400","#111111"];
+    }
+    if(key === "mythic"){
+        return ["#fff0a8","#d8a300","#111111"];
+    }
+    return ["#5dffe4","#ff7af1","#111111"];
+}
+
+function variantColor(variantId){
+    if(variantId === "gold"){
+        return "#ffdc3f";
+    }
+    if(variantId === "cheatmaster"){
+        return "#72ff8c";
+    }
+    return "#eef4ff";
+}
+
+function drawBadge(ctx,x,y,state){
+    if(state === "found"){
+        fillRoundRect(ctx,x,y,28,28,7,"#60ff5a",null);
+        ctx.strokeStyle = "#08240d";
+        ctx.lineWidth = 4;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(x + 7,y + 15);
+        ctx.lineTo(x + 12,y + 20);
+        ctx.lineTo(x + 22,y + 8);
+        ctx.stroke();
+    }
+    if(state === "mastered"){
+        fillRoundRect(ctx,x,y,28,28,7,"#ffe45c",null);
+        ctx.strokeStyle = "#111";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x + 6,y + 19);
+        ctx.lineTo(x + 6,y + 10);
+        ctx.lineTo(x + 11,y + 15);
+        ctx.lineTo(x + 14,y + 8);
+        ctx.lineTo(x + 17,y + 15);
+        ctx.lineTo(x + 22,y + 10);
+        ctx.lineTo(x + 22,y + 19);
+        ctx.closePath();
+        ctx.stroke();
+    }
+}
+
+function drawRarity(ctx,rarity,x,y,width){
+    if(!rarity || rarity === "N/A"){
+        return;
+    }
+    const [start,end,textColor] = rarityColors(rarity);
+    const gradient = ctx.createLinearGradient(x,y,x + width,y + 20);
+    if(rarityClass(rarity) === "special"){
+        gradient.addColorStop(0,"#5dffe4");
+        gradient.addColorStop(.25,"#8dff9a");
+        gradient.addColorStop(.5,"#fff36a");
+        gradient.addColorStop(.75,"#ff7af1");
+        gradient.addColorStop(1,"#8e7cff");
+    }
+    else{
+        gradient.addColorStop(0,start);
+        gradient.addColorStop(1,end);
+    }
+    fillRoundRect(ctx,x,y,width,20,5,gradient,null);
+    drawText(ctx,rarity.toUpperCase(),x + (width / 2),y + 10,{
+        align:"center",
+        size:10,
+        color:textColor,
+        weight:950
+    });
+}
+
+async function renderMobileExportCanvasBlob(){
+    const season = activeSeason();
+    const stats = calculateStats();
+    const rowHeight = 292;
+    const width = 540;
+    const height = 16 + 90 + 14 + 244 + (season.families.length * rowHeight) + 70;
+    const ratio = 2;
+    const canvas = document.createElement("canvas");
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    const ctx = canvas.getContext("2d");
+    ctx.scale(ratio,ratio);
+    ctx.fillStyle = "#070519";
+    ctx.fillRect(0,0,width,height);
+    const title = await loadCanvasImage("assets/sprite-tracker-title.png");
+    const imageEntries = await Promise.all(season.sprites.map(async sprite=>[
+        sprite.id,
+        await loadCanvasImage(sprite.image)
+    ]));
+    const imageMap = new Map(imageEntries);
+
+    fillRoundRect(ctx,15,16,510,90,8,"#0b55bf","#4abfff");
+    drawCenteredImage(ctx,title,55,25,430,70);
+
+    let y = 120;
+    fillRoundRect(ctx,15,y,510,244,0,"#0b49ad",null);
+    [["Found",`${stats.found} / ${stats.totalSprites}`],["Completed Sets",`${stats.completedSets} / ${stats.totalSets}`],["Mastered",`${stats.mastered} / ${stats.totalSprites}`],["Overall Progress",`${stats.percent}%`]].forEach((item,index)=>{
+        const col = index % 2;
+        const row = Math.floor(index / 2);
+        const x = col === 0 ? 28 : 276;
+        const yy = y + 32 + (row * 38);
+        drawText(ctx,item[0],x,yy,{size:15});
+        drawText(ctx,item[1],col === 0 ? 260 : 508,yy,{size:24,align:"right"});
+        ctx.strokeStyle = "rgba(145,229,255,.28)";
+        ctx.beginPath();
+        ctx.moveTo(x,yy + 18);
+        ctx.lineTo(col === 0 ? 260 : 508,yy + 18);
+        ctx.stroke();
+    });
+    fillRoundRect(ctx,28,y + 98,480,56,8,"#0c6ccc","#4abfff");
+    drawText(ctx,"NEXT SPRITE DROP",40,y + 116,{size:11,color:"#d7f6ff"});
+    drawText(ctx,els.timerValue.textContent || "",492,y + 126,{size:24,align:"right"});
+    drawText(ctx,"IN-GAME RELEASE",40,y + 138,{size:11,color:"#fff56d"});
+    fillRoundRect(ctx,28,y + 168,480,62,10,"#256be2","#5fbfff");
+    drawText(ctx,seasonPickerLabel(season),270,y + 199,{size:16,align:"center"});
+    y += 260;
+
+    const progress = seasonProgress(state.profile,state.seasonId);
+    season.families.forEach(family=>{
+        const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
+        const familyComplete = isFamilyComplete(family);
+        fillRoundRect(ctx,28,y,480,106,8,familyDisabled ? "#31537f" : "#0b55bf",familyComplete ? "#ffe45c" : "#308fe8");
+        fillRoundRect(ctx,42,y + 64,34,30,6,"#10aee8",null);
+        drawText(ctx,"i",59,y + 79,{size:19,align:"center",style:"italic"});
+        drawText(ctx,family.name,270,y + 54,{size:26,align:"center",stroke:"#00123f",strokeWidth:4});
+        fillRoundRect(ctx,404,y + 64,88,24,5,familyDisabled ? "rgba(255,77,109,.22)" : "rgba(103,255,80,.14)",null);
+        drawText(ctx,familyDisabled ? "DISABLED" : "ENABLED",448,y + 76,{size:10,align:"center",color:familyDisabled ? "#ff4d6d" : "#dbffe5"});
+        if(familyComplete){
+            fillRoundRect(ctx,42,y + 10,108,20,5,"rgba(255,224,92,.16)",null);
+            drawText(ctx,"SET MASTERED",96,y + 20,{size:9,align:"center",color:"#ffe45c"});
+        }
+        season.variants.forEach((variant,index)=>{
+            const sprite = season.sprites.find(item=>
+                item.family === family.name && item.variantId === variant.id
+            );
+            const x = 28 + (index * 164);
+            const cardY = y + 118;
+            const disabled = sprite?.available ? isDisabled(sprite) : false;
+            const spriteProgress = sprite?.available ? spriteState(sprite) : "unavailable";
+            const stateName = disabled ? "disabled" : spriteProgress;
+            fillRoundRect(
+                ctx,
+                x,
+                cardY,
+                152,
+                156,
+                8,
+                stateName === "disabled" ? "#42376d" : "#0b55bf",
+                stateName === "found" ? "#60ff5a" : stateName === "mastered" ? "#ffe45c" : "#308fe8"
+            );
+            drawText(ctx,variant.label.toUpperCase(),x + 7,cardY + 15,{
+                size:10,
+                color:variantColor(variant.id),
+                stroke:"#00123f",
+                strokeWidth:2
+            });
+            if(sprite?.image){
+                drawCenteredImage(ctx,imageMap.get(sprite.id),x + 28,cardY + 30,96,86);
+            }
+            if(sprite?.available){
+                drawRarity(ctx,sprite.rarity,x + 8,cardY + 124,136);
+            }
+            drawBadge(ctx,x + 116,cardY + 10,stateName);
+        });
+        y += rowHeight;
+    });
+    drawText(ctx,"AmericanVampire © 2026",270,height - 32,{
+        size:20,
+        align:"center",
+        stroke:"#00123f",
+        strokeWidth:3
+    });
+    return canvasBlob(canvas);
+}
+
 async function exportImage(){
     if(!state.profile){
         showDialog("Export Image","Open a profile first.",[{label:"OK"}]);
@@ -1005,6 +1276,24 @@ async function exportImage(){
     const filename = `Sprite Tracker - ${safeFilename(state.profile.profileName)}.png`;
     const saveHandle = await chooseDesktopImageFile(filename);
     if(saveHandle === false){
+        return;
+    }
+    if(mobileViewport()){
+        try{
+            await saveImageBlob(
+                await renderMobileExportCanvasBlob(),
+                filename,
+                saveHandle
+            );
+        }
+        catch(error){
+            console.error(error);
+            showDialog(
+                "Export Image",
+                "The image export failed. Refresh the page and try again. On mobile, use the Share or Save Image option if your browser asks where to send the PNG.",
+                [{label:"OK"}]
+            );
+        }
         return;
     }
     const restoreScroll = {x:window.scrollX,y:window.scrollY};
