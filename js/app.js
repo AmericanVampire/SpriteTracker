@@ -18,6 +18,7 @@ const els = {
     dialogTitle:document.getElementById("dialogTitle"),
     dialogContent:document.getElementById("dialogContent"),
     dialogActions:document.getElementById("dialogActions"),
+    abilityPreview:document.getElementById("abilityPreview"),
     importFileInput:document.getElementById("importFileInput")
 };
 
@@ -304,21 +305,58 @@ function abilityButton(family,sprite){
     if(!family.ability){
         return "";
     }
-    const image = sprite?.image || "";
-    const rarity = sprite?.rarity || family.rarity || "";
     return `
-        <button class="abilityButton" type="button" aria-label="${family.name} ability" aria-haspopup="true">
+        <button class="abilityButton" type="button" data-family="${slug(family.name)}" aria-label="${family.name} ability" aria-haspopup="true">
             <span class="abilityIcon" aria-hidden="true">i</span>
-            <span class="abilityDataCard" role="tooltip">
-                ${image ? `<img src="${image}" alt="${family.name}">` : ""}
-                <span class="abilityDataText">
-                    <strong>${family.name}</strong>
-                    ${rarity ? `<em>${rarity}</em>` : ""}
-                    <span>${family.ability}</span>
-                </span>
-            </span>
         </button>
     `;
+}
+
+function escapeHtml(text){
+    return String(text).replace(/[&<>"']/g,match=>({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+    }[match]));
+}
+
+function abilityDetails(familySlug){
+    const season = activeSeason();
+    const family = season.families.find(item=>slug(item.name) === familySlug);
+    if(!family){
+        return null;
+    }
+    const sprite = season.sprites.find(item=>
+        item.family === family.name && item.available
+    );
+    return {
+        name:family.name,
+        ability:family.ability,
+        rarity:sprite?.rarity || family.rarity || "",
+        image:sprite?.image || ""
+    };
+}
+
+function showAbilityPreview(familySlug){
+    const details = abilityDetails(familySlug);
+    if(!details){
+        return;
+    }
+    els.abilityPreview.innerHTML = `
+        ${details.image ? `<img src="${escapeHtml(details.image)}" alt="${escapeHtml(details.name)}">` : ""}
+        <span class="abilityDataText">
+            <strong>${escapeHtml(details.name)}</strong>
+            ${details.rarity ? `<em>${escapeHtml(details.rarity)}</em>` : ""}
+            <span>${escapeHtml(details.ability)}</span>
+        </span>
+    `;
+    els.abilityPreview.hidden = false;
+}
+
+function hideAbilityPreview(){
+    els.abilityPreview.hidden = true;
 }
 
 function spriteVariantName(sprite){
@@ -662,7 +700,41 @@ function bindControls(){
     document.getElementById("backToTopButton").addEventListener("click",()=>{
         window.scrollTo({top:0,behavior:"smooth"});
     });
+    els.trackerGrid.addEventListener("mouseover",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button){
+            showAbilityPreview(button.dataset.family);
+        }
+    });
+    els.trackerGrid.addEventListener("mouseout",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button && !button.contains(event.relatedTarget)){
+            hideAbilityPreview();
+        }
+    });
+    els.trackerGrid.addEventListener("focusin",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button){
+            showAbilityPreview(button.dataset.family);
+        }
+    });
+    els.trackerGrid.addEventListener("focusout",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button){
+            hideAbilityPreview();
+        }
+    });
+    els.trackerGrid.addEventListener("click",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button){
+            event.stopPropagation();
+            showAbilityPreview(button.dataset.family);
+        }
+    });
     document.addEventListener("click",event=>{
+        if(!event.target.closest(".abilityButton")){
+            hideAbilityPreview();
+        }
         document.querySelectorAll("details[open]").forEach(menu=>{
             if(!menu.contains(event.target)){
                 menu.removeAttribute("open");

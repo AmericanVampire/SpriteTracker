@@ -108,7 +108,7 @@ button{
     left:0;
     right:0;
     top:0;
-    z-index:55;
+    z-index:85;
     height:var(--page-gutter);
     pointer-events:none;
     background:
@@ -128,7 +128,7 @@ button{
 .topBar{
     position:sticky;
     top:var(--page-gutter);
-    z-index:60;
+    z-index:100;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -380,7 +380,7 @@ button.danger,
 .trackerSticky{
     position:sticky;
     top:var(--topbar-offset);
-    z-index:40;
+    z-index:90;
     margin:0 -18px;
     padding:7px 30px 10px 18px;
     border-bottom:1px solid rgba(155,234,255,.32);
@@ -429,7 +429,7 @@ button.danger,
     position:fixed;
     left:50%;
     top:50%;
-    z-index:45;
+    z-index:95;
     width:min(420px, calc(100vw - 36px));
     display:none;
     transform:translate(-50%,-50%);
@@ -706,7 +706,7 @@ body.exportingImage .trackerGrid{
     position:absolute;
     left:10px;
     bottom:10px;
-    z-index:50;
+    z-index:3;
     width:28px;
     height:24px;
     display:grid;
@@ -738,42 +738,38 @@ body.exportingImage .trackerGrid{
     line-height:1;
     font-style:italic;
 }
-.abilityDataCard{
-    position:absolute;
-    left:0;
-    bottom:calc(100% + 10px);
-    z-index:90;
-    width:340px;
-    min-height:152px;
+.abilityPreview{
+    position:fixed;
+    left:50%;
+    top:50%;
+    z-index:120;
+    width:min(520px, calc(100vw - 40px));
+    min-height:218px;
     display:grid;
-    grid-template-columns:104px 1fr;
-    gap:14px;
+    grid-template-columns:150px 1fr;
+    gap:18px;
     align-items:center;
-    padding:14px;
-    border:1px solid rgba(191,248,255,.72);
+    padding:20px;
+    border:2px solid rgba(214,252,255,.86);
     border-radius:var(--radius);
-    background:linear-gradient(180deg, #28c5ff 0%, #0b81e6 42%, #0750bf 100%);
+    background:#0b82e8;
+    background-image:linear-gradient(180deg, #30d4ff 0%, #0b82e8 42%, #064db9 100%);
     color:#061438;
     text-align:left;
-    opacity:0;
-    pointer-events:none;
-    transform:translateY(6px) scale(.98);
-    transform-origin:left bottom;
-    transition:opacity .14s ease, transform .14s ease;
-    box-shadow:
-        0 22px 42px rgba(0,31,94,.56),
-        0 0 0 2px rgba(0,42,132,.38),
-        inset 0 1px rgba(255,255,255,.45);
-}
-.abilityButton:hover .abilityDataCard,
-.abilityButton:focus .abilityDataCard,
-.abilityButton:focus-visible .abilityDataCard{
     opacity:1;
-    transform:translateY(0) scale(1);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    box-shadow:
+        0 28px 70px rgba(0,20,82,.62),
+        0 0 0 4px rgba(0,42,132,.44),
+        inset 0 1px rgba(255,255,255,.5);
 }
-.abilityDataCard img{
-    width:100px;
-    height:124px;
+.abilityPreview[hidden]{
+    display:none;
+}
+.abilityPreview img{
+    width:144px;
+    height:174px;
     object-fit:contain;
     filter:drop-shadow(0 8px 10px rgba(0,0,0,.28));
 }
@@ -785,14 +781,14 @@ body.exportingImage .trackerGrid{
 }
 .abilityDataText strong{
     color:#fff;
-    font-size:22px;
+    font-size:30px;
     line-height:1;
     font-weight:950;
     text-shadow:0 2px 0 rgba(0,45,132,.38);
 }
 .abilityDataText em{
     color:#07235d;
-    font-size:12px;
+    font-size:14px;
     font-style:normal;
     font-weight:950;
     letter-spacing:.08em;
@@ -800,7 +796,7 @@ body.exportingImage .trackerGrid{
 }
 .abilityDataText span{
     color:#061438;
-    font-size:14px;
+    font-size:16px;
     line-height:1.2;
     font-weight:850;
 }
@@ -1225,14 +1221,14 @@ dialog::backdrop{
     .familyName{
         font-size:22px;
     }
-    .abilityDataCard{
+    .abilityPreview{
         width:min(326px, calc(100vw - 40px));
         min-height:132px;
         grid-template-columns:82px 1fr;
         gap:12px;
         padding:12px;
     }
-    .abilityDataCard img{
+    .abilityPreview img{
         width:78px;
         height:98px;
     }
