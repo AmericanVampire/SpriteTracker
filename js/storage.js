@@ -127,6 +127,20 @@ const SpriteStore = (() => {
         ).then(keys=>keys.sort((a,b)=>a.localeCompare(b)));
     }
 
+    async function getMostRecentProfileName(){
+        const profiles = await withStore(profilesStore,"readonly",store=>
+            requestToPromise(store.getAll())
+        );
+        const mostRecent = profiles
+            .filter(profile=>profile?.profileName)
+            .sort((a,b)=>{
+                const bTime = Date.parse(b.lastOpened || b.created || "") || 0;
+                const aTime = Date.parse(a.lastOpened || a.created || "") || 0;
+                return bTime - aTime;
+            })[0];
+        return mostRecent?.profileName || null;
+    }
+
     async function getStartupProfile(){
         const setting = await withStore(settingsStore,"readonly",store=>
             requestToPromise(store.get("startupProfile"))
@@ -158,6 +172,7 @@ const SpriteStore = (() => {
         deleteProfile,
         renameProfile,
         getProfiles,
+        getMostRecentProfileName,
         getStartupProfile,
         setStartupProfile,
         normalizeProfile

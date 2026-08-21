@@ -93,6 +93,7 @@ async function persist(){
     }
     state.profile.activeSeasonId = state.seasonId;
     state.profile = await SpriteStore.saveProfile(state.profile);
+    await SpriteStore.setStartupProfile(state.profile.profileName);
 }
 
 function setSpriteState(sprite,nextState){
@@ -1005,15 +1006,16 @@ async function init(){
         try{
             state.profile = await SpriteStore.openProfile(startup);
             state.seasonId = state.profile.activeSeasonId || "override";
+            await SpriteStore.setStartupProfile(state.profile.profileName);
         }
         catch(error){
             console.warn(error);
         }
     }
     if(!state.profile){
-        const profiles = await SpriteStore.getProfiles();
-        if(profiles.length === 1){
-            state.profile = await SpriteStore.openProfile(profiles[0]);
+        const profileName = await SpriteStore.getMostRecentProfileName();
+        if(profileName){
+            state.profile = await SpriteStore.openProfile(profileName);
             state.seasonId = state.profile.activeSeasonId || "override";
             await SpriteStore.setStartupProfile(state.profile.profileName);
         }
