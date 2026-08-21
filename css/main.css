@@ -265,12 +265,12 @@ h2{
     padding:7px 12px 7px 8px;
     border-radius:var(--radius);
     background:linear-gradient(180deg, #eefaff 0%, #55cdfb 42%, #0771dc 100%);
-    color:#ffffff;
+    color:#d4002a;
     font-size:13px;
     font-weight:950;
     line-height:1;
     text-decoration:none;
-    text-shadow:0 1px 0 rgba(0,45,132,.34);
+    text-shadow:0 1px 0 rgba(255,255,255,.72);
     white-space:nowrap;
     box-shadow:
         0 5px 0 rgba(0,44,130,.36),
@@ -278,6 +278,12 @@ h2{
         inset 0 1px rgba(255,255,255,.58),
         inset 0 0 0 1px rgba(255,255,255,.28);
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.redbullButton span{
+    padding:4px 7px;
+    border-radius:5px;
+    background:rgba(255,255,255,.62);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.45);
 }
 .redbullButton img{
     width:22px;
