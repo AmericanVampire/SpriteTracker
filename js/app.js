@@ -224,7 +224,7 @@ function renderTracker(){
             <button class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <span class="familyName">${family.name}</span>
                 <span class="familyAbility">${family.ability || ""}</span>
-                <span class="familyMastered">MASTER</span>
+                <span class="familyMastered">MASTERED</span>
                 <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
             </button>
         `;
