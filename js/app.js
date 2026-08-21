@@ -372,6 +372,7 @@ function createSpriteCard(sprite,family){
         button.className = "spriteCard spriteCardEmpty";
         button.dataset.state = "unavailable";
         button.dataset.available = "false";
+        button.dataset.variantType = variantType({id:sprite.variantId,label:sprite.variant});
         button.title = "Not available in this generation.";
         button.innerHTML = sprite.image
             ? `${spriteVariantName(sprite)}<img src="${sprite.image}" alt="${sprite.family} unavailable ${sprite.variant}">`
@@ -385,6 +386,7 @@ function createSpriteCard(sprite,family){
     button.className = "spriteCard";
     button.dataset.state = disabled ? "disabled" : current;
     button.dataset.available = String(sprite.available);
+    button.dataset.variantType = variantType({id:sprite.variantId,label:sprite.variant});
     button.title = sprite.available
         ? "Left-click to cycle progress. Right-click to disable this sprite."
         : "Not available in this generation.";

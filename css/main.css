@@ -839,6 +839,12 @@ body.exportingImage .trackerGrid{
     font-weight:950;
     padding:0 30px;
     text-align:center;
+    text-shadow:
+        -1px -1px 0 #00123f,
+        1px -1px 0 #00123f,
+        -1px 1px 0 #00123f,
+        1px 1px 0 #00123f,
+        0 3px 6px rgba(0,22,74,.58);
 }
 .familyStatus{
     position:absolute;
@@ -1581,7 +1587,40 @@ dialog::backdrop{
         text-overflow:ellipsis;
         text-transform:uppercase;
         white-space:nowrap;
-        text-shadow:0 1px 0 rgba(0,0,0,.45);
+        text-shadow:
+            -1px -1px 0 #00123f,
+            1px -1px 0 #00123f,
+            -1px 1px 0 #00123f,
+            1px 1px 0 #00123f,
+            0 2px 5px rgba(0,18,63,.8);
+    }
+    .spriteCard[data-variant-type="normal"] .spriteVariantName,
+    .spriteCard[data-variant-type="base"] .spriteVariantName{
+        color:#d9e1f0;
+    }
+    .spriteCard[data-variant-type="gold"] .spriteVariantName{
+        color:#ffd75a;
+    }
+    .spriteCard[data-variant-type="gummy"] .spriteVariantName{
+        color:#ff9ce7;
+    }
+    .spriteCard[data-variant-type="galaxy"] .spriteVariantName{
+        color:#9b86ff;
+    }
+    .spriteCard[data-variant-type="holofoil"] .spriteVariantName{
+        color:#bdfcff;
+    }
+    .spriteCard[data-variant-type="cube"] .spriteVariantName{
+        color:#c58cff;
+    }
+    .spriteCard[data-variant-type="gem"] .spriteVariantName{
+        color:#e5f7ff;
+    }
+    .spriteCard[data-variant-type="quack"] .spriteVariantName{
+        color:#fff06d;
+    }
+    .spriteCard[data-variant-type="cheatmaster"] .spriteVariantName{
+        color:#88ff9c;
     }
     .spriteRarity{
         min-width:0;
