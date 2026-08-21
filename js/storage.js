@@ -3,6 +3,7 @@ const SpriteStore = (() => {
     const dbVersion = 1;
     const profilesStore = "profiles";
     const settingsStore = "settings";
+    const startupStorageKey = "sprite-tracker-startup-profile";
 
     function openDb(){
         return new Promise((resolve,reject)=>{
@@ -130,12 +131,23 @@ const SpriteStore = (() => {
         const setting = await withStore(settingsStore,"readonly",store=>
             requestToPromise(store.get("startupProfile"))
         );
-        return setting?.value || null;
+        return setting?.value || localStorage.getItem(startupStorageKey) || null;
     }
 
     async function setStartupProfile(name){
+        if(name){
+            localStorage.setItem(startupStorageKey,name);
+        }
+        else{
+            localStorage.removeItem(startupStorageKey);
+        }
         await withStore(settingsStore,"readwrite",store=>{
-            store.put({key:"startupProfile",value:name});
+            if(name){
+                store.put({key:"startupProfile",value:name});
+            }
+            else{
+                store.delete("startupProfile");
+            }
         });
     }
 

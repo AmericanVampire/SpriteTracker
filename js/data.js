@@ -1,7 +1,15 @@
 const APP_VERSION = "0.1.0-web";
 
+const SPRITE_DROP_TIMER = {
+    enabled:true,
+    label:"Next Sprite Drop",
+    cadence:"daily-reset",
+    resetHourEt:9,
+    note:"Fortnite reset"
+};
+
 const VARIANTS = [
-    { id:"normal", label:"Normal", prefix:"" },
+    { id:"normal", label:"Base", prefix:"" },
     { id:"gold", label:"Gold", prefix:"gold-" },
     { id:"gummy", label:"Gummy", prefix:"gummy-" },
     { id:"galaxy", label:"Galaxy", prefix:"galaxy-" },

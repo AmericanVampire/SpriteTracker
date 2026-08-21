@@ -17,6 +17,9 @@ const els = {
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
+    timerLabel:document.getElementById("timerLabel"),
+    timerValue:document.getElementById("timerValue"),
+    timerNote:document.getElementById("timerNote"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
@@ -57,6 +60,10 @@ function profileLoaded(){
 
 function seasonPickerLabel(season){
     return season.season.toUpperCase();
+}
+
+function variantType(variant){
+    return variant.id === "normal" ? "base" : variant.id;
 }
 
 function rarityClass(rarity){
@@ -158,6 +165,109 @@ function renderProfile(){
     els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
 }
 
+function nextEasternResetDate(now = new Date()){
+    const easternParts = new Intl.DateTimeFormat("en-US",{
+        timeZone:"America/New_York",
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:false
+    }).formatToParts(now).reduce((parts,part)=>{
+        if(part.type !== "literal"){
+            parts[part.type] = Number(part.value);
+        }
+        return parts;
+    },{});
+    const easternDate = new Date(Date.UTC(
+        easternParts.year,
+        easternParts.month - 1,
+        easternParts.day,
+        SPRITE_DROP_TIMER.resetHourEt,
+        0,
+        0
+    ));
+    const currentEastern = new Date(Date.UTC(
+        easternParts.year,
+        easternParts.month - 1,
+        easternParts.day,
+        easternParts.hour,
+        easternParts.minute,
+        easternParts.second
+    ));
+    if(currentEastern >= easternDate){
+        easternDate.setUTCDate(easternDate.getUTCDate() + 1);
+    }
+    const easternOffset = getTimeZoneOffsetMinutes(easternDate,"America/New_York");
+    return new Date(easternDate.getTime() - easternOffset * 60000);
+}
+
+function getTimeZoneOffsetMinutes(date,timeZone){
+    const parts = new Intl.DateTimeFormat("en-US",{
+        timeZone,
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:false
+    }).formatToParts(date).reduce((acc,part)=>{
+        if(part.type !== "literal"){
+            acc[part.type] = Number(part.value);
+        }
+        return acc;
+    },{});
+    const utcAsZone = Date.UTC(
+        parts.year,
+        parts.month - 1,
+        parts.day,
+        parts.hour,
+        parts.minute,
+        parts.second
+    );
+    return (utcAsZone - date.getTime()) / 60000;
+}
+
+function dropTimerTarget(){
+    if(!SPRITE_DROP_TIMER?.enabled){
+        return null;
+    }
+    if(SPRITE_DROP_TIMER.target){
+        return new Date(SPRITE_DROP_TIMER.target);
+    }
+    if(SPRITE_DROP_TIMER.cadence === "daily-reset"){
+        return nextEasternResetDate();
+    }
+    return null;
+}
+
+function renderDropTimer(){
+    if(!els.timerValue){
+        return;
+    }
+    els.timerLabel.textContent = SPRITE_DROP_TIMER?.label || "Next Sprite Drop";
+    els.timerNote.textContent = SPRITE_DROP_TIMER?.note || "";
+    const target = dropTimerTarget();
+    if(!target || Number.isNaN(target.getTime())){
+        els.timerValue.textContent = "--:--:--";
+        els.timerNote.textContent = "Timer pending";
+        return;
+    }
+    const remaining = Math.max(0,target.getTime() - Date.now());
+    const totalSeconds = Math.floor(remaining / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const pad = value=>String(value).padStart(2,"0");
+    els.timerValue.textContent = days > 0
+        ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+        : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
 function renderTracker(){
     const season = activeSeason();
     els.trackerGrid.innerHTML = "";
@@ -189,7 +299,7 @@ function renderTracker(){
             </details>
         </div>
         ${season.variants.map(variant=>
-        `<button class="variantToggle" data-variant="${variant.id}" data-variant-type="${variant.id}" data-disabled="${progress.disabledVariants[variant.id] === true}">
+        `<button class="variantToggle" data-variant="${variant.id}" data-variant-type="${variantType(variant)}" data-disabled="${progress.disabledVariants[variant.id] === true}">
             <span>${variant.label}</span>
             <small>${progress.disabledVariants[variant.id] === true ? "DISABLED" : "ENABLED"}</small>
         </button>`
@@ -409,6 +519,7 @@ function render(){
     renderProfile();
     renderStats();
     renderTracker();
+    renderDropTimer();
     updateStickyOffsets();
 }
 
@@ -738,6 +849,7 @@ async function openProfileChooser(){
         button.addEventListener("click",async()=>{
             state.profile = await SpriteStore.openProfile(profile);
             state.seasonId = state.profile.activeSeasonId || "override";
+            await SpriteStore.setStartupProfile(state.profile.profileName);
             els.dialog.close();
             render();
         });
@@ -755,6 +867,7 @@ async function importProfile(file){
     }
     state.profile = await SpriteStore.saveProfile(profile);
     state.seasonId = state.profile.activeSeasonId || "override";
+    await SpriteStore.setStartupProfile(state.profile.profileName);
     render();
 }
 
@@ -897,7 +1010,16 @@ async function init(){
             console.warn(error);
         }
     }
+    if(!state.profile){
+        const profiles = await SpriteStore.getProfiles();
+        if(profiles.length === 1){
+            state.profile = await SpriteStore.openProfile(profiles[0]);
+            state.seasonId = state.profile.activeSeasonId || "override";
+            await SpriteStore.setStartupProfile(state.profile.profileName);
+        }
+    }
     render();
+    setInterval(renderDropTimer,1000);
 }
 
 init();

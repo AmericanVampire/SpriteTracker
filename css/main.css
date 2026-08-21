@@ -470,6 +470,12 @@ button.danger,
 .statsDeck{
     padding:0;
 }
+.statsDeck{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(210px, .34fr);
+    gap:18px;
+    align-items:end;
+}
 .statsGrid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -507,6 +513,42 @@ button.danger,
     text-align:right;
     white-space:nowrap;
     text-shadow:0 1px 0 rgba(0,43,132,.28);
+}
+.spriteTimer{
+    min-height:82px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:4px;
+    padding:12px 14px;
+    border:1px solid rgba(166,242,255,.34);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, rgba(33,206,255,.26), rgba(4,73,177,.7));
+    box-shadow:
+        0 5px 0 rgba(0,52,145,.34),
+        inset 0 1px rgba(255,255,255,.22),
+        inset 0 0 20px rgba(0,231,255,.1);
+}
+.spriteTimer span,
+.spriteTimer small{
+    color:#dff9ff;
+    font-size:11px;
+    font-weight:950;
+    letter-spacing:.08em;
+    line-height:1;
+    text-transform:uppercase;
+}
+.spriteTimer strong{
+    color:#fff;
+    font-size:27px;
+    font-weight:950;
+    line-height:1;
+    text-shadow:0 2px 0 rgba(0,54,150,.44);
+    white-space:nowrap;
+}
+.spriteTimer small{
+    color:#fff36a;
+    font-size:10px;
 }
 .trackerDeck{
     min-height:420px;
@@ -1394,6 +1436,10 @@ dialog::backdrop{
         bottom:-12px;
         height:12px;
     }
+    .statsDeck{
+        grid-template-columns:1fr;
+        gap:8px;
+    }
     .statsGrid{
         grid-template-columns:1fr;
         row-gap:0;
@@ -1407,6 +1453,15 @@ dialog::backdrop{
     }
     .statBox strong{
         font-size:18px;
+    }
+    .spriteTimer{
+        min-height:54px;
+        padding:9px 10px;
+        align-items:center;
+        text-align:center;
+    }
+    .spriteTimer strong{
+        font-size:22px;
     }
     .gridHeader{
         grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
