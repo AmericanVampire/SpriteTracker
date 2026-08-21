@@ -391,7 +391,7 @@ body.exportingImage .trackerGrid{
 }
 .trackerDeck[data-variant-count="3"] .gridHeader,
 .trackerDeck[data-variant-count="3"] .spriteRow{
-    grid-template-columns:minmax(168px, 210px) repeat(3, minmax(112px, 113px));
+    grid-template-columns:minmax(168px, 210px) repeat(3, minmax(112px, calc((100% - 210px - 64px) / 8)));
 }
 .trackerDeck[data-variant-count="8"] .gridHeader,
 .trackerDeck[data-variant-count="8"] .spriteRow{
