@@ -241,11 +241,12 @@ h2{
     padding:7px 12px 7px 8px;
     border-radius:var(--radius);
     background:linear-gradient(180deg, #eefaff 0%, #55cdfb 42%, #0771dc 100%);
-    color:#d40931;
+    color:#ffffff;
     font-size:13px;
     font-weight:950;
     line-height:1;
     text-decoration:none;
+    text-shadow:0 1px 0 rgba(0,45,132,.34);
     white-space:nowrap;
     box-shadow:
         0 5px 0 rgba(0,44,130,.36),
@@ -1551,6 +1552,7 @@ dialog::backdrop{
         grid-template-columns:82px 1fr;
         gap:12px;
         padding:12px;
+        pointer-events:auto;
     }
     .abilityPreview img{
         width:78px;

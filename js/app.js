@@ -2,6 +2,7 @@ const state = {
     profile:null,
     seasonId:"override"
 };
+let suppressNextAbilityCloseClick = false;
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
@@ -473,6 +474,14 @@ function showAbilityPreview(familySlug){
 
 function hideAbilityPreview(){
     els.abilityPreview.hidden = true;
+}
+
+function mobileAbilityPreviewOpen(){
+    return window.matchMedia("(max-width: 620px)").matches && !els.abilityPreview.hidden;
+}
+
+function mobileViewport(){
+    return window.matchMedia("(max-width: 620px)").matches;
 }
 
 function spriteVariantName(sprite){
@@ -958,36 +967,80 @@ function bindControls(){
         window.scrollTo({top:0,behavior:"smooth"});
     });
     els.trackerGrid.addEventListener("mouseover",event=>{
+        if(mobileViewport()){
+            return;
+        }
         const button = event.target.closest(".abilityButton");
         if(button){
             showAbilityPreview(button.dataset.family);
         }
     });
     els.trackerGrid.addEventListener("mouseout",event=>{
+        if(mobileViewport()){
+            return;
+        }
         const button = event.target.closest(".abilityButton");
         if(button && !button.contains(event.relatedTarget)){
             hideAbilityPreview();
         }
     });
     els.trackerGrid.addEventListener("focusin",event=>{
+        if(mobileViewport()){
+            return;
+        }
         const button = event.target.closest(".abilityButton");
         if(button){
             showAbilityPreview(button.dataset.family);
         }
     });
     els.trackerGrid.addEventListener("focusout",event=>{
+        if(mobileViewport()){
+            return;
+        }
         const button = event.target.closest(".abilityButton");
         if(button){
             hideAbilityPreview();
         }
     });
-    els.trackerGrid.addEventListener("click",event=>{
+    els.trackerGrid.addEventListener("pointerdown",event=>{
         const button = event.target.closest(".abilityButton");
-        if(button){
+        if(button && mobileViewport()){
+            event.preventDefault();
             event.stopPropagation();
             showAbilityPreview(button.dataset.family);
         }
     });
+    els.trackerGrid.addEventListener("click",event=>{
+        const button = event.target.closest(".abilityButton");
+        if(button){
+            event.preventDefault();
+            event.stopPropagation();
+            showAbilityPreview(button.dataset.family);
+        }
+    });
+    els.abilityPreview.addEventListener("click",event=>{
+        event.stopPropagation();
+    });
+    document.addEventListener("pointerdown",event=>{
+        if(!mobileAbilityPreviewOpen()){
+            return;
+        }
+        if(event.target.closest(".abilityPreview") || event.target.closest(".abilityButton")){
+            return;
+        }
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        suppressNextAbilityCloseClick = true;
+        hideAbilityPreview();
+    },true);
+    document.addEventListener("click",event=>{
+        if(!suppressNextAbilityCloseClick){
+            return;
+        }
+        suppressNextAbilityCloseClick = false;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    },true);
     document.addEventListener("click",event=>{
         if(!event.target.closest(".abilityButton")){
             hideAbilityPreview();
