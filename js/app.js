@@ -666,9 +666,15 @@ function safeFilename(value){
         .trim() || "Profile";
 }
 
-async function saveImageBlob(blob,filename){
+async function saveImageBlob(blob,filename,saveHandle = null){
+    if(saveHandle){
+        const writable = await saveHandle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return;
+    }
     const file = new File([blob],filename,{type:"image/png"});
-    if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+    if(mobileViewport() && navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
         try{
             await navigator.share({
                 files:[file],
@@ -713,6 +719,29 @@ async function saveImageBlob(blob,filename){
         return;
     }
     setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+
+async function chooseDesktopImageFile(filename){
+    if(mobileViewport() || !window.showSaveFilePicker){
+        return null;
+    }
+    try{
+        return await window.showSaveFilePicker({
+            suggestedName:filename,
+            types:[
+                {
+                    description:"PNG Image",
+                    accept:{"image/png":[".png"]}
+                }
+            ]
+        });
+    }
+    catch(error){
+        if(error?.name === "AbortError"){
+            return false;
+        }
+        throw error;
+    }
 }
 
 function exportCsv(){
@@ -873,6 +902,11 @@ async function exportImage(){
         );
         return;
     }
+    const filename = `Sprite Tracker - ${safeFilename(state.profile.profileName)}.png`;
+    const saveHandle = await chooseDesktopImageFile(filename);
+    if(saveHandle === false){
+        return;
+    }
     try{
         const exportTarget = document.querySelector(".siteShell");
         document.body.classList.add("exportingImage");
@@ -890,7 +924,8 @@ async function exportImage(){
         }
         await saveImageBlob(
             imageBlob,
-            `Sprite Tracker - ${safeFilename(state.profile.profileName)}.png`
+            filename,
+            saveHandle
         );
     }
     catch(error){
