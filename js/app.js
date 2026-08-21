@@ -509,6 +509,14 @@ async function exportImage(){
         showDialog("Export Image","Open a profile first.",[{label:"OK"}]);
         return;
     }
+    if(window.location.protocol === "file:"){
+        showDialog(
+            "Export Image",
+            "Image export needs the local preview or hosted website. Opening index.html directly blocks the browser from reading the sprite images for export.",
+            [{label:"OK"}]
+        );
+        return;
+    }
     if(!window.htmlToImage){
         showDialog(
             "Export Image",
@@ -535,7 +543,11 @@ async function exportImage(){
     }
     catch(error){
         console.error(error);
-        showDialog("Export Image","The image export failed. Please try again.",[{label:"OK"}]);
+        showDialog(
+            "Export Image",
+            "The image export failed. Refresh the page and try again from the local preview or hosted website.",
+            [{label:"OK"}]
+        );
     }
     finally{
         document.body.classList.remove("exportingImage");
