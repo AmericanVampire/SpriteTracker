@@ -908,10 +908,12 @@ async function exportImage(){
     if(saveHandle === false){
         return;
     }
+    const restoreScroll = {x:window.scrollX,y:window.scrollY};
     try{
         const exportTarget = document.querySelector(".siteShell");
+        window.scrollTo(0,0);
         document.body.classList.add("exportingImage");
-        await new Promise(resolve=>requestAnimationFrame(resolve));
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
         const exportOptions = {
             pixelRatio:mobileViewport() ? 1.5 : 2,
             cacheBust:true,
@@ -939,6 +941,7 @@ async function exportImage(){
     }
     finally{
         document.body.classList.remove("exportingImage");
+        window.scrollTo(restoreScroll.x,restoreScroll.y);
     }
 }
 

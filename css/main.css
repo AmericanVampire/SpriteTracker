@@ -645,10 +645,23 @@ body.exportingImage .siteShell{
     padding:18px;
     background:#063da5;
 }
+body.exportingImage .siteShell::before{
+    display:none;
+}
 body.exportingImage .topBar{
     position:relative;
     top:auto;
+    z-index:1;
     justify-content:center;
+}
+body.exportingImage .trackerSticky{
+    position:relative;
+    top:auto;
+    z-index:1;
+}
+body.exportingImage .trackerSticky::before,
+body.exportingImage .trackerSticky::after{
+    display:none;
 }
 body.exportingImage .brandMark{
     flex:0 1 auto;
