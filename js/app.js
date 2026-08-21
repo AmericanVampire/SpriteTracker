@@ -4,10 +4,12 @@ const state = {
 };
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
+const DISCORD_INVITE_URL = "";
 
 const els = {
     topBar:document.querySelector(".topBar"),
     donateButton:document.getElementById("donateButton"),
+    discordButton:document.getElementById("discordButton"),
     currentProfileName:document.getElementById("currentProfileName"),
     foundStat:document.getElementById("foundStat"),
     masteredStat:document.getElementById("masteredStat"),
@@ -699,6 +701,14 @@ function bindControls(){
         els.donateButton.removeAttribute("href");
         els.donateButton.setAttribute("aria-disabled","true");
         els.donateButton.title = "PayPal donate link coming soon.";
+    }
+    if(DISCORD_INVITE_URL){
+        els.discordButton.href = DISCORD_INVITE_URL;
+    }
+    else{
+        els.discordButton.removeAttribute("href");
+        els.discordButton.setAttribute("aria-disabled","true");
+        els.discordButton.title = "Discord invite link coming soon.";
     }
     document.getElementById("newProfileButton").addEventListener("click",()=>{
         promptDialog("New Profile","Profile name","",async(name)=>{
