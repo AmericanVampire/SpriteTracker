@@ -166,6 +166,7 @@ function renderTracker(){
         season.variants.length
     );
     els.trackerDeck.dataset.variantCount = String(season.variants.length);
+    els.trackerDeck.dataset.profileLoaded = String(profileLoaded());
     const progress = profileLoaded()
         ? seasonProgress(state.profile,state.seasonId)
         : emptySeasonProgress();
