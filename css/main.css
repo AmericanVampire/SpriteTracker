@@ -1505,12 +1505,11 @@ dialog::backdrop{
         font-size:18px;
     }
     .gridHeader{
-        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+        grid-template-columns:1fr !important;
         gap:8px;
         padding-top:10px;
     }
     .seasonPickerCell{
-        grid-column:1 / -1;
         min-height:50px;
         padding:5px;
     }
@@ -1522,10 +1521,7 @@ dialog::backdrop{
         min-width:0;
     }
     .variantToggle{
-        min-height:48px;
-    }
-    .variantToggle span{
-        font-size:13px;
+        display:none;
     }
     .spriteRow{
         grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
