@@ -4,6 +4,7 @@ const state = {
 };
 
 const els = {
+    topBar:document.querySelector(".topBar"),
     currentProfileName:document.getElementById("currentProfileName"),
     storageNote:document.getElementById("storageNote"),
     foundStat:document.getElementById("foundStat"),
@@ -223,7 +224,7 @@ function renderTracker(){
             <div class="familyCell" data-disabled="${familyDisabled}" data-complete="${familyComplete}">
                 <button class="familyMain" type="button">
                     <span class="familyName">${family.name}</span>
-                    <span class="familyMastered">MASTERED</span>
+                    <span class="familyMastered">SET MASTERED</span>
                     <span class="familyStatus">${familyDisabled ? "DISABLED" : "ENABLED"}</span>
                 </button>
                 ${abilityButton(family,abilitySprite)}
@@ -367,6 +368,12 @@ function render(){
     renderProfile();
     renderStats();
     renderTracker();
+    updateStickyOffsets();
+}
+
+function updateStickyOffsets(){
+    const topBarHeight = Math.round(els.topBar.getBoundingClientRect().height);
+    document.documentElement.style.setProperty("--topbar-height", `${topBarHeight}px`);
 }
 
 function showDialog(title,content,actions){
@@ -662,6 +669,7 @@ function bindControls(){
             }
         });
     });
+    window.addEventListener("resize",updateStickyOffsets);
 }
 
 async function init(){
