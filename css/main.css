@@ -12,6 +12,7 @@
     --text:#f8fbff;
     --muted:#b7c3ff;
     --danger:#ff4d6d;
+    --disabled-red:#ff6a7f;
     --radius:8px;
     font-family:Inter, "Segoe UI", system-ui, sans-serif;
 }
@@ -478,10 +479,11 @@ body.exportingImage .trackerGrid{
     color:rgba(7,27,13,.76);
 }
 .variantToggle[data-disabled="true"]{
-    filter:grayscale(1) brightness(.62);
+    background:linear-gradient(180deg, #5b6070, #303444);
+    color:#d9def0;
 }
 .variantToggle[data-disabled="true"] small{
-    color:#ff6a7f;
+    color:var(--disabled-red);
 }
 .spriteRow{
     padding:10px 0;
@@ -519,7 +521,8 @@ body.exportingImage .trackerGrid{
         inset 0 0 0 1px rgba(255,255,255,.06);
 }
 .familyCell[data-disabled="true"]{
-    filter:grayscale(1) brightness(.65);
+    background:rgba(125,130,150,.12);
+    color:#d9def0;
 }
 .familyCell[data-complete="true"]{
     box-shadow:
@@ -555,7 +558,7 @@ body.exportingImage .trackerGrid{
 }
 .familyCell[data-disabled="true"] .familyStatus{
     background:rgba(255,77,109,.14);
-    color:#ff6a7f;
+    color:var(--disabled-red);
 }
 .familyMastered{
     display:none;
@@ -628,7 +631,7 @@ body.exportingImage .trackerGrid{
     border:2px solid rgba(255,255,255,.86);
     border-radius:4px;
     background:rgba(10,13,34,.76);
-    color:#ff6a7f;
+    color:var(--disabled-red);
     font-size:13px;
     font-weight:950;
     letter-spacing:.12em;
