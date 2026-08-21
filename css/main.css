@@ -497,21 +497,17 @@ body.exportingImage .trackerGrid{
     color:#071b0d;
 }
 .seasonPickerCell{
-    padding:7px 10px;
-    align-items:stretch !important;
-}
-.seasonPickerCell span{
-    color:var(--cyan);
-    font-size:9px;
-    font-weight:950;
-    letter-spacing:.16em;
-    text-transform:uppercase;
+    padding:6px 12px;
+    align-items:center !important;
+    justify-content:center !important;
 }
 .seasonMenu summary{
-    min-width:0;
-    min-height:30px;
-    padding:6px 10px;
-    font-size:12px;
+    min-width:154px;
+    min-height:42px;
+    justify-content:center;
+    gap:14px;
+    padding:10px 14px;
+    font-size:13px;
 }
 .seasonMenuPanel button{
     min-height:34px;

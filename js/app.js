@@ -171,7 +171,6 @@ function renderTracker(){
         : emptySeasonProgress();
     els.gridHeader.innerHTML = `
         <div class="seasonPickerCell">
-            <span>${season.chapter}</span>
             <details class="seasonMenu">
                 <summary>${seasonPickerLabel(season)}</summary>
                 <div class="seasonMenuPanel">
