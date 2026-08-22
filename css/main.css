@@ -974,8 +974,12 @@ body.exportingImage .trackerGrid{
     bottom:10px;
     min-width:72px;
     padding:4px 7px;
-    background:rgba(103,255,80,.12);
-    color:#dbffe5;
+    background:linear-gradient(180deg, #9effa0, #28b45e);
+    color:#061807;
+    text-shadow:0 1px 0 rgba(255,255,255,.32);
+    box-shadow:
+        0 3px 0 rgba(0,76,34,.36),
+        inset 0 1px rgba(255,255,255,.42);
 }
 .mobileExportMastered{
     display:none;
@@ -995,8 +999,11 @@ body.exportingImage .trackerGrid{
     background:#31537f;
 }
 .mobileExportFamily[data-disabled="true"] .mobileExportStatus{
-    background:rgba(255,77,109,.14);
-    color:var(--disabled-red);
+    background:linear-gradient(180deg, #ff9bab, #d72849);
+    color:#230006;
+    box-shadow:
+        0 3px 0 rgba(93,0,18,.38),
+        inset 0 1px rgba(255,255,255,.34);
 }
 .mobileExportSprite{
     min-height:134px;
@@ -1318,15 +1325,22 @@ body.exportingImage .trackerGrid{
     justify-content:center;
     padding:3px 7px;
     border-radius:5px;
-    background:rgba(103,255,80,.12);
-    color:#dbffe5;
+    background:linear-gradient(180deg, #9effa0, #28b45e);
+    color:#061807;
     font-size:10px;
     font-weight:950;
     letter-spacing:.12em;
+    text-shadow:0 1px 0 rgba(255,255,255,.32);
+    box-shadow:
+        0 3px 0 rgba(0,76,34,.36),
+        inset 0 1px rgba(255,255,255,.42);
 }
 .familyCell[data-disabled="true"] .familyStatus{
-    background:rgba(255,77,109,.14);
-    color:var(--disabled-red);
+    background:linear-gradient(180deg, #ff9bab, #d72849);
+    color:#230006;
+    box-shadow:
+        0 3px 0 rgba(93,0,18,.38),
+        inset 0 1px rgba(255,255,255,.34);
 }
 .familyMastered{
     display:none;
