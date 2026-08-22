@@ -209,6 +209,69 @@ a,
     background:linear-gradient(180deg, #0756c4, #062b81);
     backdrop-filter:blur(14px);
 }
+.topActions{
+    display:flex;
+    flex:0 0 auto;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:center;
+    gap:8px;
+    min-width:max-content;
+}
+.noticeButton{
+    position:relative;
+    z-index:3;
+    width:36px;
+    height:36px;
+    display:grid;
+    place-items:center;
+    border:0;
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, #2d88ff, #173fba);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:
+        0 4px 0 rgba(0,0,0,.3),
+        0 12px 22px rgba(0,54,148,.25),
+        inset 0 1px rgba(255,255,255,.28),
+        inset 0 0 0 1px rgba(255,255,255,.18);
+    transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.noticeButton svg{
+    width:20px;
+    height:20px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.35;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    filter:drop-shadow(0 2px 0 rgba(0,35,110,.45));
+}
+.noticeButton:hover{
+    filter:brightness(1.12);
+    transform:translateY(-1px);
+}
+.noticeButton:active{
+    transform:translateY(2px);
+    box-shadow:
+        0 2px 0 rgba(0,0,0,.34),
+        inset 0 1px rgba(255,255,255,.2);
+}
+.noticeDot{
+    position:absolute;
+    top:5px;
+    right:5px;
+    width:10px;
+    height:10px;
+    border-radius:999px;
+    background:#ff233f;
+    box-shadow:
+        0 0 0 2px #062b81,
+        0 0 10px rgba(255,35,63,.78);
+}
+.noticeButton[data-unread="false"] .noticeDot{
+    display:none;
+}
 .brandMark{
     display:inline-flex;
     align-items:center;
@@ -2133,6 +2196,20 @@ dialog::backdrop{
         gap:6px;
         min-height:0;
         padding:6px;
+    }
+    .topActions{
+        align-items:stretch;
+        min-width:0;
+        width:100%;
+    }
+    .noticeButton{
+        align-self:flex-end;
+        width:32px;
+        height:32px;
+    }
+    .noticeButton svg{
+        width:18px;
+        height:18px;
     }
     .brandMark{
         flex:0 0 auto;

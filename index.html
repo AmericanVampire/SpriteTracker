@@ -22,50 +22,59 @@
     <title>Sprite Tracker</title>
     <link rel="canonical" href="https://spritetracker.net/">
     <link rel="icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="css/main.css?v=2026-08-22-11">
+    <link rel="stylesheet" href="css/main.css?v=2026-08-22-12">
 </head>
 <body>
     <div class="scanlines" aria-hidden="true"></div>
     <div class="siteShell">
         <header class="topBar">
-            <a class="brandMark" href="/" aria-label="Sprite Tracker top">
+            <div class="brandMark" aria-label="Sprite Tracker">
                 <img src="assets/sprite-tracker-title.png" alt="Sprite Tracker">
-            </a>
-            <section class="topProfile" aria-label="Profile controls">
-                <a id="donateButton" class="redbullButton" href="#" target="_blank" rel="noopener">
-                    <img src="assets/buy-me-a-redbull.png" alt="">
-                    <span>Buy me a Red Bull</span>
-                </a>
-                <a id="discordButton" class="discordButton" href="#" target="_blank" rel="noopener">
-                    <img src="assets/discord-logo.png" alt="">
-                    <span>Join Discord</span>
-                </a>
-                <div class="profileStatus">
-                    <span>Profile</span>
-                    <strong id="currentProfileName">No profile loaded</strong>
-                    <small id="storageNote">Saved locally with IndexedDB</small>
-                </div>
-                <details class="profileMenu">
-                    <summary>Menu</summary>
-                    <div class="profileMenuPanel">
-                        <div class="menuGroupLabel">Profiles</div>
-                        <button id="newProfileButton" type="button">New Profile</button>
-                        <button id="openProfileButton" type="button">Open Profile</button>
-                        <button id="renameProfileButton" type="button">Rename Profile</button>
-                        <button id="importProfileButton" type="button">Import Profile</button>
-                        <div class="menuDivider"></div>
-                        <div class="menuGroupLabel">Export</div>
-                        <button id="exportProfileButton" type="button">Export Profile</button>
-                        <button id="exportImageButton" type="button">Export Image</button>
-                        <button id="exportTextButton" type="button">Export Text</button>
-                        <button id="exportCsvButton" type="button">Export CSV</button>
-                        <div class="menuDivider"></div>
-                        <div class="menuGroupLabel">Delete Profile</div>
-                        <button id="deleteProfileButton" type="button" class="danger">Delete Profile</button>
+            </div>
+            <div class="topActions">
+                <button id="noticeButton" class="noticeButton" type="button" aria-label="Sprite Tracker notice" title="Sprite Tracker notice">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2v1h16v-1l-2-2Z"></path>
+                        <path d="M9.5 20a2.8 2.8 0 0 0 5 0"></path>
+                    </svg>
+                    <span class="noticeDot" aria-hidden="true"></span>
+                </button>
+                <section class="topProfile" aria-label="Profile controls">
+                    <a id="donateButton" class="redbullButton" href="#" target="_blank" rel="noopener">
+                        <img src="assets/buy-me-a-redbull.png" alt="">
+                        <span>Buy me a Red Bull</span>
+                    </a>
+                    <a id="discordButton" class="discordButton" href="#" target="_blank" rel="noopener">
+                        <img src="assets/discord-logo.png" alt="">
+                        <span>Join Discord</span>
+                    </a>
+                    <div class="profileStatus">
+                        <span>Profile</span>
+                        <strong id="currentProfileName">No profile loaded</strong>
+                        <small id="storageNote">Saved locally with IndexedDB</small>
                     </div>
-                </details>
-                <input id="importFileInput" type="file" accept="application/json,.json" hidden>
-            </section>
+                    <details class="profileMenu">
+                        <summary>Menu</summary>
+                        <div class="profileMenuPanel">
+                            <div class="menuGroupLabel">Profiles</div>
+                            <button id="newProfileButton" type="button">New Profile</button>
+                            <button id="openProfileButton" type="button">Open Profile</button>
+                            <button id="renameProfileButton" type="button">Rename Profile</button>
+                            <button id="importProfileButton" type="button">Import Profile</button>
+                            <div class="menuDivider"></div>
+                            <div class="menuGroupLabel">Export</div>
+                            <button id="exportProfileButton" type="button">Export Profile</button>
+                            <button id="exportImageButton" type="button">Export Image</button>
+                            <button id="exportTextButton" type="button">Export Text</button>
+                            <button id="exportCsvButton" type="button">Export CSV</button>
+                            <div class="menuDivider"></div>
+                            <div class="menuGroupLabel">Delete Profile</div>
+                            <button id="deleteProfileButton" type="button" class="danger">Delete Profile</button>
+                        </div>
+                    </details>
+                    <input id="importFileInput" type="file" accept="application/json,.json" hidden>
+                </section>
+            </div>
         </header>
 
         <main class="appGrid">
@@ -137,8 +146,8 @@
     </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
-    <script src="js/data.js?v=2026-08-22-11"></script>
-    <script src="js/storage.js?v=2026-08-22-11"></script>
-    <script src="js/app.js?v=2026-08-22-11"></script>
+    <script src="js/data.js?v=2026-08-22-12"></script>
+    <script src="js/storage.js?v=2026-08-22-12"></script>
+    <script src="js/app.js?v=2026-08-22-12"></script>
 </body>
 </html>

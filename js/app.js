@@ -6,9 +6,12 @@ let suppressNextAbilityCloseClick = false;
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
+const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v1";
 
 const els = {
     topBar:document.querySelector(".topBar"),
+    noticeButton:document.getElementById("noticeButton"),
     donateButton:document.getElementById("donateButton"),
     discordButton:document.getElementById("discordButton"),
     footerInfoButton:document.getElementById("footerInfoButton"),
@@ -794,6 +797,48 @@ function promptDialog(title,label,defaultValue,onSubmit){
         }
     ]);
     setTimeout(()=>wrapper.querySelector("input").focus(),50);
+}
+
+function appNoticeHasBeenRead(){
+    return localStorage.getItem(APP_NOTICE_STORAGE_KEY) === "read";
+}
+
+function updateNoticeButton(){
+    if(!els.noticeButton){
+        return;
+    }
+    els.noticeButton.dataset.unread = appNoticeHasBeenRead() ? "false" : "true";
+}
+
+function markAppNoticeRead(){
+    localStorage.setItem(APP_NOTICE_STORAGE_KEY,"read");
+    updateNoticeButton();
+}
+
+function showAppNotice(){
+    markAppNoticeRead();
+    showDialog("Sprite Tracker Notice",`
+        <div class="legalInfo webNoticeInfo">
+            <div class="legalIntro">
+                <strong>Sprite Tracker desktop app</strong>
+                <span>Get the Windows app from the Microsoft Store.</span>
+            </div>
+            <p>
+                The desktop app gives you the same Sprite tracking style in a
+                dedicated Windows experience.
+            </p>
+            <p>
+                Profiles are still stored locally. Use Export and Import when
+                you want to move progress between the website and the app.
+            </p>
+        </div>
+    `,[
+        {label:"Close"},
+        {
+            label:"Open Microsoft Store",
+            onClick:()=>window.open(MICROSOFT_STORE_URL,"_blank","noopener")
+        }
+    ]);
 }
 
 function showTrackerInfo(){
@@ -1586,6 +1631,10 @@ async function importProfile(file){
 }
 
 function bindControls(){
+    updateNoticeButton();
+    if(els.noticeButton){
+        els.noticeButton.addEventListener("click",showAppNotice);
+    }
     if(PAYPAL_DONATE_URL){
         els.donateButton.href = PAYPAL_DONATE_URL;
     }
