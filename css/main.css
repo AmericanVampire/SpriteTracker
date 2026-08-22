@@ -2198,14 +2198,19 @@ dialog::backdrop{
         padding:6px;
     }
     .topActions{
+        display:grid;
+        grid-template-columns:42px 42px minmax(0, 1fr) 42px 96px;
         align-items:stretch;
         min-width:0;
         width:100%;
+        gap:7px;
     }
     .noticeButton{
-        align-self:flex-end;
-        width:32px;
-        height:32px;
+        order:4;
+        align-self:stretch;
+        width:100%;
+        height:auto;
+        min-height:40px;
     }
     .noticeButton svg{
         width:18px;
@@ -2223,12 +2228,19 @@ dialog::backdrop{
         object-position:center;
     }
     .topProfile{
-        display:grid;
-        grid-template-columns:42px 42px minmax(0, 1fr) 96px;
-        align-items:stretch;
-        min-width:0;
-        width:100%;
-        gap:7px;
+        display:contents;
+    }
+    .redbullButton{
+        order:1;
+    }
+    .discordButton{
+        order:2;
+    }
+    .profileStatus{
+        order:3;
+    }
+    .profileMenu{
+        order:5;
     }
     .redbullButton{
         min-width:0;
