@@ -1293,10 +1293,12 @@ body.exportingImage .trackerGrid{
     color:#d9def0;
 }
 .familyCell[data-complete="true"]{
+    background:linear-gradient(180deg, rgba(38,116,219,.5), rgba(10,55,149,.68));
     box-shadow:
-        0 5px 0 rgba(0,0,0,.22),
+        0 5px 0 rgba(0,0,0,.24),
+        0 0 22px rgba(255,224,92,.22),
         inset 0 0 0 2px var(--yellow),
-        inset 0 1px rgba(255,255,255,.12);
+        inset 0 1px rgba(255,255,255,.2);
 }
 .familyName{
     font-size:21px;
@@ -1334,13 +1336,17 @@ body.exportingImage .trackerGrid{
     justify-content:center;
     padding:3px 8px;
     border-radius:5px;
-    background:rgba(255,224,92,.16);
-    color:var(--yellow);
+    background:linear-gradient(180deg, #fff27a, #d9a414);
+    color:#201807;
     font-size:9px;
     font-weight:950;
     line-height:1;
     letter-spacing:.12em;
-    text-shadow:0 1px 0 rgba(0,0,0,.5);
+    text-shadow:0 1px 0 rgba(255,255,255,.36);
+    box-shadow:
+        0 3px 0 rgba(86,60,0,.38),
+        0 0 12px rgba(255,224,92,.24),
+        inset 0 1px rgba(255,255,255,.45);
 }
 .familyCell[data-complete="true"] .familyMastered{
     display:inline-flex;

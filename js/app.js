@@ -88,6 +88,15 @@ function isDisabled(sprite){
         progress.disabledVariants[sprite.variantId] === true;
 }
 
+function isFamilyOrVariantDisabled(sprite){
+    if(!profileLoaded()){
+        return false;
+    }
+    const progress = seasonProgress(state.profile,state.seasonId);
+    return progress.disabledFamilies[slug(sprite.family)] === true ||
+        progress.disabledVariants[sprite.variantId] === true;
+}
+
 async function persist(){
     if(!state.profile){
         return;
@@ -110,6 +119,29 @@ function nextSpriteState(current){
         return "mastered";
     }
     return "not-found";
+}
+
+function cycleMobileSpriteState(sprite){
+    const progress = seasonProgress(state.profile,state.seasonId);
+    if(isFamilyOrVariantDisabled(sprite)){
+        return;
+    }
+    if(progress.disabledSprites[sprite.id] === true){
+        delete progress.disabledSprites[sprite.id];
+        progress.sprites[sprite.id] = "not-found";
+        return;
+    }
+    const current = spriteState(sprite);
+    if(current === "not-found"){
+        progress.sprites[sprite.id] = "found";
+        return;
+    }
+    if(current === "found"){
+        progress.sprites[sprite.id] = "mastered";
+        return;
+    }
+    progress.sprites[sprite.id] = "not-found";
+    progress.disabledSprites[sprite.id] = true;
 }
 
 function calculateStats(){
@@ -398,7 +430,16 @@ function createSpriteCard(sprite,family){
         button.disabled = true;
     }
     button.addEventListener("click",async()=>{
-        if(!profileLoaded() || disabled){
+        if(!profileLoaded()){
+            return;
+        }
+        if(mobileViewport()){
+            cycleMobileSpriteState(sprite);
+            await persist();
+            render();
+            return;
+        }
+        if(disabled){
             return;
         }
         setSpriteState(sprite,nextSpriteState(current));
