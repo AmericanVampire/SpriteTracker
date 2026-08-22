@@ -1443,6 +1443,7 @@ body.exportingImage .trackerGrid{
     width:100%;
 }
 .seasonMenu summary{
+    position:relative;
     width:100%;
     min-width:0;
     min-height:54px;
@@ -1450,6 +1451,10 @@ body.exportingImage .trackerGrid{
     gap:14px;
     padding:10px 14px;
     font-size:13px;
+}
+.seasonMenu summary::after{
+    position:absolute;
+    right:18px;
 }
 .seasonMenuPanel button{
     min-height:34px;
