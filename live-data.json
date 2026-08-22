@@ -1,0 +1,66 @@
+{
+  "updatedAt": "2026-08-22T00:00:00-04:00",
+  "spriteDropTimer": {
+    "enabled": true,
+    "label": "Next Sprite Drop",
+    "target": "2026-08-27T09:00:00-04:00",
+    "note": "In-game release"
+  },
+  "spriteEvents": [
+    {
+      "name": "Golden Hours",
+      "date": "August 27, 2026",
+      "startsAt": "2026-08-27T09:00:00-04:00",
+      "duration": "for 2 hours"
+    },
+    {
+      "name": "Golden Hours",
+      "date": "August 27, 2026",
+      "startsAt": "2026-08-27T21:00:00-04:00",
+      "duration": "for 2 hours"
+    }
+  ],
+  "lobbyHackGroups": [
+    {
+      "name": "Sprites",
+      "items": [
+        { "code": "Born2Play", "reward": "Cheat Master Adventure Sprite" },
+        { "code": "8BitBlast", "reward": "Cheat Master 8-Bit Sprite" },
+        { "code": "GottaGoFast", "reward": "Cheat Master Sonic Sprite" },
+        { "code": "IWannaFlyHigh", "reward": "Cheat Master Tails Sprite" },
+        { "code": "Play4All", "reward": "Cheat Master Jonesy Sprite" },
+        { "code": "GatherAndCraft", "reward": "Cheat Master Bush Sprite (Requires Quest In-Game)" }
+      ]
+    },
+    {
+      "name": "Loading Screens & Locker Items",
+      "items": [
+        { "code": "BeMoreAlien", "reward": "Override Ready Loading Screen" },
+        { "code": "ReachYourImpossible", "reward": "Block Party Loading Screen" }
+      ]
+    },
+    {
+      "name": "Consumable Resources",
+      "items": [
+        { "code": "H0p0nVC", "reward": "2,000 Sprite Dust" },
+        { "code": "OverrideXP", "reward": "40,000 XP" },
+        { "code": "Magilume", "reward": "2,000 Sprite Dust" },
+        { "code": "Chispambo", "reward": "2,000 Sprite Dust" },
+        { "code": "Abgestaubt", "reward": "2,000 Sprite Dust" },
+        { "code": "PerlimPinPin", "reward": "2,000 Sprite Dust" },
+        { "code": "SurviveTheNight", "reward": "2 Cheat Code Locators" },
+        { "code": "FindItChat", "reward": "2 Cheat Code Locators" },
+        { "code": "TakeYourHeart", "reward": "2 Extraction Accelerators" },
+        { "code": "PerfectOrder", "reward": "4 Spicy Tacos" },
+        { "code": "O2Override", "reward": "1 Llama Supply Drop & 1 Portable Extractor" }
+      ]
+    },
+    {
+      "name": "Fun Effects",
+      "items": [
+        { "code": "DontBlockMe", "reward": "Turns you into a Tetrimino." },
+        { "code": "LetsBlockAndRoll", "reward": "Turns you into a Tetrimino." }
+      ]
+    }
+  ]
+}

@@ -50,6 +50,7 @@ const SpriteStore = (() => {
             version:APP_VERSION,
             activeSeasonId:profile.activeSeasonId || "override",
             seasons:profile.seasons || {},
+            lobbyHacks:profile.lobbyHacks || {},
             sprites:profile.sprites || {},
             disabledSprites:profile.disabledSprites || {}
         };

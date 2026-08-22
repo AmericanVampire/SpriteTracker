@@ -22,7 +22,7 @@
     <title>Sprite Tracker</title>
     <link rel="canonical" href="https://spritetracker.net/">
     <link rel="icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="css/main.css?v=2026-08-21-36">
+    <link rel="stylesheet" href="css/main.css?v=2026-08-22-01">
 </head>
 <body>
     <div class="scanlines" aria-hidden="true"></div>
@@ -90,11 +90,21 @@
                                 <strong id="overallStat">0%</strong>
                             </div>
                         </div>
-                        <aside class="spriteTimer" aria-label="Next Sprite Drop">
-                            <span id="timerLabel">Next Sprite Drop</span>
-                            <strong id="timerValue">--:--:--</strong>
-                            <small id="timerNote">In-game release</small>
-                        </aside>
+                        <div class="progressSideStack">
+                            <aside class="spriteTimer" aria-label="Next Sprite Drop">
+                                <span id="timerLabel">Next Sprite Drop</span>
+                                <strong id="timerValue">--:--:--</strong>
+                                <small id="timerNote">In-game release</small>
+                            </aside>
+                            <details class="infoDropdown eventsDropdown">
+                                <summary>Events</summary>
+                                <div id="eventsPanel" class="infoDropdownPanel"></div>
+                            </details>
+                            <details class="infoDropdown hacksDropdown">
+                                <summary>Hack Codes</summary>
+                                <div id="hackCodesPanel" class="infoDropdownPanel"></div>
+                            </details>
+                        </div>
                     </section>
                     <div id="gridHeader" class="gridHeader"></div>
                 </div>
@@ -129,8 +139,8 @@
     </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
-    <script src="js/data.js?v=2026-08-21-34"></script>
-    <script src="js/storage.js?v=2026-08-21-34"></script>
-    <script src="js/app.js?v=2026-08-21-34"></script>
+    <script src="js/data.js?v=2026-08-22-01"></script>
+    <script src="js/storage.js?v=2026-08-22-01"></script>
+    <script src="js/app.js?v=2026-08-22-01"></script>
 </body>
 </html>

@@ -21,6 +21,8 @@ const els = {
     timerLabel:document.getElementById("timerLabel"),
     timerValue:document.getElementById("timerValue"),
     timerNote:document.getElementById("timerNote"),
+    eventsPanel:document.getElementById("eventsPanel"),
+    hackCodesPanel:document.getElementById("hackCodesPanel"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
@@ -53,6 +55,11 @@ function emptySeasonProgress(){
         disabledFamilies:{},
         disabledVariants:{}
     };
+}
+
+function lobbyHacks(profile){
+    profile.lobbyHacks = profile.lobbyHacks || {};
+    return profile.lobbyHacks;
 }
 
 function profileLoaded(){
@@ -278,6 +285,22 @@ function dropTimerTarget(){
     return null;
 }
 
+function formatCountdown(target){
+    if(!target || Number.isNaN(target.getTime())){
+        return "Timer pending";
+    }
+    const remaining = Math.max(0,target.getTime() - Date.now());
+    const totalSeconds = Math.floor(remaining / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const pad = value=>String(value).padStart(2,"0");
+    return days > 0
+        ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+        : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
 function renderDropTimer(){
     if(!els.timerValue){
         return;
@@ -290,16 +313,134 @@ function renderDropTimer(){
         els.timerNote.textContent = "Timer pending";
         return;
     }
-    const remaining = Math.max(0,target.getTime() - Date.now());
-    const totalSeconds = Math.floor(remaining / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    const pad = value=>String(value).padStart(2,"0");
-    els.timerValue.textContent = days > 0
-        ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
-        : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    els.timerValue.textContent = formatCountdown(target);
+    renderEvents();
+}
+
+function eventCountdownLabel(startsAt){
+    const target = new Date(startsAt);
+    if(Number.isNaN(target.getTime())){
+        return "Starts soon";
+    }
+    return Date.now() >= target.getTime()
+        ? "Started"
+        : `Starts in ${formatCountdown(target)}`;
+}
+
+function renderEvents(){
+    if(!els.eventsPanel){
+        return;
+    }
+    const events = [];
+    const timerTarget = dropTimerTarget();
+    if(SPRITE_DROP_TIMER?.enabled){
+        events.push({
+            name:SPRITE_DROP_TIMER.label || "Next Sprite Drop",
+            countdown:timerTarget ? eventCountdownLabel(timerTarget.toISOString()) : "Timer pending",
+            meta:`${timerTarget ? timerTarget.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}) : "Date pending"} · ${SPRITE_DROP_TIMER.note || "In-game release"}`
+        });
+    }
+    (SPRITE_EVENTS || []).forEach(event=>{
+        events.push({
+            name:event.name,
+            countdown:eventCountdownLabel(event.startsAt),
+            meta:`${event.date} · ${event.duration}`
+        });
+    });
+    els.eventsPanel.innerHTML = events.map(event=>`
+        <div class="eventItem">
+            <strong>${escapeHtml(event.name)}</strong>
+            <span>${escapeHtml(event.countdown)}</span>
+            <small>${escapeHtml(event.meta)}</small>
+        </div>
+    `).join("");
+}
+
+function hackUsedIcon(){
+    return `
+        <span class="hackUsedIcon" aria-hidden="true">
+            <svg class="foundIcon" viewBox="0 0 24 24">
+                <path d="M5 13.5L10 18L19 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </span>
+    `;
+}
+
+function copyIcon(){
+    return `
+        <svg class="copyIcon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="8" y="8" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+            <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+    `;
+}
+
+async function copyText(text){
+    if(navigator.clipboard?.writeText){
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+    const input = document.createElement("textarea");
+    input.value = text;
+    input.setAttribute("readonly","");
+    input.style.position = "fixed";
+    input.style.left = "-9999px";
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+}
+
+function renderLobbyHacks(){
+    if(!els.hackCodesPanel){
+        return;
+    }
+    const used = state.profile ? lobbyHacks(state.profile) : {};
+    els.hackCodesPanel.innerHTML = `
+        <p class="hackIntro">Keep track of your codes.</p>
+        ${(LOBBY_HACK_GROUPS || []).map(group=>`
+            <section class="hackGroup">
+                <h3>${escapeHtml(group.name)}</h3>
+                ${group.items.map(item=>{
+                    const isUsed = used[item.code] === true;
+                    return `
+                        <div class="hackCodeItem" data-used="${isUsed}" data-disabled="${!profileLoaded()}">
+                            <button class="hackCodeToggle" type="button" data-code="${escapeHtml(item.code)}" ${profileLoaded() ? "" : "disabled"}>
+                                ${hackUsedIcon()}
+                                <span>
+                                    <strong>${escapeHtml(item.code)}</strong>
+                                    <small>${escapeHtml(item.reward)}</small>
+                                </span>
+                            </button>
+                            <button class="hackCopyButton" type="button" data-copy-code="${escapeHtml(item.code)}" title="Copy code" aria-label="Copy code ${escapeHtml(item.code)}">
+                                ${copyIcon()}
+                                <span>Copy code</span>
+                            </button>
+                        </div>
+                    `;
+                }).join("")}
+            </section>
+        `).join("")}
+    `;
+    els.hackCodesPanel.querySelectorAll(".hackCodeToggle").forEach(button=>{
+        button.addEventListener("click",async()=>{
+            if(!profileLoaded()){
+                return;
+            }
+            const usedCodes = lobbyHacks(state.profile);
+            usedCodes[button.dataset.code] = usedCodes[button.dataset.code] !== true;
+            await persist();
+            renderLobbyHacks();
+        });
+    });
+    els.hackCodesPanel.querySelectorAll(".hackCopyButton").forEach(button=>{
+        button.addEventListener("click",async event=>{
+            event.stopPropagation();
+            await copyText(button.dataset.copyCode);
+            button.dataset.copied = "true";
+            setTimeout(()=>delete button.dataset.copied,1100);
+        });
+    });
 }
 
 function renderTracker(){
@@ -573,6 +714,8 @@ function render(){
     renderStats();
     renderTracker();
     renderDropTimer();
+    renderEvents();
+    renderLobbyHacks();
     updateStickyOffsets();
 }
 
