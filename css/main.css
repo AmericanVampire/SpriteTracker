@@ -565,14 +565,15 @@ button.danger,
     align-items:center;
     gap:4px;
     padding:8px 12px;
-    border:1px solid rgba(166,242,255,.34);
+    border:0;
     border-radius:var(--radius);
-    background:linear-gradient(180deg, rgba(33,206,255,.3), rgba(4,73,177,.78));
+    background:linear-gradient(180deg, #2d88ff, #173fba);
     color:#fff;
     box-shadow:
-        0 5px 0 rgba(0,52,145,.34),
+        0 5px 0 rgba(0,0,0,.28),
+        0 12px 22px rgba(0,54,148,.28),
         inset 0 1px rgba(255,255,255,.22),
-        inset 0 0 20px rgba(0,231,255,.1);
+        inset 0 0 0 1px rgba(255,255,255,.14);
 }
 .dropTimerCard span{
     color:#bff6ff;
@@ -608,16 +609,17 @@ button.danger,
     gap:12px;
     min-width:300px;
     padding:6px 12px;
-    border:1px solid rgba(166,242,255,.34);
+    border:0;
     border-radius:var(--radius);
-    background:linear-gradient(180deg, rgba(33,206,255,.3), rgba(4,73,177,.78));
+    background:linear-gradient(180deg, #2d88ff, #173fba);
     color:#fff;
     cursor:pointer;
     list-style:none;
     box-shadow:
-        0 5px 0 rgba(0,52,145,.34),
+        0 5px 0 rgba(0,0,0,.28),
+        0 12px 22px rgba(0,54,148,.28),
         inset 0 1px rgba(255,255,255,.22),
-        inset 0 0 20px rgba(0,231,255,.1);
+        inset 0 0 0 1px rgba(255,255,255,.14);
 }
 .intelMenu summary::-webkit-details-marker{
     display:none;
@@ -669,7 +671,7 @@ button.danger,
     gap:7px;
 }
 .hackIntro{
-    padding:3px 4px 8px;
+    padding:3px 4px 2px;
     color:#d2e9ff;
     font-size:12px;
     font-weight:950;
@@ -678,6 +680,17 @@ button.danger,
     text-align:center;
     text-transform:uppercase;
     text-shadow:none;
+}
+.hackTotal{
+    margin:0;
+    padding:0 4px 8px;
+    color:#ffffff;
+    font-size:12px;
+    font-weight:950;
+    letter-spacing:.08em;
+    line-height:1.2;
+    text-align:center;
+    text-transform:uppercase;
 }
 .hackGroup + .hackGroup{
     padding-top:8px;
@@ -1420,13 +1433,19 @@ body.exportingImage .trackerGrid{
     color:#071b0d;
 }
 .seasonPickerCell{
-    padding:6px 12px;
+    padding:0;
     align-items:center !important;
     justify-content:center !important;
+    background:transparent !important;
+    box-shadow:none !important;
+}
+.seasonMenu{
+    width:100%;
 }
 .seasonMenu summary{
-    min-width:214px;
-    min-height:42px;
+    width:100%;
+    min-width:0;
+    min-height:54px;
     justify-content:center;
     gap:14px;
     padding:10px 14px;
@@ -2243,7 +2262,7 @@ dialog::backdrop{
     }
     .seasonPickerCell{
         min-height:50px;
-        padding:5px;
+        padding:0;
     }
     .seasonMenu,
     .seasonMenu summary{

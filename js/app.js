@@ -414,8 +414,10 @@ function renderLobbyHacks(){
         return;
     }
     const used = state.profile ? lobbyHacks(state.profile) : {};
+    const totalCodes = (LOBBY_HACK_GROUPS || []).reduce((total,group)=>total + group.items.length,0);
     els.hackCodesPanel.innerHTML = `
-        <p class="hackIntro">Keep track of your codes.</p>
+        <p class="hackIntro">Keep track of your used codes.</p>
+        <p class="hackTotal">TOTAL CODES: ${totalCodes}</p>
         ${(LOBBY_HACK_GROUPS || []).map(group=>`
             <section class="hackGroup">
                 <h3>${escapeHtml(group.name)}</h3>
