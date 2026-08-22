@@ -2257,7 +2257,9 @@ dialog::backdrop{
     }
     .gridHeader{
         grid-template-columns:1fr !important;
-        gap:8px;
+        gap:0;
+        width:calc(100% + 20px);
+        margin:0 -10px;
         padding-top:10px;
     }
     .seasonPickerCell{
