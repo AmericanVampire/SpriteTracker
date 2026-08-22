@@ -68,6 +68,10 @@ function seasonPickerLabel(season){
     return season.season.toUpperCase();
 }
 
+function seasonPickerChapter(season){
+    return (season.chapter || "").toUpperCase();
+}
+
 function variantType(variant){
     return variant.id === "normal" ? "base" : variant.id;
 }
@@ -483,7 +487,12 @@ function renderTracker(){
     els.gridHeader.innerHTML = `
         <div class="seasonPickerCell">
             <details class="seasonMenu">
-                <summary>${seasonPickerLabel(season)}</summary>
+                <summary>
+                    <span class="seasonSummaryLabel">
+                        <small>${seasonPickerChapter(season)}</small>
+                        <b>${seasonPickerLabel(season)}</b>
+                    </span>
+                </summary>
                 <div class="seasonMenuPanel">
                     ${SEASONS.map(item=>`
                         <button type="button" data-season="${item.id}" data-active="${item.id === state.seasonId}">

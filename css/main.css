@@ -671,24 +671,24 @@ button.danger,
     gap:7px;
 }
 .hackIntro{
-    padding:3px 4px 2px;
-    color:#d2e9ff;
+    padding:3px 4px 8px;
+    color:#fff;
     font-size:12px;
     font-weight:950;
     letter-spacing:.08em;
     line-height:1.2;
     text-align:center;
     text-transform:uppercase;
-    text-shadow:none;
+    text-shadow:0 2px 0 rgba(0,43,132,.34);
 }
 .hackTotal{
-    margin:0;
+    margin-top:-4px;
     padding:0 4px 8px;
-    color:#ffffff;
-    font-size:12px;
+    color:#fff36a;
+    font-size:11px;
     font-weight:950;
     letter-spacing:.08em;
-    line-height:1.2;
+    line-height:1;
     text-align:center;
     text-transform:uppercase;
 }
@@ -1447,14 +1447,46 @@ body.exportingImage .trackerGrid{
     width:100%;
     min-width:0;
     min-height:54px;
-    justify-content:center;
+    display:grid;
+    grid-template-columns:20px 1fr 20px;
+    align-items:center;
+    justify-content:stretch;
     gap:14px;
     padding:10px 14px;
     font-size:13px;
+    text-align:center;
+}
+.seasonSummaryLabel{
+    grid-column:2;
+    justify-self:center;
+    display:grid;
+    grid-template-rows:auto auto;
+    justify-items:center;
+    gap:1px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.seasonSummaryLabel small{
+    color:#fff36a;
+    font-size:9px;
+    font-weight:950;
+    letter-spacing:.12em;
+    line-height:1;
+    white-space:nowrap;
+}
+.seasonSummaryLabel b{
+    color:inherit;
+    display:block;
+    font-size:13px;
+    font-weight:950;
+    line-height:1;
+    transform:translateY(-1px);
+    white-space:nowrap;
 }
 .seasonMenu summary::after{
-    position:absolute;
-    right:18px;
+    grid-column:3;
+    justify-self:end;
 }
 .seasonMenuPanel button{
     min-height:34px;
