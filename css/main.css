@@ -2106,7 +2106,7 @@ dialog::backdrop{
     }
     .brandMark img{
         width:100%;
-        max-height:56px;
+        max-height:90px;
         object-position:center;
     }
     .topProfile{
@@ -2257,9 +2257,7 @@ dialog::backdrop{
     }
     .gridHeader{
         grid-template-columns:1fr !important;
-        gap:0;
-        width:calc(100% + 20px);
-        margin:0 -10px;
+        gap:8px;
         padding-top:10px;
     }
     .seasonPickerCell{
