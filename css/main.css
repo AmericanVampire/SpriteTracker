@@ -2035,7 +2035,7 @@ dialog::backdrop{
             inset 0 0 0 1px rgba(161,234,255,.22);
     }
     .familyMain{
-        padding:16px 92px 16px 54px;
+        padding:16px 58px;
     }
     .familyName{
         font-size:23px;
@@ -2045,8 +2045,8 @@ dialog::backdrop{
     }
     .familyStatus{
         right:10px;
-        bottom:50%;
-        transform:translateY(50%);
+        bottom:10px;
+        transform:none;
     }
     .abilityButton{
         bottom:10px;
