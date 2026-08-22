@@ -3,24 +3,12 @@ const APP_VERSION = "0.1.0-web";
 const SPRITE_DROP_TIMER = {
     enabled:true,
     label:"Next Sprite Drop",
-    target:"2026-08-27T09:00:00-04:00",
-    note:"In-game release"
+    cadence:"weekly",
+    weekdayEt:4,
+    hourEt:9,
+    minuteEt:0,
+    note:"Thursday at 9:00 AM ET"
 };
-
-const SPRITE_EVENTS = [
-    {
-        name:"Golden Hours",
-        date:"August 27, 2026",
-        startsAt:"2026-08-27T09:00:00-04:00",
-        duration:"for 2 hours"
-    },
-    {
-        name:"Golden Hours",
-        date:"August 27, 2026",
-        startsAt:"2026-08-27T21:00:00-04:00",
-        duration:"for 2 hours"
-    }
-];
 
 const LOBBY_HACK_GROUPS = [
     {

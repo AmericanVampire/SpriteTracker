@@ -18,10 +18,8 @@ const els = {
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
-    timerLabel:document.getElementById("timerLabel"),
     timerValue:document.getElementById("timerValue"),
-    timerNote:document.getElementById("timerNote"),
-    eventsPanel:document.getElementById("eventsPanel"),
+    timerDate:document.getElementById("timerDate"),
     hackCodesPanel:document.getElementById("hackCodesPanel"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
@@ -206,22 +204,30 @@ function renderProfile(){
     els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
 }
 
-function nextEasternResetDate(now = new Date()){
-    const easternParts = new Intl.DateTimeFormat("en-US",{
+function easternDateParts(date){
+    return new Intl.DateTimeFormat("en-US",{
         timeZone:"America/New_York",
         year:"numeric",
         month:"2-digit",
         day:"2-digit",
+        weekday:"short",
         hour:"2-digit",
         minute:"2-digit",
         second:"2-digit",
         hour12:false
-    }).formatToParts(now).reduce((parts,part)=>{
+    }).formatToParts(date).reduce((parts,part)=>{
         if(part.type !== "literal"){
-            parts[part.type] = Number(part.value);
+            parts[part.type] =
+                part.type === "weekday"
+                    ? part.value
+                    : Number(part.value);
         }
         return parts;
     },{});
+}
+
+function nextEasternResetDate(now = new Date()){
+    const easternParts = easternDateParts(now);
     const easternDate = new Date(Date.UTC(
         easternParts.year,
         easternParts.month - 1,
@@ -243,6 +249,38 @@ function nextEasternResetDate(now = new Date()){
     }
     const easternOffset = getTimeZoneOffsetMinutes(easternDate,"America/New_York");
     return new Date(easternDate.getTime() - easternOffset * 60000);
+}
+
+function nextWeeklyEasternDate({
+    weekdayEt = 4,
+    hourEt = 9,
+    minuteEt = 0
+} = {},now = new Date()){
+    const easternParts = easternDateParts(now);
+    const currentEastern = new Date(Date.UTC(
+        easternParts.year,
+        easternParts.month - 1,
+        easternParts.day,
+        easternParts.hour,
+        easternParts.minute,
+        easternParts.second
+    ));
+    const currentWeekday = currentEastern.getUTCDay();
+    const targetEastern = new Date(Date.UTC(
+        easternParts.year,
+        easternParts.month - 1,
+        easternParts.day,
+        hourEt,
+        minuteEt,
+        0
+    ));
+    let daysUntil = (weekdayEt - currentWeekday + 7) % 7;
+    if(daysUntil === 0 && currentEastern >= targetEastern){
+        daysUntil = 7;
+    }
+    targetEastern.setUTCDate(targetEastern.getUTCDate() + daysUntil);
+    const easternOffset = getTimeZoneOffsetMinutes(targetEastern,"America/New_York");
+    return new Date(targetEastern.getTime() - easternOffset * 60000);
 }
 
 function getTimeZoneOffsetMinutes(date,timeZone){
@@ -279,6 +317,13 @@ function dropTimerTarget(){
     if(SPRITE_DROP_TIMER.target){
         return new Date(SPRITE_DROP_TIMER.target);
     }
+    if(SPRITE_DROP_TIMER.cadence === "weekly"){
+        return nextWeeklyEasternDate({
+            weekdayEt:SPRITE_DROP_TIMER.weekdayEt,
+            hourEt:SPRITE_DROP_TIMER.hourEt,
+            minuteEt:SPRITE_DROP_TIMER.minuteEt
+        });
+    }
     if(SPRITE_DROP_TIMER.cadence === "daily-reset"){
         return nextEasternResetDate();
     }
@@ -287,7 +332,7 @@ function dropTimerTarget(){
 
 function formatCountdown(target){
     if(!target || Number.isNaN(target.getTime())){
-        return "Timer pending";
+        return "--:--:--";
     }
     const remaining = Math.max(0,target.getTime() - Date.now());
     const totalSeconds = Math.floor(remaining / 1000);
@@ -301,64 +346,37 @@ function formatCountdown(target){
         : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
+function formatEventDate(date){
+    return new Intl.DateTimeFormat("en-US",{
+        weekday:"long",
+        month:"long",
+        day:"numeric",
+        hour:"numeric",
+        minute:"2-digit"
+    }).format(date);
+}
+
 function renderDropTimer(){
     if(!els.timerValue){
         return;
     }
-    els.timerLabel.textContent = SPRITE_DROP_TIMER?.label || "Next Sprite Drop";
-    els.timerNote.textContent = SPRITE_DROP_TIMER?.note || "";
     const target = dropTimerTarget();
     if(!target || Number.isNaN(target.getTime())){
         els.timerValue.textContent = "--:--:--";
-        els.timerNote.textContent = "Timer pending";
+        if(els.timerDate){
+            els.timerDate.textContent = "Schedule unavailable";
+        }
         return;
     }
     els.timerValue.textContent = formatCountdown(target);
-    renderEvents();
-}
-
-function eventCountdownLabel(startsAt){
-    const target = new Date(startsAt);
-    if(Number.isNaN(target.getTime())){
-        return "Starts soon";
+    if(els.timerDate){
+        els.timerDate.textContent = formatEventDate(target);
     }
-    return Date.now() >= target.getTime()
-        ? "Started"
-        : `Starts in ${formatCountdown(target)}`;
-}
-
-function renderEvents(){
-    if(!els.eventsPanel){
-        return;
-    }
-    const events = [];
-    const timerTarget = dropTimerTarget();
-    if(SPRITE_DROP_TIMER?.enabled){
-        events.push({
-            name:SPRITE_DROP_TIMER.label || "Next Sprite Drop",
-            countdown:timerTarget ? eventCountdownLabel(timerTarget.toISOString()) : "Timer pending",
-            meta:`${timerTarget ? timerTarget.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}) : "Date pending"} · ${SPRITE_DROP_TIMER.note || "In-game release"}`
-        });
-    }
-    (SPRITE_EVENTS || []).forEach(event=>{
-        events.push({
-            name:event.name,
-            countdown:eventCountdownLabel(event.startsAt),
-            meta:`${event.date} · ${event.duration}`
-        });
-    });
-    els.eventsPanel.innerHTML = events.map(event=>`
-        <div class="eventItem">
-            <strong>${escapeHtml(event.name)}</strong>
-            <span>${escapeHtml(event.countdown)}</span>
-            <small>${escapeHtml(event.meta)}</small>
-        </div>
-    `).join("");
 }
 
 function hackUsedIcon(){
     return `
-        <span class="hackUsedIcon" aria-hidden="true">
+        <span class="hackCheck" aria-hidden="true">
             <svg class="foundIcon" viewBox="0 0 24 24">
                 <path d="M5 13.5L10 18L19 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
@@ -404,10 +422,10 @@ function renderLobbyHacks(){
                 ${group.items.map(item=>{
                     const isUsed = used[item.code] === true;
                     return `
-                        <div class="hackCodeItem" data-used="${isUsed}" data-disabled="${!profileLoaded()}">
-                            <button class="hackCodeToggle" type="button" data-code="${escapeHtml(item.code)}" ${profileLoaded() ? "" : "disabled"}>
+                        <article class="hackItem" data-used="${isUsed}" data-disabled="${!profileLoaded()}">
+                            <button class="hackUseButton" type="button" data-code="${escapeHtml(item.code)}" ${profileLoaded() ? "" : "disabled"} title="${isUsed ? "Mark unused" : "Mark used"}">
                                 ${hackUsedIcon()}
-                                <span>
+                                <span class="hackText">
                                     <strong>${escapeHtml(item.code)}</strong>
                                     <small>${escapeHtml(item.reward)}</small>
                                 </span>
@@ -416,13 +434,13 @@ function renderLobbyHacks(){
                                 ${copyIcon()}
                                 <span>Copy code</span>
                             </button>
-                        </div>
+                        </article>
                     `;
                 }).join("")}
             </section>
         `).join("")}
     `;
-    els.hackCodesPanel.querySelectorAll(".hackCodeToggle").forEach(button=>{
+    els.hackCodesPanel.querySelectorAll(".hackUseButton").forEach(button=>{
         button.addEventListener("click",async()=>{
             if(!profileLoaded()){
                 return;
@@ -714,7 +732,6 @@ function render(){
     renderStats();
     renderTracker();
     renderDropTimer();
-    renderEvents();
     renderLobbyHacks();
     updateStickyOffsets();
 }
