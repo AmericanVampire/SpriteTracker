@@ -1531,13 +1531,13 @@ body.exportingImage .trackerGrid{
     position:relative;
     min-height:167px;
     border-radius:var(--radius);
-    background:linear-gradient(180deg, rgba(30,115,219,.34), rgba(11,59,150,.42));
+    background:linear-gradient(180deg, rgba(7,68,171,.82), rgba(4,41,126,.9));
     color:var(--text);
     text-align:center;
     box-shadow:
         0 5px 0 rgba(0,30,96,.24),
-        inset 0 1px rgba(255,255,255,.18),
-        inset 0 0 0 1px rgba(161,234,255,.14);
+        inset 0 1px rgba(255,255,255,.22),
+        inset 0 0 0 1px rgba(161,234,255,.22);
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
 }
 .familyMain{
@@ -1572,11 +1572,11 @@ body.exportingImage .trackerGrid{
     color:#d9def0;
 }
 .familyCell[data-complete="true"]{
-    background:linear-gradient(180deg, rgba(38,116,219,.5), rgba(10,55,149,.68));
+    background:linear-gradient(180deg, rgba(7,68,171,.82), rgba(4,41,126,.9));
     box-shadow:
         0 5px 0 rgba(0,0,0,.24),
-        inset 0 0 0 1px rgba(161,234,255,.14),
-        inset 0 1px rgba(255,255,255,.2);
+        inset 0 0 0 1px rgba(161,234,255,.22),
+        inset 0 1px rgba(255,255,255,.22);
 }
 .familyName{
     font-size:21px;
