@@ -737,7 +737,8 @@ function render(){
 }
 
 function updateStickyOffsets(){
-    const topBarHeight = Math.round(els.topBar.getBoundingClientRect().height);
+    const stickyGap = mobileViewport() ? 0 : 10;
+    const topBarHeight = Math.round(els.topBar.getBoundingClientRect().height) + stickyGap;
     document.documentElement.style.setProperty("--topbar-height", `${topBarHeight}px`);
 }
 

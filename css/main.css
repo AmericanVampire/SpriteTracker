@@ -2075,30 +2075,32 @@ dialog::backdrop{
         position:relative;
         top:auto;
         flex-direction:column;
-        gap:10px;
+        gap:6px;
         min-height:0;
-        padding:8px;
+        padding:6px;
     }
     .brandMark{
+        flex:0 0 auto;
         min-width:0;
+        width:100%;
         justify-content:center;
     }
     .brandMark img{
-        width:min(100%, 520px);
-        max-height:56px;
+        width:min(100%, 360px);
+        max-height:34px;
         object-position:center;
     }
     .topProfile{
         display:grid;
-        grid-template-columns:48px 48px minmax(0, 1fr) 106px;
+        grid-template-columns:42px 42px minmax(0, 1fr) 96px;
         align-items:stretch;
         min-width:0;
         width:100%;
-        gap:8px;
+        gap:7px;
     }
     .redbullButton{
         min-width:0;
-        min-height:44px;
+        min-height:40px;
         justify-content:center;
         padding:6px;
     }
@@ -2111,7 +2113,7 @@ dialog::backdrop{
     }
     .discordButton{
         min-width:0;
-        min-height:44px;
+        min-height:40px;
         justify-content:center;
         padding:6px;
     }
