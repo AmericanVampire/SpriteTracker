@@ -1721,7 +1721,27 @@ async function importProfile(file){
     render();
 }
 
+function bindSourceDeterrents(){
+    const blockedCombo = event=>{
+        const key = event.key.toLowerCase();
+        const commandKey = event.ctrlKey || event.metaKey;
+        return event.key === "F12"
+            || (commandKey && event.shiftKey && ["i","j","c"].includes(key))
+            || (commandKey && ["u","s"].includes(key));
+    };
+    document.addEventListener("contextmenu",event=>{
+        event.preventDefault();
+    });
+    document.addEventListener("keydown",event=>{
+        if(blockedCombo(event)){
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    },true);
+}
+
 function bindControls(){
+    bindSourceDeterrents();
     updateNoticeButton();
     if(els.noticeButton){
         els.noticeButton.addEventListener("click",showAppNotice);
