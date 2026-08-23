@@ -629,13 +629,13 @@ button.danger,
     color:#171100;
 }
 .statIconSets{
-    background:linear-gradient(180deg, #2f73dd, #1551b4 54%, #0d3f91);
-    color:#ffe46a;
-    border:1px solid rgba(255,228,106,.46);
+    background:linear-gradient(180deg, #6b4b15, #3d2a0a 58%, #241704);
+    color:#ffe66f;
+    border:1px solid rgba(255,230,111,.58);
     box-shadow:
         0 4px 8px rgba(0,0,0,.24),
-        inset 0 1px rgba(255,255,255,.34),
-        inset 0 -2px rgba(6,29,82,.34);
+        inset 0 1px rgba(255,246,180,.28),
+        inset 0 -2px rgba(36,23,4,.42);
 }
 .statIconSets svg{
     width:19px;
