@@ -929,36 +929,67 @@ function showTrackerInfo(){
 }
 
 function showLicenseInfo(){
-    showDialog("License",`
+    showDialog("Sprite Tracker Copyright & Usage Notice",`
         <div class="legalInfo legalScroll">
             <p>
                 <strong>Sprite Tracker</strong><br>
                 Developed by <b>AmericanVampire</b><br>
                 Copyright &copy; 2026 AmericanVampire<br>
-                All Rights Reserved.
+                <strong>All Rights Reserved.</strong>
             </p>
             <p>
-                This website and its related code, assets, design, and content
-                are proprietary and protected by copyright law. You are granted
-                a limited, non-exclusive, non-transferable license to access
-                and use this website for your own personal, non-commercial use.
+                This website, including its original source code, design,
+                graphics, layout, features, and other original content, is
+                proprietary and protected by applicable copyright and
+                intellectual property laws.
+            </p>
+            <p>
+                You are granted a limited, non-exclusive, non-transferable
+                license to access and use Sprite Tracker for personal,
+                non-commercial purposes.
             </p>
             <p><strong>You may not:</strong></p>
             <ul>
-                <li>Copy or redistribute this website, its code, or its assets.</li>
-                <li>Modify, adapt, or create derivative works.</li>
-                <li>Sell, rent, lease, sublicense, or transfer this website or its content.</li>
-                <li>Remove or alter any copyright, trademark, or branding.</li>
-                <li>Represent this website, in whole or in part, as your own work.</li>
-                <li>Reverse engineer, decompile, or disassemble the site code except where expressly permitted by applicable law.</li>
+                <li>Copy, reproduce, republish, or redistribute this website or its original code, assets, or content.</li>
+                <li>Modify, adapt, or create derivative works based on this website or its original materials.</li>
+                <li>Sell, rent, lease, sublicense, distribute, or otherwise transfer any portion of this website or its content.</li>
+                <li>Remove, obscure, or alter any copyright notices, branding, trademarks, or ownership information.</li>
+                <li>Claim, represent, or present this website, its design, code, or original content as your own work.</li>
+                <li>Reverse engineer, decompile, disassemble, or otherwise attempt to reproduce protected portions of the website except where expressly permitted by applicable law.</li>
             </ul>
             <p>
-                This website is provided "as is", without warranty of any kind,
-                express or implied, including but not limited to the warranties
-                of merchantability, fitness for a particular purpose, and
-                non-infringement. In no event shall the author be liable for
-                any claim, damages, or other liability arising from the use of
-                this website.
+                Third-party names, trademarks, game assets, images, data, and
+                other intellectual property remain the property of their
+                respective owners. Nothing on this website should be
+                interpreted as claiming ownership of third-party intellectual
+                property.
+            </p>
+            <p><strong>Disclaimer</strong></p>
+            <p>
+                Sprite Tracker is an independent project and is not affiliated
+                with, endorsed by, sponsored by, or officially associated with
+                Epic Games, Inc. or Fortnite. Fortnite and related trademarks,
+                names, and assets are the property of Epic Games, Inc. and
+                their respective owners.
+            </p>
+            <p>
+                This website is provided <strong>"as is"</strong> and
+                <strong>"as available"</strong> without warranties of any kind,
+                either express or implied. To the fullest extent permitted by
+                law, the developer disclaims all warranties, including
+                warranties of merchantability, fitness for a particular
+                purpose, accuracy, availability, and non-infringement.
+            </p>
+            <p>
+                To the fullest extent permitted by applicable law, the
+                developer shall not be liable for any direct, indirect,
+                incidental, consequential, special, or other damages arising
+                from or related to the use of, or inability to use, this
+                website.
+            </p>
+            <p>
+                By accessing or using Sprite Tracker, you acknowledge and agree
+                to comply with this Copyright &amp; Usage Notice.
             </p>
         </div>
     `,[{label:"Close"}]);
