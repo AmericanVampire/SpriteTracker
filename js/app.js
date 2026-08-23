@@ -1303,16 +1303,25 @@ function buildMobileImageExportGrid(season){
 function buildMobileImageExportSprite(sprite,family){
     const card = document.createElement("div");
     if(!sprite){
-        card.className = "mobileExportSprite";
+        card.className = "mobileExportSprite mobileExportSprite--unavailable";
         card.dataset.state = "unavailable";
         return card;
     }
     const disabled = sprite.available ? isDisabled(sprite) : false;
     const current = sprite.available ? spriteState(sprite) : "unavailable";
-    card.className = "mobileExportSprite";
-    card.dataset.state = disabled ? "disabled" : current;
+    const exportState = disabled ? "disabled" : current;
+    card.className = `mobileExportSprite mobileExportSprite--${exportState}`;
+    card.dataset.state = exportState;
     card.dataset.available = String(sprite.available);
     card.dataset.variantType = variantType({id:sprite.variantId,label:sprite.variant});
+    if(exportState === "found"){
+        card.style.background = "linear-gradient(180deg, #3282c0 0%, #276cab 100%)";
+        card.style.borderColor = "#67ff50";
+    }
+    if(exportState === "mastered"){
+        card.style.background = "linear-gradient(180deg, #b0a066 0%, #6977b8 100%)";
+        card.style.borderColor = "#ffef5a";
+    }
     card.innerHTML = `
         ${spriteBadges()}
         <span class="mobileExportVariant">${escapeHtml(sprite.variant)}</span>

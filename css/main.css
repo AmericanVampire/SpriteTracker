@@ -1317,12 +1317,14 @@ body.exportingImage .trackerGrid{
     object-fit:contain;
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
-.mobileExportSprite[data-state="found"]{
+.mobileExportSprite[data-state="found"],
+.mobileExportSprite--found{
     background:
         linear-gradient(180deg, #3282c0 0%, #276cab 100%);
     border-color:var(--green);
 }
-.mobileExportSprite[data-state="mastered"]{
+.mobileExportSprite[data-state="mastered"],
+.mobileExportSprite--mastered{
     background:
         linear-gradient(180deg, #b0a066 0%, #6977b8 100%);
     border-color:var(--yellow);
