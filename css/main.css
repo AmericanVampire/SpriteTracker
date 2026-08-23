@@ -1318,9 +1318,13 @@ body.exportingImage .trackerGrid{
     filter:grayscale(.85) brightness(.78) drop-shadow(0 7px 8px rgba(0,0,0,.3));
 }
 .mobileExportSprite[data-state="found"]{
+    background:
+        linear-gradient(180deg, #3282c0 0%, #276cab 100%);
     border-color:var(--green);
 }
 .mobileExportSprite[data-state="mastered"]{
+    background:
+        linear-gradient(180deg, #b0a066 0%, #6977b8 100%);
     border-color:var(--yellow);
 }
 .mobileExportSprite[data-state="found"] .spriteBadge,
@@ -1966,11 +1970,12 @@ body.exportingImage .trackerGrid{
 }
 .spriteCard[data-state="found"]{
     background:
-        linear-gradient(180deg, rgba(59,169,199,.62), rgba(33,113,177,.54));
+        linear-gradient(180deg, #3282c0 0%, #276cab 100%);
     box-shadow:
         0 5px 0 rgba(0,0,0,.22),
         0 10px 18px rgba(0,0,0,.2),
-        inset 0 1px rgba(255,255,255,.18),
+        0 10px 22px rgba(103,255,80,.06),
+        inset 0 1px rgba(255,255,255,.16),
         inset 0 0 0 2px var(--green);
 }
 .spriteCard[data-state="found"] .spriteBadge{
@@ -1982,11 +1987,11 @@ body.exportingImage .trackerGrid{
 }
 .spriteCard[data-state="mastered"]{
     background:
-        linear-gradient(180deg, rgba(129,138,178,.7), rgba(83,98,152,.62));
+        linear-gradient(180deg, #b0a066 0%, #6977b8 100%);
     box-shadow:
         0 5px 0 rgba(0,0,0,.22),
-        0 10px 18px rgba(0,0,0,.2),
-        inset 0 1px rgba(255,255,255,.18),
+        0 12px 24px rgba(255,239,90,.18),
+        inset 0 1px rgba(255,255,255,.26),
         inset 0 0 0 2px var(--yellow);
 }
 .spriteCard[data-state="mastered"] .masteredBadge{
