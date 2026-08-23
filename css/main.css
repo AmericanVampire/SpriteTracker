@@ -629,7 +629,7 @@ button.danger,
     color:#171100;
 }
 .statIconSets{
-    background:linear-gradient(180deg, #ffe98a, #e9b927 54%, #b77708);
+    background:linear-gradient(180deg, #fff27a, #d9a414);
     color:#171100;
     border:0;
     box-shadow:
@@ -644,7 +644,7 @@ button.danger,
 .statIconSets path{
     fill:none;
     stroke:currentColor;
-    stroke-width:2.4;
+    stroke-width:1.55;
     stroke-linejoin:round;
 }
 .statIconOverall{
