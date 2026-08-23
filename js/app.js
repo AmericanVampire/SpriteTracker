@@ -892,7 +892,7 @@ function showTrackerInfo(){
                 <div class="howToGrid">
                     <article>
                         <strong>Profiles</strong>
-                        <p>Create, open, rename, import, export, or delete profiles from Menu. Progress saves automatically as you make changes.</p>
+                        <p>Create, open, rename, import, export, or delete profiles from Menu. Progress saves automatically in this browser, so export a profile backup before clearing cookies, site data, or browser storage.</p>
                     </article>
                     <article>
                         <strong>Sprites</strong>
