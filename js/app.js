@@ -940,7 +940,7 @@ function showTrackerInfo(){
 }
 
 function showLicenseInfo(){
-    showDialog("Sprite Tracker Copyright & Usage Notice",`
+    showDialog("Copyright & Usage",`
         <div class="legalInfo legalScroll">
             <p>
                 <strong>Sprite Tracker</strong><br>
