@@ -565,7 +565,7 @@ button.danger,
 }
 .statsDeck{
     display:grid;
-    grid-template-columns:minmax(0, 1fr) minmax(210px, .34fr);
+    grid-template-columns:minmax(0, 1fr) minmax(300px, .38fr);
     gap:18px;
     align-items:end;
 }
@@ -573,10 +573,10 @@ button.danger,
     display:grid;
     grid-template-columns:1fr 1fr;
     column-gap:28px;
-    row-gap:4px;
+    row-gap:8px;
 }
 .statBox{
-    min-height:38px;
+    min-height:45px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -589,18 +589,78 @@ button.danger,
 .statBox span{
     display:inline-flex;
     align-items:center;
+    gap:10px;
     color:#fff;
-    font-size:16px;
+    font-size:18px;
     font-weight:950;
     text-transform:none;
     letter-spacing:0;
     text-shadow:0 1px 0 rgba(0,43,132,.28);
 }
+.statIcon{
+    width:28px;
+    height:28px;
+    flex:0 0 28px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    box-shadow:
+        0 4px 8px rgba(0,0,0,.24),
+        inset 0 1px rgba(255,255,255,.32);
+}
+.statIcon svg{
+    width:20px;
+    height:20px;
+    display:block;
+}
+.statIconFound{
+    background:var(--green);
+    color:#061b0a;
+}
+.statIconFound path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.statIconMastered{
+    background:var(--yellow);
+    color:#171100;
+}
+.statIconSets{
+    width:32px;
+    height:32px;
+    flex-basis:32px;
+    background:transparent;
+    color:#ffd642;
+    box-shadow:none;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));
+}
+.statIconSets svg{
+    width:30px;
+    height:30px;
+}
+.statIconSets path{
+    fill:#ffd642;
+    stroke:none;
+}
+.statIconOverall{
+    background:linear-gradient(180deg, #8ee8ff, #2e9cff);
+    color:#061a35;
+}
+.statIconOverall path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
 .statBox strong{
     display:inline-block;
     margin-top:0;
     color:#fff;
-    font-size:22px;
+    font-size:28px;
     font-weight:950;
     line-height:1;
     text-align:right;
@@ -1446,11 +1506,27 @@ body.exportingImage .trackerGrid{
     font-weight:900;
     background:#1d70df;
     box-shadow:
-        0 5px 0 rgba(0,0,0,.24),
-        0 10px 18px rgba(0,0,0,.22),
-        inset 0 1px rgba(255,255,255,.2),
-        inset 0 0 0 1px rgba(255,255,255,.12);
+        0 5px 0 rgba(0,0,0,.28),
+        0 12px 18px rgba(0,0,0,.24),
+        inset 0 1px rgba(255,255,255,.36),
+        inset 0 -14px 20px rgba(0,0,0,.16),
+        inset 0 0 0 1px rgba(255,255,255,.16);
     transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.variantToggle{
+    position:relative;
+    overflow:hidden;
+}
+.variantToggle:not([data-disabled="true"])::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    pointer-events:none;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.22) 36%, rgba(255,255,255,.06) 68%, rgba(255,255,255,0)),
+        radial-gradient(circle at 50% -22%, rgba(255,255,255,.58), rgba(255,255,255,0) 54%);
+    mix-blend-mode:screen;
 }
 .variantToggle:hover{
     filter:brightness(1.12);
@@ -1464,6 +1540,8 @@ body.exportingImage .trackerGrid{
         inset 0 0 0 1px rgba(255,255,255,.12);
 }
 .variantToggle span{
+    position:relative;
+    z-index:1;
     max-width:100%;
     overflow:hidden;
     font-size:14px;
@@ -1474,35 +1552,36 @@ body.exportingImage .trackerGrid{
 }
 .variantToggle[data-variant-type="normal"],
 .variantToggle[data-variant-type="base"]{
-    background:linear-gradient(180deg, #687188, #30384b);
+    background:linear-gradient(180deg, #f8fbff 0%, #dfeaf7 45%, #c9d9ee 100%);
+    color:#101726;
 }
 .variantToggle[data-variant-type="gold"]{
-    background:linear-gradient(180deg, #ffd75a, #98671a);
+    background:linear-gradient(180deg, #fff36a 0%, #ffd119 48%, #ee9f00 100%);
     color:#1d1607;
 }
 .variantToggle[data-variant-type="gummy"]{
-    background:linear-gradient(180deg, #ff9ce7, #8e3d86);
+    background:linear-gradient(180deg, #ffa6ec 0%, #f252bc 48%, #cf1678 100%);
 }
 .variantToggle[data-variant-type="galaxy"]{
-    background:linear-gradient(180deg, #725cff, #25195f);
+    background:linear-gradient(180deg, #a386ff 0%, #6848e5 48%, #28158a 100%);
 }
 .variantToggle[data-variant-type="holofoil"]{
-    background:linear-gradient(180deg, #c4fff6, #497bcf);
+    background:linear-gradient(180deg, #ffffff 0%, #c8fbff 48%, #69c3ef 100%);
     color:#101932;
 }
 .variantToggle[data-variant-type="cube"]{
-    background:linear-gradient(180deg, #b37cff, #552591);
+    background:linear-gradient(180deg, #251a39 0%, #4a2874 48%, #8b3ff1 100%);
 }
 .variantToggle[data-variant-type="gem"]{
-    background:linear-gradient(180deg, #f3fbff, #6a9ec9);
+    background:linear-gradient(180deg, #eefdff 0%, #aceeff 48%, #58bfea 100%);
     color:#101932;
 }
 .variantToggle[data-variant-type="quack"]{
-    background:linear-gradient(180deg, #fff06d, #df8f1f);
+    background:linear-gradient(180deg, #fff4ff 0%, #d9adff 48%, #a660ee 100%);
     color:#201807;
 }
 .variantToggle[data-variant-type="cheatmaster"]{
-    background:linear-gradient(180deg, #88ff9c, #246b3f);
+    background:linear-gradient(180deg, #91ffa5 0%, #58d66f 48%, #267642 100%);
     color:#071b0d;
 }
 .seasonPickerCell{
@@ -1575,12 +1654,16 @@ body.exportingImage .trackerGrid{
         inset 0 1px rgba(255,255,255,.2);
 }
 .variantToggle small{
+    position:relative;
+    z-index:1;
     font-size:9px;
     font-weight:900;
     letter-spacing:.12em;
     color:#cfd7ff;
 }
 .variantToggle[data-variant-type="gold"] small,
+.variantToggle[data-variant-type="normal"] small,
+.variantToggle[data-variant-type="base"] small,
 .variantToggle[data-variant-type="holofoil"] small,
 .variantToggle[data-variant-type="gem"] small,
 .variantToggle[data-variant-type="quack"] small{
@@ -2508,6 +2591,16 @@ dialog::backdrop{
     }
     .statBox span{
         font-size:12px;
+    }
+    .statIcon{
+        width:22px;
+        height:22px;
+        flex-basis:22px;
+        border-radius:6px;
+    }
+    .statIcon svg{
+        width:16px;
+        height:16px;
     }
     .statBox strong{
         font-size:16px;
