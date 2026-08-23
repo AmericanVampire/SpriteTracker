@@ -4,6 +4,7 @@ const SpriteStore = (() => {
     const profilesStore = "profiles";
     const settingsStore = "settings";
     const startupStorageKey = "sprite-tracker-startup-profile";
+    const profileBackupKey = "sprite-tracker-profile-backups";
 
     function openDb(){
         return new Promise((resolve,reject)=>{
@@ -41,6 +42,44 @@ const SpriteStore = (() => {
         });
     }
 
+    function readProfileBackups(){
+        try{
+            return JSON.parse(localStorage.getItem(profileBackupKey) || "{}");
+        }
+        catch(error){
+            console.warn(error);
+            return {};
+        }
+    }
+
+    function writeProfileBackups(backups){
+        try{
+            localStorage.setItem(profileBackupKey,JSON.stringify(backups));
+        }
+        catch(error){
+            console.warn(error);
+        }
+    }
+
+    function getBackupProfile(name){
+        return readProfileBackups()[name] || null;
+    }
+
+    function setBackupProfile(profile){
+        if(!profile?.profileName){
+            return;
+        }
+        const backups = readProfileBackups();
+        backups[profile.profileName] = profile;
+        writeProfileBackups(backups);
+    }
+
+    function deleteBackupProfile(name){
+        const backups = readProfileBackups();
+        delete backups[name];
+        writeProfileBackups(backups);
+    }
+
     function normalizeProfile(profile){
         const now = new Date().toISOString();
         return {
@@ -57,9 +96,16 @@ const SpriteStore = (() => {
     }
 
     async function getProfile(name){
-        return withStore(profilesStore,"readonly",store=>
-            requestToPromise(store.get(name))
-        );
+        try{
+            const profile = await withStore(profilesStore,"readonly",store=>
+                requestToPromise(store.get(name))
+            );
+            return profile || getBackupProfile(name);
+        }
+        catch(error){
+            console.warn(error);
+            return getBackupProfile(name);
+        }
     }
 
     async function createProfile(name){
@@ -77,9 +123,15 @@ const SpriteStore = (() => {
 
     async function saveProfile(profile){
         const normalized = normalizeProfile(profile);
-        await withStore(profilesStore,"readwrite",store=>{
-            store.put(normalized);
-        });
+        setBackupProfile(normalized);
+        try{
+            await withStore(profilesStore,"readwrite",store=>{
+                store.put(normalized);
+            });
+        }
+        catch(error){
+            console.warn(error);
+        }
         return normalized;
     }
 
@@ -94,9 +146,15 @@ const SpriteStore = (() => {
     }
 
     async function deleteProfile(name){
-        await withStore(profilesStore,"readwrite",store=>{
-            store.delete(name);
-        });
+        try{
+            await withStore(profilesStore,"readwrite",store=>{
+                store.delete(name);
+            });
+        }
+        catch(error){
+            console.warn(error);
+        }
+        deleteBackupProfile(name);
         const startup = await getStartupProfile();
         if(startup === name){
             await setStartupProfile(null);
@@ -123,16 +181,33 @@ const SpriteStore = (() => {
     }
 
     async function getProfiles(){
-        return withStore(profilesStore,"readonly",store=>
-            requestToPromise(store.getAllKeys())
-        ).then(keys=>keys.sort((a,b)=>a.localeCompare(b)));
+        const backupKeys = Object.keys(readProfileBackups());
+        let keys = [];
+        try{
+            keys = await withStore(profilesStore,"readonly",store=>
+                requestToPromise(store.getAllKeys())
+            );
+        }
+        catch(error){
+            console.warn(error);
+        }
+        return [...new Set([...keys,...backupKeys])]
+            .sort((a,b)=>a.localeCompare(b));
     }
 
     async function getMostRecentProfileName(){
-        const profiles = await withStore(profilesStore,"readonly",store=>
-            requestToPromise(store.getAll())
-        );
+        const backupProfiles = Object.values(readProfileBackups());
+        let profiles = [];
+        try{
+            profiles = await withStore(profilesStore,"readonly",store=>
+                requestToPromise(store.getAll())
+            );
+        }
+        catch(error){
+            console.warn(error);
+        }
         const mostRecent = profiles
+            .concat(backupProfiles)
             .filter(profile=>profile?.profileName)
             .sort((a,b)=>{
                 const bTime = Date.parse(b.lastOpened || b.created || "") || 0;
@@ -143,9 +218,15 @@ const SpriteStore = (() => {
     }
 
     async function getStartupProfile(){
-        const setting = await withStore(settingsStore,"readonly",store=>
-            requestToPromise(store.get("startupProfile"))
-        );
+        let setting = null;
+        try{
+            setting = await withStore(settingsStore,"readonly",store=>
+                requestToPromise(store.get("startupProfile"))
+            );
+        }
+        catch(error){
+            console.warn(error);
+        }
         return setting?.value || localStorage.getItem(startupStorageKey) || null;
     }
 
@@ -156,14 +237,19 @@ const SpriteStore = (() => {
         else{
             localStorage.removeItem(startupStorageKey);
         }
-        await withStore(settingsStore,"readwrite",store=>{
-            if(name){
-                store.put({key:"startupProfile",value:name});
-            }
-            else{
-                store.delete("startupProfile");
-            }
-        });
+        try{
+            await withStore(settingsStore,"readwrite",store=>{
+                if(name){
+                    store.put({key:"startupProfile",value:name});
+                }
+                else{
+                    store.delete("startupProfile");
+                }
+            });
+        }
+        catch(error){
+            console.warn(error);
+        }
     }
 
     return {
