@@ -629,21 +629,23 @@ button.danger,
     color:#171100;
 }
 .statIconSets{
-    width:32px;
-    height:32px;
-    flex-basis:32px;
-    background:transparent;
-    color:#ffd642;
-    box-shadow:none;
-    filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));
+    background:linear-gradient(180deg, #2f73dd, #1551b4 54%, #0d3f91);
+    color:#ffe46a;
+    border:1px solid rgba(255,228,106,.46);
+    box-shadow:
+        0 4px 8px rgba(0,0,0,.24),
+        inset 0 1px rgba(255,255,255,.34),
+        inset 0 -2px rgba(6,29,82,.34);
 }
 .statIconSets svg{
-    width:30px;
-    height:30px;
+    width:19px;
+    height:19px;
 }
 .statIconSets path{
-    fill:#ffd642;
-    stroke:none;
+    fill:currentColor;
+    stroke:#4c3300;
+    stroke-width:1.1;
+    stroke-linejoin:round;
 }
 .statIconOverall{
     background:linear-gradient(180deg, #8ee8ff, #2e9cff);
