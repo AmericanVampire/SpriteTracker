@@ -2053,6 +2053,9 @@ dialog{
 dialog:has(.trackerInfoPanel){
     width:min(760px,92vw);
 }
+dialog:has(.notificationsPanel){
+    width:min(620px,92vw);
+}
 dialog::backdrop{
     background:rgba(0,0,0,.68);
     backdrop-filter:blur(6px);
@@ -2104,6 +2107,97 @@ dialog::backdrop{
     max-height:min(56vh,430px);
     overflow:auto;
     padding-right:6px;
+}
+.notificationsPanel{
+    display:grid;
+    gap:12px;
+}
+.notificationCard{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:13px;
+    padding:14px;
+    border-radius:var(--radius);
+    background:
+        linear-gradient(180deg, rgba(28,118,236,.72), rgba(6,69,173,.68));
+    box-shadow:
+        inset 0 0 0 1px rgba(168,238,255,.28),
+        0 14px 28px rgba(0,31,94,.28);
+}
+.notificationIcon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:linear-gradient(180deg, #31a9ff, #1956d8);
+    color:#fff;
+    box-shadow:
+        0 5px 0 rgba(0,0,0,.24),
+        inset 0 1px rgba(255,255,255,.28);
+}
+.notificationIcon svg{
+    width:25px;
+    height:25px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.notificationContent{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.notificationMeta{
+    color:#fff56d;
+    font-size:11px;
+    font-weight:950;
+    letter-spacing:.12em;
+    line-height:1;
+    text-transform:uppercase;
+}
+.notificationContent strong{
+    color:#fff;
+    font-size:20px;
+    font-weight:950;
+    line-height:1.08;
+    text-shadow:0 2px 0 rgba(0,0,0,.28);
+}
+.notificationContent p{
+    margin:0;
+    color:#e6f8ff;
+    font-size:13px;
+    font-weight:750;
+    line-height:1.42;
+}
+.notificationAction{
+    align-self:flex-start;
+    min-height:38px;
+    margin-top:4px;
+    padding:9px 13px;
+    border-radius:var(--radius);
+    background:linear-gradient(180deg, #2d88ff, #173fba);
+    color:#fff;
+    font-size:13px;
+    font-weight:950;
+    cursor:pointer;
+    box-shadow:
+        0 4px 0 rgba(0,0,0,.28),
+        inset 0 1px rgba(255,255,255,.2),
+        inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.notificationAction:hover{
+    filter:brightness(1.12);
+    transform:translateY(-1px);
+}
+.notificationAction:active{
+    transform:translateY(2px);
+    box-shadow:
+        0 2px 0 rgba(0,0,0,.32),
+        inset 0 1px rgba(255,255,255,.12);
 }
 .trackerInfoPanel{
     max-height:min(66vh,610px);
@@ -2235,6 +2329,13 @@ dialog::backdrop{
     :root{
         --page-gutter:10px;
         --topbar-height:0px;
+    }
+    .notificationCard{
+        grid-template-columns:1fr;
+    }
+    .notificationIcon{
+        width:38px;
+        height:38px;
     }
     .siteShell{
         min-width:0;

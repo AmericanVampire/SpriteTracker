@@ -840,28 +840,39 @@ function markAppNoticeRead(){
 
 function showAppNotice(){
     markAppNoticeRead();
-    showDialog("Sprite Tracker Notice",`
-        <div class="legalInfo webNoticeInfo">
-            <div class="legalIntro">
-                <strong>Sprite Tracker desktop app</strong>
-                <span>Get the Windows app from the Microsoft Store.</span>
-            </div>
-            <p>
-                The desktop app gives you the same Sprite tracking style in a
-                dedicated Windows experience.
-            </p>
-            <p>
-                Profiles are still stored locally. Use Export and Import when
-                you want to move progress between the website and the app.
-            </p>
+    showDialog("Notifications",`
+        <div class="notificationsPanel">
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3.5c3.6 0 6.5 2.9 6.5 6.5v4.7l1.8 1.8v1.2H3.7v-1.2l1.8-1.8V10c0-3.6 2.9-6.5 6.5-6.5Z"></path>
+                        <path d="M9.5 19.5a2.8 2.8 0 0 0 5 0"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Desktop App Available</span>
+                    <strong>Sprite Tracker is also on Windows</strong>
+                    <p>
+                        Get Sprite Tracker from the Microsoft Store when you want
+                        the same tracking style in a dedicated desktop app.
+                    </p>
+                    <p>
+                        Profiles stay local on each device. To move progress,
+                        export your profile here, open the app, and import that
+                        profile there.
+                    </p>
+                    <button class="notificationAction" type="button" data-open-store>
+                        Open Microsoft Store
+                    </button>
+                </div>
+            </article>
         </div>
     `,[
-        {label:"Close"},
-        {
-            label:"Open Microsoft Store",
-            onClick:()=>window.open(MICROSOFT_STORE_URL,"_blank","noopener")
-        }
+        {label:"Close"}
     ]);
+    els.dialog
+        .querySelector("[data-open-store]")
+        ?.addEventListener("click",()=>window.open(MICROSOFT_STORE_URL,"_blank","noopener"));
 }
 
 function showTrackerInfo(){
