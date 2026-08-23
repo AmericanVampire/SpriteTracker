@@ -1,6 +1,7 @@
 const state = {
     profile:null,
-    seasonId:"override"
+    seasonId:"override",
+    loading:true
 };
 let suppressNextAbilityCloseClick = false;
 
@@ -27,6 +28,7 @@ const els = {
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
+    noProfileNotice:document.querySelector(".noProfileNotice"),
     dialog:document.getElementById("dialog"),
     dialogTitle:document.getElementById("dialogTitle"),
     dialogContent:document.getElementById("dialogContent"),
@@ -200,6 +202,13 @@ function calculateStats(){
 }
 
 function renderStats(){
+    if(state.loading){
+        els.foundStat.textContent = "- / -";
+        els.masteredStat.textContent = "- / -";
+        els.setsStat.textContent = "- / -";
+        els.overallStat.textContent = "-";
+        return;
+    }
     const stats = calculateStats();
     els.foundStat.textContent = `${stats.found} / ${stats.totalSprites}`;
     els.masteredStat.textContent = `${stats.mastered} / ${stats.totalSprites}`;
@@ -208,7 +217,9 @@ function renderStats(){
 }
 
 function renderProfile(){
-    els.currentProfileName.textContent = state.profile?.profileName || "No profile loaded";
+    els.currentProfileName.textContent = state.loading
+        ? "Loading profile..."
+        : state.profile?.profileName || "No profile loaded";
 }
 
 function easternDateParts(date){
@@ -474,6 +485,15 @@ function renderTracker(){
     const season = activeSeason();
     els.trackerGrid.innerHTML = "";
     els.gridHeader.innerHTML = "";
+    els.trackerDeck.dataset.loading = String(state.loading);
+    if(els.noProfileNotice){
+        els.noProfileNotice.querySelector("strong").textContent = state.loading
+            ? "Loading your profile..."
+            : "Please name your profile to begin tracking.";
+        els.noProfileNotice.querySelector("span").textContent = state.loading
+            ? "Sprite Tracker is opening your saved progress."
+            : "Use Menu to create, open, or import a profile.";
+    }
     els.trackerGrid.style.setProperty(
         "--variant-count",
         season.variants.length
@@ -484,6 +504,9 @@ function renderTracker(){
     );
     els.trackerDeck.dataset.variantCount = String(season.variants.length);
     els.trackerDeck.dataset.profileLoaded = String(profileLoaded());
+    if(state.loading){
+        return;
+    }
     const progress = profileLoaded()
         ? seasonProgress(state.profile,state.seasonId)
         : emptySeasonProgress();
@@ -843,7 +866,7 @@ function showAppNotice(){
 
 function showTrackerInfo(){
     showDialog("Sprite Tracker Info",`
-        <div class="legalInfo">
+        <div class="legalInfo trackerInfoPanel">
             <div class="legalIntro">
                 <strong>Sprite Tracker</strong>
                 <span>Developed by <b>AmericanVampire</b></span>
@@ -864,6 +887,43 @@ function showTrackerInfo(){
                 Sprite Tracker is not affiliated with, endorsed by, sponsored
                 by, or approved by Epic Games, Inc.
             </p>
+            <section class="howToUsePanel" aria-label="How to use Sprite Tracker">
+                <h3>How to Use</h3>
+                <div class="howToGrid">
+                    <article>
+                        <strong>Profiles</strong>
+                        <p>Create, open, rename, import, export, or delete profiles from Menu. Progress saves automatically as you make changes.</p>
+                    </article>
+                    <article>
+                        <strong>Sprites</strong>
+                        <p>Left-click a Sprite card to cycle between Not Found, Found, and Mastered.</p>
+                    </article>
+                    <article>
+                        <strong>Disable One Sprite</strong>
+                        <p>Right-click a Sprite card to disable or re-enable that specific Sprite. Disabled Sprites are ignored by progress totals.</p>
+                    </article>
+                    <article>
+                        <strong>Rows and Variants</strong>
+                        <p>Use the Sprite row button or variant column buttons to enable and disable full groups for each profile.</p>
+                    </article>
+                    <article>
+                        <strong>Seasons</strong>
+                        <p>Use the Season dropdown to switch between current and archived Sprite collections.</p>
+                    </article>
+                    <article>
+                        <strong>Hack Codes</strong>
+                        <p>Open Hack Codes to copy codes and mark which ones you have already used.</p>
+                    </article>
+                    <article>
+                        <strong>Next Sprite Drop</strong>
+                        <p>The drop timer counts down to the next Thursday Sprite release at 9:00 AM ET.</p>
+                    </article>
+                    <article>
+                        <strong>Exports</strong>
+                        <p>Export your profile as an image, text report, CSV spreadsheet, or internal profile backup.</p>
+                    </article>
+                </div>
+            </section>
         </div>
     `,[{label:"Close"}]);
 }
@@ -1807,7 +1867,14 @@ function bindControls(){
 
 async function init(){
     bindControls();
-    const startup = await SpriteStore.getStartupProfile();
+    render();
+    let startup = null;
+    try{
+        startup = await SpriteStore.getStartupProfile();
+    }
+    catch(error){
+        console.warn(error);
+    }
     if(startup){
         try{
             state.profile = await SpriteStore.openProfile(startup);
@@ -1819,13 +1886,25 @@ async function init(){
         }
     }
     if(!state.profile){
-        const profileName = await SpriteStore.getMostRecentProfileName();
+        let profileName = null;
+        try{
+            profileName = await SpriteStore.getMostRecentProfileName();
+        }
+        catch(error){
+            console.warn(error);
+        }
         if(profileName){
-            state.profile = await SpriteStore.openProfile(profileName);
-            state.seasonId = state.profile.activeSeasonId || "override";
-            await SpriteStore.setStartupProfile(state.profile.profileName);
+            try{
+                state.profile = await SpriteStore.openProfile(profileName);
+                state.seasonId = state.profile.activeSeasonId || "override";
+                await SpriteStore.setStartupProfile(state.profile.profileName);
+            }
+            catch(error){
+                console.warn(error);
+            }
         }
     }
+    state.loading = false;
     render();
     setInterval(renderDropTimer,1000);
 }
