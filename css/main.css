@@ -728,6 +728,7 @@ button.danger,
     text-transform:uppercase;
 }
 .intelMenu summary{
+    position:relative;
     min-height:38px;
     display:grid;
     grid-template-columns:20px 1fr 20px;
@@ -746,6 +747,19 @@ button.danger,
         0 12px 22px rgba(0,54,148,.28),
         inset 0 1px rgba(255,255,255,.22),
         inset 0 0 0 1px rgba(255,255,255,.14);
+    transition:filter .14s ease, transform .14s ease, box-shadow .14s ease;
+}
+.intelMenu summary:hover{
+    filter:brightness(1.1);
+    transform:translateY(-1px);
+}
+.intelMenu summary:active{
+    transform:translateY(3px);
+    box-shadow:
+        0 2px 0 rgba(0,0,0,.32),
+        0 8px 16px rgba(0,54,148,.22),
+        inset 0 1px rgba(255,255,255,.14),
+        inset 0 0 0 1px rgba(255,255,255,.1);
 }
 .intelMenu summary::-webkit-details-marker{
     display:none;
