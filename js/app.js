@@ -1440,13 +1440,35 @@ function drawText(ctx,text,x,y,options = {}){
     ctx.restore();
 }
 
-function drawCenteredImage(ctx,image,x,y,width,height){
+function drawCenteredImage(ctx,image,x,y,width,height,options = {}){
     if(!image){
         return;
     }
     const scale = Math.min(width / image.naturalWidth,height / image.naturalHeight);
     const drawWidth = image.naturalWidth * scale;
     const drawHeight = image.naturalHeight * scale;
+    ctx.save();
+    if(options.silhouette){
+        const mask = document.createElement("canvas");
+        mask.width = Math.max(1,Math.ceil(drawWidth));
+        mask.height = Math.max(1,Math.ceil(drawHeight));
+        const maskCtx = mask.getContext("2d");
+        maskCtx.drawImage(image,0,0,mask.width,mask.height);
+        maskCtx.globalCompositeOperation = "source-in";
+        maskCtx.fillStyle = "#050914";
+        maskCtx.fillRect(0,0,mask.width,mask.height);
+        ctx.globalAlpha = .72;
+        ctx.filter = "drop-shadow(0 7px 8px rgba(0,0,0,.35))";
+        ctx.drawImage(
+            mask,
+            x + ((width - drawWidth) / 2),
+            y + ((height - drawHeight) / 2),
+            drawWidth,
+            drawHeight
+        );
+        ctx.restore();
+        return;
+    }
     ctx.drawImage(
         image,
         x + ((width - drawWidth) / 2),
@@ -1454,6 +1476,7 @@ function drawCenteredImage(ctx,image,x,y,width,height){
         drawWidth,
         drawHeight
     );
+    ctx.restore();
 }
 
 function rarityColors(rarity){
@@ -1629,7 +1652,9 @@ async function renderMobileExportCanvasBlob(){
                 strokeWidth:2
             });
             if(sprite?.image){
-                drawCenteredImage(ctx,imageMap.get(sprite.id),x + 28,cardY + 30,96,86);
+                drawCenteredImage(ctx,imageMap.get(sprite.id),x + 28,cardY + 30,96,86,{
+                    silhouette:!sprite.available
+                });
             }
             if(sprite?.available){
                 drawRarity(ctx,sprite.rarity,x + 8,cardY + 124,136);

@@ -1439,7 +1439,7 @@ body.exportingImage .trackerGrid{
     justify-content:center;
 }
 .mobileExportSprite[data-state="unavailable"] img{
-    filter:brightness(.34) contrast(1.15) drop-shadow(0 7px 8px rgba(0,0,0,.3));
+    filter:brightness(0) opacity(.68) drop-shadow(0 7px 8px rgba(0,0,0,.35));
 }
 .mobileExportVariant{
     position:absolute;
@@ -2126,7 +2126,7 @@ body.exportingImage .trackerGrid{
     filter:none;
 }
 .spriteCard[data-state="unavailable"] img{
-    filter:brightness(.34) contrast(1.15) drop-shadow(0 7px 8px rgba(0,0,0,.3));
+    filter:brightness(0) opacity(.68) drop-shadow(0 7px 8px rgba(0,0,0,.35));
 }
 @keyframes spriteHoverPop{
     0%{
