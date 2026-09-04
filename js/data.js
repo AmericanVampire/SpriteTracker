@@ -14,6 +14,7 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Sprites",
         items:[
+            { code:"JonesyIsGolden", reward:"Gold Jonesy Sprite" },
             { code:"Born2Play", reward:"Cheat Master Adventure Sprite" },
             { code:"8BitBlast", reward:"Cheat Master 8-Bit Sprite" },
             { code:"GottaGoFast", reward:"Cheat Master Sonic Sprite" },
@@ -25,6 +26,7 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Loading Screens & Locker Items",
         items:[
+            { code:"YourThoughtsAreMine", reward:"Void Master Geno style + 5,000 Sprite Dust (Requires hidden story quest)" },
             { code:"BeMoreAlien", reward:"Override Ready Loading Screen" },
             { code:"ReachYourImpossible", reward:"Block Party Loading Screen" }
         ]
@@ -32,6 +34,8 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Consumable Resources",
         items:[
+            { code:"ChatWhereDoYouFindTheKey", reward:"2 Extraction Accelerators" },
+            { code:"InvalidCheat", reward:"2 Cheat Code Locators" },
             { code:"H0p0nVC", reward:"2,000 Sprite Dust" },
             { code:"OverrideXP", reward:"40,000 XP" },
             { code:"Magilume", reward:"2,000 Sprite Dust" },
@@ -48,6 +52,8 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Fun Effects",
         items:[
+            { code:"BRB", reward:"Turns you into a toilet." },
+            { code:"InsertCoinToContinue", reward:"Turns all party members into props." },
             { code:"DontBlockMe", reward:"Turns you into a Tetrimino." },
             { code:"LetsBlockAndRoll", reward:"Turns you into a Tetrimino." }
         ]
@@ -96,22 +102,27 @@ const LEGACY_FAMILIES = [
 const OVERRIDE_VARIANTS = [
     { id:"base", label:"Base" },
     { id:"gold", label:"Gold", prefix:"gold-" },
-    { id:"cheatmaster", label:"Cheat Master", prefix:"cheatmaster-" }
+    { id:"cheatmaster", label:"Cheat Master", prefix:"cheatmaster-" },
+    { id:"loothacker", label:"Loot Hacker", prefix:"loot-hacker-" }
 ];
 
 const OVERRIDE_FAMILIES = [
-    { name:"Jackrabbit", rarity:"Legendary", ability:"Grants the ability to perform another jump while mid-air. Cooldown between jumps decreases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Shadow", rarity:"Epic", ability:"Automatically reloads unequipped weapons over time, and reloads the equipped weapon at max level.", variants:["base","gold","cheatmaster"] },
-    { name:"Bush", rarity:"Rare", ability:"Grants a bush after a duration, and grants a bush on elimination at max level. Activation time decreases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Tails", rarity:"Epic", ability:"Grants the ability to hover with the help of Tails. Hover speed increases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Killswitch", rarity:"Epic", ability:"Enter Hangtime with improved accuracy when aiming while jumping and falling. Accuracy increases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Adventure", rarity:"Rare", ability:"Upgrades a random item in the player's inventory with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Klombo", rarity:"Mythic", ability:"Grants random items at each level, only levels up by consuming items. Item quality increases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Jonesy", rarity:"Rare", ability:"Recover health or shields after being damaged, after a short duration. Amount healed increases with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Sonic", rarity:"Epic", ability:"Gotta Go Fast! Sprint faster with each Level Up.", variants:["base","gold","cheatmaster"] },
-    { name:"Crown", rarity:"Mythic", ability:"Only levels up by winning matches. Levels up faster with Crown Wins. New variants unlock after mastering.", variants:["base","gold","cheatmaster"] },
-    { name:"8-Bit", rarity:"Rare", ability:"Find an 8-Bit Shotgun in your first chest and gain a score multiplier for it.", variants:["base","gold","cheatmaster"] },
-    { name:"Storm Scout", rarity:"Rare", ability:"Applies Overdrive after taking storm damage and reveals future Storm Circles at max level.", variants:["base","gold","cheatmaster"] }
+    { name:"Jackrabbit", rarity:"Legendary", ability:"Grants the ability to perform another jump while mid-air. Cooldown between jumps decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Shadow", rarity:"Epic", ability:"Automatically reloads unequipped weapons over time, and reloads the equipped weapon at max level.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Bush", rarity:"Rare", ability:"Grants a bush after a duration, and grants a bush on elimination at max level. Activation time decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Tails", rarity:"Epic", ability:"Grants the ability to hover with the help of Tails. Hover speed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Killswitch", rarity:"Epic", ability:"Enter Hangtime with improved accuracy when aiming while jumping and falling. Accuracy increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Adventure", rarity:"Rare", ability:"Upgrades a random item in the player's inventory with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Klombo", rarity:"Mythic", ability:"Grants random items at each level, only levels up by consuming items. Item quality increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Jonesy", rarity:"Rare", ability:"Recover health or shields after being damaged, after a short duration. Amount healed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Sonic", rarity:"Epic", ability:"Gotta Go Fast! Sprint faster with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Crown", rarity:"Mythic", ability:"Only levels up by winning matches. Levels up faster with Crown Wins. New variants unlock after mastering.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"8-Bit", rarity:"Rare", ability:"Find an 8-Bit Shotgun in your first chest and gain a score multiplier for it.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Storm Scout", rarity:"Rare", ability:"Applies Overdrive after taking storm damage and reveals future Storm Circles at max level.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Mega Man", rarity:"Rare", ability:"Slip and slide around with reduced friction while sliding. Slide farther with each Level Up.", variants:["base"] },
+    { name:"Overshield", rarity:"Rare", ability:"Grants Overshield over time. Overshield amount increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"X-Ray", rarity:"Rare", ability:"Periodically marks nearby enemies. Detection radius increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] },
+    { name:"Onigiri", rarity:"Rare", ability:"Activates Overdrive after you eat or drink a consumable. Overdrive lasts longer with each Level Up.", variants:["base","gold","cheatmaster","loothacker"] }
 ];
 
 function slug(text){
@@ -152,7 +163,7 @@ function buildOverrideSprites(){
                 available,
                 image:available
                     ? `sprites/S4/${variant.prefix ?? ""}${slug(family.name)}-sprite.webp`
-                    : ""
+                    : `sprites/S4/${slug(family.name)}-sprite.webp`
             };
         })
     );

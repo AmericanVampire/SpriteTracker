@@ -8,7 +8,7 @@ let suppressNextAbilityCloseClick = false;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v1";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v2";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -845,6 +845,30 @@ function showAppNotice(){
             <article class="notificationCard">
                 <div class="notificationIcon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Sprite Update</span>
+                    <strong>New Sprites and Hack Codes added</strong>
+                    <p>
+                        Season 4 now includes the newest Sprite families,
+                        Loot Hacker variants, and updated Hack Codes from the
+                        latest Fortnite update.
+                    </p>
+                    <p>
+                        Existing profiles stay intact. New Sprites will appear
+                        automatically and can still be tracked, mastered, or
+                        individually disabled like the rest of your collection.
+                    </p>
+                </div>
+            </article>
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
                         <path d="M12 3.5c3.6 0 6.5 2.9 6.5 6.5v4.7l1.8 1.8v1.2H3.7v-1.2l1.8-1.8V10c0-3.6 2.9-6.5 6.5-6.5Z"></path>
                         <path d="M9.5 19.5a2.8 2.8 0 0 0 5 0"></path>
                     </svg>
@@ -1455,6 +1479,9 @@ function variantColor(variantId){
     }
     if(variantId === "cheatmaster"){
         return "#72ff8c";
+    }
+    if(variantId === "loothacker"){
+        return "#ff9a57";
     }
     return "#eef4ff";
 }
