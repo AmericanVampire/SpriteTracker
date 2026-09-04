@@ -852,10 +852,10 @@ function showAppNotice(){
                     </svg>
                 </div>
                 <div class="notificationContent">
-                    <span class="notificationMeta">Sprite Update</span>
+                    <span class="notificationMeta">Sprite Tracker Update</span>
                     <strong>New Sprites and Hack Codes added</strong>
-                    <p><strong>The app has been updated with the newest Sprite families, Loot Hacker variants, and Hack Codes from the latest Fortnite update.</strong></p>
-                    <p><strong>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</strong></p>
+                    <p>The app has been updated with the newest Sprite families, Loot Hacker variants, and Hack Codes from the latest Fortnite update.</p>
+                    <p>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</p>
                 </div>
             </article>
             <article class="notificationCard">
