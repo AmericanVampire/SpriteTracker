@@ -854,16 +854,8 @@ function showAppNotice(){
                 <div class="notificationContent">
                     <span class="notificationMeta">Sprite Update</span>
                     <strong>New Sprites and Hack Codes added</strong>
-                    <p>
-                        Season 4 now includes the newest Sprite families,
-                        Loot Hacker variants, and updated Hack Codes from the
-                        latest Fortnite update.
-                    </p>
-                    <p>
-                        Existing profiles stay intact. New Sprites will appear
-                        automatically and can still be tracked, mastered, or
-                        individually disabled like the rest of your collection.
-                    </p>
+                    <p><strong>The app has been updated with the newest Sprite families, Loot Hacker variants, and Hack Codes from the latest Fortnite update.</strong></p>
+                    <p><strong>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</strong></p>
                 </div>
             </article>
             <article class="notificationCard">
