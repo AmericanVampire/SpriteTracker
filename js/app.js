@@ -8,7 +8,7 @@ let suppressNextAbilityCloseClick = false;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v2";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v3";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -853,8 +853,8 @@ function showAppNotice(){
                 </div>
                 <div class="notificationContent">
                     <span class="notificationMeta">Sprite Tracker Update</span>
-                    <strong>New Sprites and Hack Codes added</strong>
-                    <p>The app has been updated with the newest Sprite families, Loot Hacker variants, and Hack Codes from the latest Fortnite update.</p>
+                    <strong>Bounty Hunter Sprites and new Hack Codes added</strong>
+                    <p>Sprite Tracker has been updated with the Bounty Hunter variant, five new Sprite families, and the newest Hack Codes from the latest Fortnite update.</p>
                     <p>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</p>
                 </div>
             </article>
@@ -1498,6 +1498,9 @@ function variantColor(variantId){
     if(variantId === "loothacker"){
         return "#ff9a57";
     }
+    if(variantId === "bountyhunter"){
+        return "#ff8096";
+    }
     return "#eef4ff";
 }
 
@@ -1560,7 +1563,9 @@ function drawRarity(ctx,rarity,x,y,width){
 async function renderMobileExportCanvasBlob(){
     const season = activeSeason();
     const stats = calculateStats();
-    const rowHeight = 292;
+    const cardsPerRow = 3;
+    const variantRows = Math.ceil(season.variants.length / cardsPerRow);
+    const rowHeight = 124 + (variantRows * 168);
     const width = 540;
     const height = 16 + 90 + 14 + 244 + (season.families.length * rowHeight) + 70;
     const ratio = 2;
@@ -1622,8 +1627,8 @@ async function renderMobileExportCanvasBlob(){
             const sprite = season.sprites.find(item=>
                 item.family === family.name && item.variantId === variant.id
             );
-            const x = 28 + (index * 164);
-            const cardY = y + 118;
+            const x = 28 + ((index % cardsPerRow) * 164);
+            const cardY = y + 118 + (Math.floor(index / cardsPerRow) * 168);
             const disabled = sprite?.available ? isDisabled(sprite) : false;
             const spriteProgress = sprite?.available ? spriteState(sprite) : "unavailable";
             const stateName = disabled ? "disabled" : spriteProgress;

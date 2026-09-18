@@ -1488,6 +1488,9 @@ body.exportingImage .trackerGrid{
 .mobileExportSprite[data-variant-type="loothacker"] .mobileExportVariant{
     color:#ff7a45;
 }
+.mobileExportSprite[data-variant-type="bountyhunter"] .mobileExportVariant{
+    color:#ff5f79;
+}
 .mobileExportSprite .spriteRarity{
     min-width:0;
     width:100%;
@@ -1608,6 +1611,10 @@ body.exportingImage .trackerGrid{
     background:linear-gradient(180deg, #ffcc73 0%, #ff7a1a 52%, #933300 100%);
     color:#1f0d02;
 }
+.variantToggle[data-variant-type="bountyhunter"]{
+    background:linear-gradient(180deg, #ffadbd 0%, #e84968 52%, #78172d 100%);
+    color:#24060d;
+}
 .seasonPickerCell{
     padding:0;
     align-items:center !important;
@@ -1698,6 +1705,9 @@ body.exportingImage .trackerGrid{
 }
 .variantToggle[data-variant-type="loothacker"] small{
     color:rgba(31,13,2,.78);
+}
+.variantToggle[data-variant-type="bountyhunter"] small{
+    color:rgba(36,6,13,.78);
 }
 .variantToggle[data-disabled="true"]{
     background:linear-gradient(180deg, #5b6070, #303444);
@@ -2797,6 +2807,9 @@ dialog::backdrop{
     }
     .spriteCard[data-variant-type="loothacker"] .spriteVariantName{
         color:#ff9a57;
+    }
+    .spriteCard[data-variant-type="bountyhunter"] .spriteVariantName{
+        color:#ff8096;
     }
     .spriteRarity{
         min-width:0;
