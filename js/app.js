@@ -8,7 +8,7 @@ let suppressNextAbilityCloseClick = false;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v3";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v4";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -853,8 +853,8 @@ function showAppNotice(){
                 </div>
                 <div class="notificationContent">
                     <span class="notificationMeta">Sprite Tracker Update</span>
-                    <strong>Bounty Hunter Sprites and new Hack Codes added</strong>
-                    <p>Sprite Tracker has been updated with the Bounty Hunter variant, five new Sprite families, and the newest Hack Codes from the latest Fortnite update.</p>
+                    <strong>New Sprites and Admin Panel Codes added</strong>
+                    <p>Sprite Tracker has been updated with the Trick or Treat variant, four new Sprite families, and the latest Fortnite Admin Panel Codes.</p>
                     <p>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</p>
                 </div>
             </article>
@@ -938,8 +938,8 @@ function showTrackerInfo(){
                         <p>Use the Season dropdown to switch between current and archived Sprite collections.</p>
                     </article>
                     <article>
-                        <strong>Hack Codes</strong>
-                        <p>Open Hack Codes to copy codes and mark which ones you have already used.</p>
+                        <strong>Admin Panel Codes</strong>
+                        <p>Open Admin Panel Codes to copy codes and mark which ones you have already used.</p>
                     </article>
                     <article>
                         <strong>Next Sprite Drop</strong>

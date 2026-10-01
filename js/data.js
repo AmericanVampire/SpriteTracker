@@ -26,6 +26,9 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Loading Screens & Locker Items",
         items:[
+            { code:"S7H-50P-R03", reward:"Geno Story" },
+            { code:"WeAreTheWorldChampionsToday", reward:"FNCS Sentry Back Bling" },
+            { code:"9Years", reward:"9th Birthday Sprite Spray" },
             { code:"SAYH12WR1X3L", reward:"Wrixel's Hero Portrait Spray" },
             { code:"YourThoughtsAreMine", reward:"Void Master Geno style + 5,000 Sprite Dust (Requires hidden story quest)" },
             { code:"BeMoreAlien", reward:"Override Ready Loading Screen" },
@@ -35,6 +38,11 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Consumable Resources",
         items:[
+            { code:"IThinkTheKeyFoundMeChat", reward:"1 Extraction Accelerator" },
+            { code:"BoneRattler", reward:"4 Spicy Tacos" },
+            { code:"WhoCrackedTheCode", reward:"40,000 XP" },
+            { code:"DustySprites", reward:"5,000 Sprite Dust" },
+            { code:"AlmostScaringSeason", reward:"2 Cheat Code Locators" },
             { code:"PlayToLevelUp", reward:"2,000 Sprite Dust" },
             { code:"ChatFindMeAnotherCode", reward:"2 Cheat Code Locators" },
             { code:"NOCTURNEOP55N1", reward:"2 Extraction Accelerators" },
@@ -62,8 +70,11 @@ const LOBBY_HACK_GROUPS = [
     {
         name:"Fun Effects",
         items:[
+            { code:"CrowsAreAfraid", reward:"Turns you into a Scarecrow." },
+            { code:"PumpkinSpiceLife", reward:"Turns you into a Pumpkin." },
+            { code:"PowerOut", reward:"FNAF Jumpscare." },
             { code:"BRB", reward:"Turns you into a toilet." },
-            { code:"InsertCoinToContinue", reward:"Turns all party members into props." },
+            { code:"InsertCoinToContinue", reward:"Turns you into an arcade machine." },
             { code:"DontBlockMe", reward:"Turns you into a Tetrimino." },
             { code:"LetsBlockAndRoll", reward:"Turns you into a Tetrimino." }
         ]
@@ -114,31 +125,36 @@ const OVERRIDE_VARIANTS = [
     { id:"gold", label:"Gold", prefix:"gold-" },
     { id:"cheatmaster", label:"Cheat Master", prefix:"cheatmaster-" },
     { id:"loothacker", label:"Loot Hacker", prefix:"loot-hacker-" },
-    { id:"bountyhunter", label:"Bounty Hunter", prefix:"bounty-hunter-" }
+    { id:"bountyhunter", label:"Bounty Hunter", prefix:"bounty-hunter-" },
+    { id:"tricktreat", label:"Trick or Treat", prefix:"trick-or-treat-" }
 ];
 
 const OVERRIDE_FAMILIES = [
-    { name:"Jackrabbit", rarity:"Legendary", ability:"Grants the ability to perform another jump while mid-air. Cooldown between jumps decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Shadow", rarity:"Epic", ability:"Automatically reloads unequipped weapons over time, and reloads the equipped weapon at max level.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Bush", rarity:"Rare", ability:"Grants a bush after a duration, and grants a bush on elimination at max level. Activation time decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Tails", rarity:"Epic", ability:"Grants the ability to hover with the help of Tails. Hover speed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Killswitch", rarity:"Epic", ability:"Enter Hangtime with improved accuracy when aiming while jumping and falling. Accuracy increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Adventure", rarity:"Rare", ability:"Upgrades a random item in the player's inventory with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Klombo", rarity:"Mythic", ability:"Grants random items at each level, only levels up by consuming items. Item quality increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Jonesy", rarity:"Rare", ability:"Recover health or shields after being damaged, after a short duration. Amount healed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Sonic", rarity:"Epic", ability:"Gotta Go Fast! Sprint faster with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Crown", rarity:"Mythic", ability:"Only levels up by winning matches. Levels up faster with Crown Wins. New variants unlock after mastering.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"8-Bit", rarity:"Rare", ability:"Find an 8-Bit Shotgun in your first chest and gain a score multiplier for it.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Storm Scout", rarity:"Rare", ability:"Applies Overdrive after taking storm damage and reveals future Storm Circles at max level.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
+    { name:"Jackrabbit", rarity:"Legendary", ability:"Grants the ability to perform another jump while mid-air. Cooldown between jumps decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Shadow", rarity:"Epic", ability:"Automatically reloads unequipped weapons over time, and reloads the equipped weapon at max level.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Bush", rarity:"Rare", ability:"Grants a bush after a duration, and grants a bush on elimination at max level. Activation time decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Tails", rarity:"Epic", ability:"Grants the ability to hover with the help of Tails. Hover speed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Killswitch", rarity:"Epic", ability:"Enter Hangtime with improved accuracy when aiming while jumping and falling. Accuracy increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Adventure", rarity:"Rare", ability:"Upgrades a random item in the player's inventory with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Klombo", rarity:"Mythic", ability:"Grants random items at each level, only levels up by consuming items. Item quality increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Jonesy", rarity:"Rare", ability:"Recover health or shields after being damaged, after a short duration. Amount healed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Sonic", rarity:"Epic", ability:"Gotta Go Fast! Sprint faster with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Crown", rarity:"Mythic", ability:"Only levels up by winning matches. Levels up faster with Crown Wins. New variants unlock after mastering.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"8-Bit", rarity:"Rare", ability:"Find an 8-Bit Shotgun in your first chest and gain a score multiplier for it.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Storm Scout", rarity:"Rare", ability:"Applies Overdrive after taking storm damage and reveals future Storm Circles at max level.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Mega Man", rarity:"Rare", ability:"Slip and slide around with reduced friction while sliding. Slide farther with each Level Up.", variants:["base"] },
-    { name:"Overshield", rarity:"Rare", ability:"Grants Overshield over time. Overshield amount increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"X-Ray", rarity:"Rare", ability:"Periodically marks nearby enemies. Detection radius increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Onigiri", rarity:"Rare", ability:"Activates Overdrive after you eat or drink a consumable. Overdrive lasts longer with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Blinky", rarity:"Legendary", ability:"Grants cloak for a duration when you take damage. Cloak duration increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Birthday", rarity:"Rare", ability:"Opening chests has a chance to spawn a piece of cake. Eliminations can spawn cake at max level. Chance to spawn cake increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Crash Bandicoot", rarity:"Legendary", ability:"Jump in the air to trigger a whirlwind attack, damaging and knocking back nearby enemies. Damage increases and cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Pond", rarity:"Epic", ability:"Jump shortly after landing to trigger a Super Jump when charges are present. Gain charges over time. Super Jump strength increases and cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] },
-    { name:"Morgana", rarity:"Epic", ability:"Increases the effectiveness of healing items. Healing effectiveness increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter"] }
+    { name:"Overshield", rarity:"Rare", ability:"Grants Overshield over time. Overshield amount increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"X-Ray", rarity:"Legendary", ability:"Periodically marks nearby enemies. Detection radius increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Onigiri", rarity:"Rare", ability:"Activates Overdrive after you eat or drink a consumable. Overdrive lasts longer with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Blinky", rarity:"Legendary", ability:"Grants cloak for a duration when you take damage. Cloak duration increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Birthday", rarity:"Rare", ability:"Opening chests has a chance to spawn a piece of cake. Eliminations can spawn cake at max level. Chance to spawn cake increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Crash Bandicoot", rarity:"Legendary", ability:"Jump in the air to trigger a whirlwind attack, damaging and knocking back nearby enemies. Damage increases and cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Pond", rarity:"Epic", ability:"Jump shortly after landing to trigger a Super Jump when charges are present. Gain charges over time. Super Jump strength increases and cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Morgana", rarity:"Epic", ability:"Increases the effectiveness of healing items. Healing effectiveness increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Spooky Dash", rarity:"Mythic", ability:"Jump in the air to phase through some objects. Gain charges over time. Charge cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Vampire", rarity:"Legendary", ability:"Recover health when damaging an enemy. Health recovered increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"The Deer", rarity:"Legendary", ability:"Melee attacks deal more damage. Melee attack damage increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Dumpster Dive", rarity:"Epic", ability:"Food provides bonus healing. Find food when jumping out of hiding props and sometimes when opening containers. Find better food with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] }
 ];
 
 function slug(text){
