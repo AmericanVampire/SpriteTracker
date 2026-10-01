@@ -956,7 +956,7 @@ button.danger,
     top:var(--topbar-offset);
     z-index:90;
     margin:0 -18px;
-    padding:7px 30px 10px 18px;
+    padding:7px 18px 10px;
     border-bottom:1px solid rgba(155,234,255,.32);
     background:linear-gradient(180deg, #0749b2, #062a80);
     box-shadow:
