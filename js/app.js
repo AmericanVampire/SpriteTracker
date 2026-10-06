@@ -8,7 +8,7 @@ let suppressNextAbilityCloseClick = false;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v4";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v5";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -853,8 +853,40 @@ function showAppNotice(){
                 </div>
                 <div class="notificationContent">
                     <span class="notificationMeta">Sprite Tracker Update</span>
+                    <strong>Sprite Order Corrected</strong>
+                    <p>Version 3.0.7 reorganizes all Sprite families into their correct collection order.</p>
+                    <p>Your existing profiles, collection progress, disabled Sprites, and saved settings will remain unchanged.</p>
+                </div>
+            </article>
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Sprite Tracker Update</span>
+                    <strong>Halloween Sprites and new codes added</strong>
+                    <p>Version 3.0.6 adds the Trick or Treat type, four new Sprite families, and 11 new Admin Panel Codes.</p>
+                    <p>Spooky Dash, Vampire, The Deer, and Dumpster Dive are ready to track. Existing profiles and progress remain unchanged.</p>
+                </div>
+            </article>
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Sprite Tracker Update</span>
                     <strong>New Sprites and Admin Panel Codes added</strong>
-                    <p>Sprite Tracker has been updated with the Trick or Treat variant, four new Sprite families, and the latest Fortnite Admin Panel Codes.</p>
+                    <p>Version 3.0.5 adds the new Bounty Hunter variant, five new Sprite families, and the latest Fortnite Admin Panel Codes.</p>
                     <p>Your existing profiles and progress will remain unchanged. New Sprites can be tracked, mastered, or individually disabled like the rest of your collection.</p>
                 </div>
             </article>
