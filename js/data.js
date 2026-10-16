@@ -139,7 +139,6 @@ const OVERRIDE_VARIANTS = [
 ];
 
 const OVERRIDE_FAMILIES = [
-    { name:"Dumpster Dive", rarity:"Epic", ability:"Food provides bonus healing. Find food when jumping out of hiding props and sometimes when opening containers. Find better food with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Jonesy", rarity:"Rare", ability:"Recover health or shields after being damaged, after a short duration. Amount healed increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat","quack"] },
     { name:"Adventure", rarity:"Rare", ability:"Upgrades a random item in the player's inventory with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat","quack"] },
     { name:"Bush", rarity:"Rare", ability:"Grants a bush after a duration, and grants a bush on elimination at max level. Activation time decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat","quack"] },
@@ -158,6 +157,7 @@ const OVERRIDE_FAMILIES = [
     { name:"Onigiri", rarity:"Rare", ability:"Activates Overdrive after you eat or drink a consumable. Overdrive lasts longer with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Storm Scout", rarity:"Rare", ability:"Applies Overdrive after taking storm damage and reveals future Storm Circles at max level.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Blinky", rarity:"Legendary", ability:"Grants cloak for a duration when you take damage. Cloak duration increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
+    { name:"Dumpster Dive", rarity:"Epic", ability:"Food provides bonus healing. Find food when jumping out of hiding props and sometimes when opening containers. Find better food with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Birthday", rarity:"Rare", ability:"Opening chests has a chance to spawn a piece of cake. Eliminations can spawn cake at max level. Chance to spawn cake increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Crash Bandicoot", rarity:"Legendary", ability:"Jump in the air to trigger a whirlwind attack, damaging and knocking back nearby enemies. Damage increases and cooldown decreases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
     { name:"Morgana", rarity:"Epic", ability:"Increases the effectiveness of healing items. Healing effectiveness increases with each Level Up.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] },
