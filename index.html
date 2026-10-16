@@ -22,7 +22,7 @@
     <title>Sprite Tracker</title>
     <link rel="canonical" href="https://spritetracker.net/">
     <link rel="icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="css/main.css?v=2026-10-01-1">
+    <link rel="stylesheet" href="css/main.css?v=2026-10-15-1">
 </head>
 <body>
     <div class="scanlines" aria-hidden="true"></div>
@@ -32,13 +32,20 @@
                 <img src="assets/sprite-tracker-title.png" alt="Sprite Tracker">
             </div>
             <div class="topActions">
-                <button id="noticeButton" class="noticeButton" type="button" aria-label="Sprite Tracker notice" title="Sprite Tracker notice">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2v1h16v-1l-2-2Z"></path>
-                        <path d="M9.5 20a2.8 2.8 0 0 0 5 0"></path>
-                    </svg>
-                    <span class="noticeDot" aria-hidden="true"></span>
-                </button>
+                <div class="topUtility">
+                    <div class="profileStatus">
+                        <span>Profile</span>
+                        <strong id="currentProfileName">No profile loaded</strong>
+                        <small id="storageNote">Saved locally with IndexedDB</small>
+                    </div>
+                    <button id="noticeButton" class="noticeButton" type="button" aria-label="Sprite Tracker notice" title="Sprite Tracker notice">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2v1h16v-1l-2-2Z"></path>
+                            <path d="M9.5 20a2.8 2.8 0 0 0 5 0"></path>
+                        </svg>
+                        <span class="noticeDot" aria-hidden="true"></span>
+                    </button>
+                </div>
                 <section class="topProfile" aria-label="Profile controls">
                     <a id="donateButton" class="redbullButton" href="#" target="_blank" rel="noopener">
                         <img src="assets/buy-me-a-redbull.png" alt="">
@@ -48,11 +55,6 @@
                         <img src="assets/discord-logo.png" alt="">
                         <span>Join Discord</span>
                     </a>
-                    <div class="profileStatus">
-                        <span>Profile</span>
-                        <strong id="currentProfileName">No profile loaded</strong>
-                        <small id="storageNote">Saved locally with IndexedDB</small>
-                    </div>
                     <details class="profileMenu">
                         <summary>Menu</summary>
                         <div class="profileMenuPanel">
@@ -132,11 +134,18 @@
                                 <strong id="overallStat">0%</strong>
                             </div>
                         </div>
-                        <aside class="intelDeck" aria-label="Sprite drop timer and admin panel codes">
-                            <section class="dropTimerCard" aria-label="Next Sprite Drop">
-                                <span>Next Sprite Drop</span>
-                                <strong id="timerValue">--:--:--</strong>
-                                <small id="timerDate">Thursday at 9:00 AM ET</small>
+                        <aside class="intelDeck" aria-label="Weekly events and Admin Panel Codes">
+                            <section class="dropTimerCard" aria-label="Weekly Sprite events">
+                                <div class="dropTimerSlot" id="masteryMondayTimer">
+                                    <span>Mastery Monday</span>
+                                    <strong id="masteryMondayCountdown">--:--:--</strong>
+                                    <small id="masteryMondayDate">Monday at 9:00 AM ET</small>
+                                </div>
+                                <div class="dropTimerSlot" id="spriteDropTimer">
+                                    <span>Next Sprite Drop</span>
+                                    <strong id="spriteDropCountdown">--:--:--</strong>
+                                    <small id="spriteDropDate">Thursday at 9:00 AM ET</small>
+                                </div>
                             </section>
                             <details class="intelMenu hacksDropdown">
                                 <summary>
@@ -179,8 +188,8 @@
     </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
-    <script src="js/data.js?v=2026-10-01-1"></script>
+    <script src="js/data.js?v=2026-10-15-1"></script>
     <script src="js/storage.js?v=2026-08-23-10"></script>
-    <script src="js/app.js?v=2026-10-01-1"></script>
+    <script src="js/app.js?v=2026-10-15-1"></script>
 </body>
 </html>

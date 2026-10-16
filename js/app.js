@@ -8,7 +8,7 @@ let suppressNextAbilityCloseClick = false;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v6";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v7";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -22,8 +22,12 @@ const els = {
     masteredStat:document.getElementById("masteredStat"),
     setsStat:document.getElementById("setsStat"),
     overallStat:document.getElementById("overallStat"),
-    timerValue:document.getElementById("timerValue"),
-    timerDate:document.getElementById("timerDate"),
+    spriteDropCountdown:document.getElementById("spriteDropCountdown"),
+    spriteDropDate:document.getElementById("spriteDropDate"),
+    spriteDropTimer:document.getElementById("spriteDropTimer"),
+    masteryMondayTimer:document.getElementById("masteryMondayTimer"),
+    masteryMondayCountdown:document.getElementById("masteryMondayCountdown"),
+    masteryMondayDate:document.getElementById("masteryMondayDate"),
     hackCodesPanel:document.getElementById("hackCodesPanel"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
@@ -232,7 +236,7 @@ function easternDateParts(date){
         hour:"2-digit",
         minute:"2-digit",
         second:"2-digit",
-        hour12:false
+        hourCycle:"h23"
     }).formatToParts(date).reduce((parts,part)=>{
         if(part.type !== "literal"){
             parts[part.type] =
@@ -297,8 +301,32 @@ function nextWeeklyEasternDate({
         daysUntil = 7;
     }
     targetEastern.setUTCDate(targetEastern.getUTCDate() + daysUntil);
-    const easternOffset = getTimeZoneOffsetMinutes(targetEastern,"America/New_York");
-    return new Date(targetEastern.getTime() - easternOffset * 60000);
+    return easternWallDateToUtc(targetEastern);
+}
+
+function easternWallDateToUtc(wallDate){
+    let target = new Date(wallDate);
+    // Resolve the offset at the event itself, including weeks across DST changes.
+    for(let pass = 0; pass < 3; pass++){
+        const offset = getTimeZoneOffsetMinutes(target,"America/New_York");
+        const resolved = new Date(wallDate.getTime() - offset * 60000);
+        if(resolved.getTime() === target.getTime()){
+            break;
+        }
+        target = resolved;
+    }
+    return target;
+}
+
+function weeklyEventState(schedule,now = new Date()){
+    const parts = easternDateParts(now);
+    const wallNow = new Date(Date.UTC(parts.year,parts.month - 1,parts.day,parts.hour,parts.minute,parts.second));
+    const startsToday = new Date(Date.UTC(parts.year,parts.month - 1,parts.day,schedule.hourEt,schedule.minuteEt || 0));
+    const active = wallNow.getUTCDay() === schedule.weekdayEt && wallNow >= startsToday;
+    return {
+        active,
+        date:active ? easternWallDateToUtc(startsToday) : nextWeeklyEasternDate(schedule,now)
+    };
 }
 
 function getTimeZoneOffsetMinutes(date,timeZone){
@@ -310,7 +338,7 @@ function getTimeZoneOffsetMinutes(date,timeZone){
         hour:"2-digit",
         minute:"2-digit",
         second:"2-digit",
-        hour12:false
+        hourCycle:"h23"
     }).formatToParts(date).reduce((acc,part)=>{
         if(part.type !== "literal"){
             acc[part.type] = Number(part.value);
@@ -348,11 +376,11 @@ function dropTimerTarget(){
     return null;
 }
 
-function formatCountdown(target){
+function formatCountdown(target,now = new Date()){
     if(!target || Number.isNaN(target.getTime())){
         return "--:--:--";
     }
-    const remaining = Math.max(0,target.getTime() - Date.now());
+    const remaining = Math.max(0,target.getTime() - now.getTime());
     const totalSeconds = Math.floor(remaining / 1000);
     const days = Math.floor(totalSeconds / 86400);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
@@ -366,6 +394,7 @@ function formatCountdown(target){
 
 function formatEventDate(date){
     return new Intl.DateTimeFormat("en-US",{
+        timeZone:"America/New_York",
         weekday:"long",
         month:"long",
         day:"numeric",
@@ -374,22 +403,23 @@ function formatEventDate(date){
     }).format(date);
 }
 
-function renderDropTimer(){
-    if(!els.timerValue){
+function renderDropTimer(now = new Date()){
+    if(!els.spriteDropCountdown || !els.spriteDropDate){
         return;
     }
-    const target = dropTimerTarget();
-    if(!target || Number.isNaN(target.getTime())){
-        els.timerValue.textContent = "--:--:--";
-        if(els.timerDate){
-            els.timerDate.textContent = "Schedule unavailable";
+    const events = [
+        { schedule:{weekdayEt:1,hourEt:9,minuteEt:0}, panel:els.masteryMondayTimer, countdown:els.masteryMondayCountdown, date:els.masteryMondayDate, message:"MASTERY MONDAY" },
+        { schedule:SPRITE_DROP_TIMER, panel:els.spriteDropTimer, countdown:els.spriteDropCountdown, date:els.spriteDropDate, message:"NEW SPRITES TODAY" }
+    ];
+    events.forEach(event=>{
+        if(!event.panel || !event.countdown || !event.date){
+            return;
         }
-        return;
-    }
-    els.timerValue.textContent = formatCountdown(target);
-    if(els.timerDate){
-        els.timerDate.textContent = formatEventDate(target);
-    }
+        const status = weeklyEventState(event.schedule,now);
+        event.panel.dataset.active = String(status.active);
+        event.countdown.textContent = status.active ? event.message : formatCountdown(status.date,now);
+        event.date.textContent = formatEventDate(status.date) + " ET";
+    });
 }
 
 function hackUsedIcon(){
@@ -434,7 +464,7 @@ function renderLobbyHacks(){
     const used = state.profile ? lobbyHacks(state.profile) : {};
     const totalCodes = (LOBBY_HACK_GROUPS || []).reduce((total,group)=>total + group.items.length,0);
     els.hackCodesPanel.innerHTML = `
-        <p class="hackIntro">Keep track of your used codes.</p>
+        <p class="hackIntro">KEEP TRACK OF USED CODES</p>
         <p class="hackTotal">TOTAL CODES: ${totalCodes}</p>
         ${(LOBBY_HACK_GROUPS || []).map(group=>`
             <section class="hackGroup">
@@ -853,6 +883,22 @@ function showAppNotice(){
                 </div>
                 <div class="notificationContent">
                     <span class="notificationMeta">Sprite Tracker Update</span>
+                    <strong>New Sprites and variants added</strong>
+                    <p>Sprite Tracker now includes Honey and One Wish Willow, plus Quack variants for Jonesy, Adventure, Bush, Klombo, and Spooky Dash.</p>
+                    <p>Also includes additional Admin Panel Codes, Mastery Monday and Sprite drop timers, and interface refinements.</p>
+                </div>
+            </article>
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Sprite Tracker Update</span>
                     <strong>Sprite Order Corrected</strong>
                     <p>All Sprite families are now organized in their correct collection order.</p>
                     <p>Your existing profiles, collection progress, disabled Sprites, and saved settings will remain unchanged.</p>
@@ -918,6 +964,10 @@ function showAppNotice(){
     `,[
         {label:"Close"}
     ]);
+    els.dialogTitle.tabIndex = -1;
+    els.dialogTitle.focus({preventScroll:true});
+    els.dialog.scrollTop = 0;
+    els.dialogContent.scrollTop = 0;
     els.dialog
         .querySelector("[data-open-store]")
         ?.addEventListener("click",()=>window.open(MICROSOFT_STORE_URL,"_blank","noopener"));
@@ -974,8 +1024,8 @@ function showTrackerInfo(){
                         <p>Open Admin Panel Codes to copy codes and mark which ones you have already used.</p>
                     </article>
                     <article>
-                        <strong>Next Sprite Drop</strong>
-                        <p>The drop timer counts down to the next Thursday Sprite release at 9:00 AM ET.</p>
+                        <strong>Weekly Events</strong>
+                        <p>The timers track Mastery Monday and the next Thursday Sprite release, both beginning at 9:00 AM ET.</p>
                     </article>
                     <article>
                         <strong>Exports</strong>
@@ -1635,7 +1685,7 @@ async function renderMobileExportCanvasBlob(){
     });
     fillRoundRect(ctx,28,y + 98,480,56,8,"#0c6ccc","#4abfff");
     drawText(ctx,"NEXT SPRITE DROP",40,y + 116,{size:11,color:"#d7f6ff"});
-    drawText(ctx,els.timerValue.textContent || "",492,y + 126,{size:24,align:"right"});
+    drawText(ctx,els.spriteDropCountdown.textContent || "",492,y + 126,{size:24,align:"right"});
     drawText(ctx,"IN-GAME RELEASE",40,y + 138,{size:11,color:"#fff56d"});
     fillRoundRect(ctx,28,y + 168,480,62,10,"#256be2","#5fbfff");
     drawText(ctx,seasonPickerLabel(season),270,y + 199,{size:16,align:"center"});

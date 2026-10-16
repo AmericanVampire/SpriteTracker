@@ -20,6 +20,7 @@
     --disabled-red:#ff6a7f;
     --radius:8px;
     --page-gutter:24px;
+    --utility-column-width:528px;
     --topbar-height:114px;
     --topbar-offset:calc(var(--page-gutter) + var(--topbar-height));
     font-family:Inter, "Segoe UI", system-ui, sans-serif;
@@ -205,7 +206,7 @@ a,
     align-items:center;
     gap:18px;
     min-height:88px;
-    padding:10px 14px;
+    padding:10px 18px 10px 14px;
     background:linear-gradient(180deg, #0756c4, #062b81);
     backdrop-filter:blur(14px);
 }
@@ -216,7 +217,21 @@ a,
     align-items:flex-end;
     justify-content:center;
     gap:8px;
-    min-width:max-content;
+    width:var(--utility-column-width);
+    min-width:0;
+}
+.topUtility{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:12px;
+}
+.topUtility .profileStatus{
+    min-height:36px;
+    padding:3px 12px;
+}
+.topUtility .profileStatus strong{
+    font-size:18px;
 }
 .noticeButton{
     position:relative;
@@ -318,12 +333,27 @@ h2{
     border-radius:0 0 var(--radius) var(--radius);
 }
 .topProfile{
-    display:flex;
-    align-items:center;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    align-items:stretch;
     justify-content:flex-end;
     flex:0 0 auto;
     gap:12px;
-    min-width:max-content;
+    width:100%;
+    min-width:0;
+}
+.topProfile > a,
+.topProfile > .profileMenu{
+    height:54px;
+    min-width:0;
+}
+.topProfile > a{
+    justify-content:center;
+}
+.topProfile .profileMenu summary{
+    width:100%;
+    height:100%;
+    min-width:0;
 }
 .redbullButton{
     min-height:48px;
@@ -565,7 +595,7 @@ button.danger,
 }
 .statsDeck{
     display:grid;
-    grid-template-columns:minmax(0, 1fr) minmax(300px, .38fr);
+    grid-template-columns:minmax(0, 1fr) var(--utility-column-width);
     gap:18px;
     align-items:end;
 }
@@ -683,14 +713,14 @@ button.danger,
     min-width:0;
 }
 .dropTimerCard{
-    min-height:64px;
+    min-height:88px;
     min-width:300px;
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
     justify-items:center;
     align-items:center;
-    gap:4px;
-    padding:8px 12px;
+    gap:0;
+    padding:8px 0;
     border:0;
     border-radius:var(--radius);
     background:linear-gradient(180deg, #2d88ff, #173fba);
@@ -701,11 +731,24 @@ button.danger,
         inset 0 1px rgba(255,255,255,.22),
         inset 0 0 0 1px rgba(255,255,255,.14);
 }
+.dropTimerSlot{
+    min-width:0;
+    width:100%;
+    display:grid;
+    grid-template-rows:14px 28px 28px;
+    align-items:center;
+    justify-items:center;
+    gap:3px;
+    padding:0 10px;
+}
+.dropTimerSlot + .dropTimerSlot{
+    border-left:1px solid rgba(191,246,255,.35);
+}
 .dropTimerCard span{
-    color:#bff6ff;
+    color:#ffffff;
     font-size:12px;
     font-weight:950;
-    letter-spacing:.12em;
+    letter-spacing:0;
     line-height:1;
     text-align:center;
     text-transform:uppercase;
@@ -713,7 +756,7 @@ button.danger,
 .dropTimerCard strong{
     width:100%;
     color:#fff36a;
-    font-size:28px;
+    font-size:24px;
     font-weight:950;
     line-height:1;
     text-align:center;
@@ -721,11 +764,23 @@ button.danger,
 }
 .dropTimerCard small{
     color:#ffffff;
-    font-size:11px;
+    font-size:10px;
     font-weight:900;
-    line-height:1;
+    line-height:1.25;
     text-align:center;
     text-transform:uppercase;
+}
+.dropTimerSlot[data-active="true"] strong{
+    grid-row:1 / 3;
+    font-size:18px;
+    line-height:1.1;
+    white-space:normal;
+}
+.dropTimerSlot[data-active="true"] > span{
+    display:none;
+}
+.dropTimerSlot[data-active="true"] small{
+    grid-row:3;
 }
 .intelMenu summary{
     position:relative;
@@ -1486,7 +1541,7 @@ body.exportingImage .trackerGrid{
     color:#72ff8c;
 }
 .mobileExportSprite[data-variant-type="loothacker"] .mobileExportVariant{
-    color:#ff7a45;
+    color:#cfadff;
 }
 .mobileExportSprite[data-variant-type="bountyhunter"] .mobileExportVariant{
     color:#ff5f79;
@@ -1608,8 +1663,8 @@ body.exportingImage .trackerGrid{
     color:#071b0d;
 }
 .variantToggle[data-variant-type="loothacker"]{
-    background:linear-gradient(180deg, #ffcc73 0%, #ff7a1a 52%, #933300 100%);
-    color:#1f0d02;
+    background:linear-gradient(180deg, #d8baff 0%, #9b65d5 52%, #57317d 100%);
+    color:#180d2b;
 }
 .variantToggle[data-variant-type="bountyhunter"]{
     background:linear-gradient(180deg, #ffadbd 0%, #e84968 52%, #78172d 100%);
@@ -1704,7 +1759,7 @@ body.exportingImage .trackerGrid{
     color:rgba(7,27,13,.76);
 }
 .variantToggle[data-variant-type="loothacker"] small{
-    color:rgba(31,13,2,.78);
+    color:#241336;
 }
 .variantToggle[data-variant-type="bountyhunter"] small{
     color:rgba(36,6,13,.78);
@@ -2493,6 +2548,16 @@ dialog::backdrop{
         width:100%;
         gap:7px;
     }
+    .topUtility{
+        display:contents;
+    }
+    .topUtility .profileStatus{
+        min-height:40px;
+        padding:6px 8px;
+    }
+    .topUtility .profileStatus strong{
+        font-size:15px;
+    }
     .noticeButton{
         order:4;
         align-self:stretch;
@@ -2517,6 +2582,10 @@ dialog::backdrop{
     }
     .topProfile{
         display:contents;
+    }
+    .topProfile > a,
+    .topProfile > .profileMenu{
+        height:auto;
     }
     .redbullButton{
         order:1;
@@ -2806,7 +2875,7 @@ dialog::backdrop{
         color:#72ff8c;
     }
     .spriteCard[data-variant-type="loothacker"] .spriteVariantName{
-        color:#ff9a57;
+        color:#cfadff;
     }
     .spriteCard[data-variant-type="bountyhunter"] .spriteVariantName{
         color:#ff8096;
