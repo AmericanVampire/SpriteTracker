@@ -4,6 +4,7 @@ const state = {
     loading:true
 };
 let suppressNextAbilityCloseClick = false;
+let spriteSaveQueue = Promise.resolve();
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
@@ -122,6 +123,30 @@ async function persist(){
     state.profile.activeSeasonId = state.seasonId;
     state.profile = await SpriteStore.saveProfile(state.profile);
     await SpriteStore.setStartupProfile(state.profile.profileName);
+}
+
+function persistSpriteChange(){
+    if(!state.profile){
+        return;
+    }
+    state.profile.activeSeasonId = state.seasonId;
+    state.profile = SpriteStore.saveProfileBackup(state.profile);
+    const snapshot = typeof structuredClone === "function"
+        ? structuredClone(state.profile)
+        : JSON.parse(JSON.stringify(state.profile));
+    spriteSaveQueue = spriteSaveQueue
+        .catch(error=>console.warn(error))
+        .then(()=>SpriteStore.saveProfileToDatabase(snapshot))
+        .catch(error=>console.warn(error));
+}
+
+function refreshSpriteSelection(button,sprite,family){
+    button.dataset.state = isDisabled(sprite) ? "disabled" : spriteState(sprite);
+    const familyCell = button.closest(".spriteRow")?.querySelector(".familyCell");
+    if(familyCell){
+        familyCell.dataset.complete = String(isFamilyComplete(family));
+    }
+    renderStats();
 }
 
 function setSpriteState(sprite,nextState){
@@ -661,8 +686,8 @@ function createSpriteCard(sprite,family){
         }
         if(mobileViewport()){
             cycleMobileSpriteState(sprite);
-            await persist();
-            render();
+            refreshSpriteSelection(button,sprite,family);
+            persistSpriteChange();
             return;
         }
         if(disabled){

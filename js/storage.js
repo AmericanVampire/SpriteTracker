@@ -96,15 +96,24 @@ const SpriteStore = (() => {
     }
 
     async function getProfile(name){
+        const backup = getBackupProfile(name);
         try{
             const profile = await withStore(profilesStore,"readonly",store=>
                 requestToPromise(store.get(name))
             );
-            return profile || getBackupProfile(name);
+            if(!profile){
+                return backup;
+            }
+            if(!backup){
+                return profile;
+            }
+            const profileTime = Date.parse(profile.lastOpened || profile.created || "") || 0;
+            const backupTime = Date.parse(backup.lastOpened || backup.created || "") || 0;
+            return backupTime > profileTime ? backup : profile;
         }
         catch(error){
             console.warn(error);
-            return getBackupProfile(name);
+            return backup;
         }
     }
 
@@ -121,9 +130,14 @@ const SpriteStore = (() => {
         return profile;
     }
 
-    async function saveProfile(profile){
+    function saveProfileBackup(profile){
         const normalized = normalizeProfile(profile);
         setBackupProfile(normalized);
+        return normalized;
+    }
+
+    async function saveProfileToDatabase(profile){
+        const normalized = normalizeProfile(profile);
         try{
             await withStore(profilesStore,"readwrite",store=>{
                 store.put(normalized);
@@ -132,6 +146,12 @@ const SpriteStore = (() => {
         catch(error){
             console.warn(error);
         }
+        return normalized;
+    }
+
+    async function saveProfile(profile){
+        const normalized = saveProfileBackup(profile);
+        await saveProfileToDatabase(normalized);
         return normalized;
     }
 
@@ -255,6 +275,8 @@ const SpriteStore = (() => {
     return {
         createProfile,
         saveProfile,
+        saveProfileBackup,
+        saveProfileToDatabase,
         openProfile,
         deleteProfile,
         renameProfile,
