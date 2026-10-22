@@ -1578,10 +1578,16 @@ function variantColor(variantId){
         return "#72ff8c";
     }
     if(variantId === "loothacker"){
-        return "#ff9a57";
+        return "#cfadff";
     }
     if(variantId === "bountyhunter"){
         return "#ff8096";
+    }
+    if(variantId === "tricktreat"){
+        return "#ffb13b";
+    }
+    if(variantId === "quack"){
+        return "#fff04a";
     }
     return "#eef4ff";
 }
@@ -1645,17 +1651,19 @@ function drawRarity(ctx,rarity,x,y,width){
 async function renderMobileExportCanvasBlob(){
     const season = activeSeason();
     const stats = calculateStats();
-    const cardsPerRow = 3;
-    const variantRows = Math.ceil(season.variants.length / cardsPerRow);
-    const rowHeight = 124 + (variantRows * 168);
-    const width = 540;
-    const height = 16 + 90 + 14 + 244 + (season.families.length * rowHeight) + 70;
-    const ratio = 2;
+    const width = 1520;
+    const outerX = 18;
+    const contentWidth = width - (outerX * 2);
+    const familyWidth = 240;
+    const columnGap = 8;
+    const variantWidth = (contentWidth - familyWidth - (columnGap * season.variants.length)) / season.variants.length;
+    const rowHeight = 180;
+    const rowsY = 374;
+    const height = rowsY + (season.families.length * rowHeight) + 68;
     const canvas = document.createElement("canvas");
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
+    canvas.width = width;
+    canvas.height = height;
     const ctx = canvas.getContext("2d");
-    ctx.scale(ratio,ratio);
     ctx.fillStyle = "#070519";
     ctx.fillRect(0,0,width,height);
     const title = await loadCanvasImage("assets/sprite-tracker-title.png");
@@ -1664,85 +1672,138 @@ async function renderMobileExportCanvasBlob(){
         await loadCanvasImage(sprite.image)
     ]));
     const imageMap = new Map(imageEntries);
+    const verticalGradient = (y,gradientHeight,colors)=>{
+        const gradient = ctx.createLinearGradient(0,y,0,y + gradientHeight);
+        colors.forEach((color,index)=>gradient.addColorStop(index / (colors.length - 1),color));
+        return gradient;
+    };
+    const variantGradient = (variant,y,gradientHeight)=>{
+        const palettes = {
+            normal:["#f8fbff","#aebbd2","#526078"],
+            gold:["#fff17a","#f0b609","#9b6500"],
+            cheatmaster:["#9cffaa","#3dc969","#16753b"],
+            loothacker:["#d8baff","#9b65d5","#57317d"],
+            bountyhunter:["#ff9eb0","#dc4567","#7d1737"],
+            tricktreat:["#ffd067","#f47b20","#55206f"],
+            quack:["#f7e9ff","#c083ec","#704298"]
+        };
+        return verticalGradient(y,gradientHeight,palettes[variant.id] || ["#4ca4ff","#1d55bc","#0b2a72"]);
+    };
 
-    fillRoundRect(ctx,15,16,510,90,8,"#0b55bf","#4abfff");
-    drawCenteredImage(ctx,title,55,25,430,70);
+    fillRoundRect(ctx,outerX,16,contentWidth,100,8,"#0b55bf","#4abfff");
+    drawCenteredImage(ctx,title,380,24,760,84);
 
-    let y = 120;
-    fillRoundRect(ctx,15,y,510,244,0,"#0b49ad",null);
+    const summaryY = 130;
+    const timerWidth = 528;
+    const summaryGap = 18;
+    const statsWidth = contentWidth - timerWidth - summaryGap;
+    fillRoundRect(ctx,outerX,summaryY,contentWidth,148,0,"#0b49ad",null);
     [["Found",`${stats.found} / ${stats.totalSprites}`],["Completed Sets",`${stats.completedSets} / ${stats.totalSets}`],["Mastered",`${stats.mastered} / ${stats.totalSprites}`],["Overall Progress",`${stats.percent}%`]].forEach((item,index)=>{
         const col = index % 2;
         const row = Math.floor(index / 2);
-        const x = col === 0 ? 28 : 276;
-        const yy = y + 32 + (row * 38);
-        drawText(ctx,item[0],x,yy,{size:15});
-        drawText(ctx,item[1],col === 0 ? 260 : 508,yy,{size:24,align:"right"});
+        const statColumnWidth = statsWidth / 2;
+        const x = outerX + 18 + (col * statColumnWidth);
+        const yy = summaryY + 40 + (row * 60);
+        drawText(ctx,item[0],x,yy,{size:20});
+        drawText(ctx,item[1],outerX + ((col + 1) * statColumnWidth) - 18,yy,{size:29,align:"right"});
         ctx.strokeStyle = "rgba(145,229,255,.28)";
         ctx.beginPath();
-        ctx.moveTo(x,yy + 18);
-        ctx.lineTo(col === 0 ? 260 : 508,yy + 18);
+        ctx.moveTo(x,yy + 22);
+        ctx.lineTo(outerX + ((col + 1) * statColumnWidth) - 18,yy + 22);
         ctx.stroke();
     });
-    fillRoundRect(ctx,28,y + 98,480,56,8,"#0c6ccc","#4abfff");
-    drawText(ctx,"NEXT SPRITE DROP",40,y + 116,{size:11,color:"#d7f6ff"});
-    drawText(ctx,els.spriteDropCountdown.textContent || "",492,y + 126,{size:24,align:"right"});
-    drawText(ctx,"IN-GAME RELEASE",40,y + 138,{size:11,color:"#fff56d"});
-    fillRoundRect(ctx,28,y + 168,480,62,10,"#256be2","#5fbfff");
-    drawText(ctx,seasonPickerLabel(season),270,y + 199,{size:16,align:"center"});
-    y += 260;
+
+    const timerX = outerX + statsWidth + summaryGap;
+    fillRoundRect(ctx,timerX,summaryY + 8,timerWidth,92,8,verticalGradient(summaryY + 8,92,["#3085ee","#124aa9"]),"#4abfff");
+    ctx.strokeStyle = "rgba(145,229,255,.32)";
+    ctx.beginPath();
+    ctx.moveTo(timerX + (timerWidth / 2),summaryY + 18);
+    ctx.lineTo(timerX + (timerWidth / 2),summaryY + 90);
+    ctx.stroke();
+    const timerPanels = [
+        ["MASTERY MONDAY",els.masteryMondayCountdown?.textContent || "",els.masteryMondayDate?.textContent || ""],
+        ["NEXT SPRITE DROP",els.spriteDropCountdown?.textContent || "",els.spriteDropDate?.textContent || ""]
+    ];
+    timerPanels.forEach((timer,index)=>{
+        const centerX = timerX + ((index + .5) * (timerWidth / 2));
+        drawText(ctx,timer[0],centerX,summaryY + 27,{size:13,align:"center",color:"#d7f6ff"});
+        drawText(ctx,timer[1],centerX,summaryY + 53,{size:25,align:"center",color:"#fff05a"});
+        drawText(ctx,timer[2],centerX,summaryY + 79,{size:9,align:"center"});
+    });
+    fillRoundRect(ctx,timerX,summaryY + 108,timerWidth,32,7,verticalGradient(summaryY + 108,32,["#3288f2","#1747b4"]),"#4abfff");
+    drawText(ctx,"ADMIN PANEL CODES",timerX + (timerWidth / 2),summaryY + 124,{size:14,align:"center"});
+
+    const headerY = 294;
+    fillRoundRect(ctx,outerX,headerY,familyWidth,64,8,verticalGradient(headerY,64,["#418cff","#1542b4"]),"#5fbfff");
+    drawText(ctx,seasonPickerChapter(season),outerX + (familyWidth / 2),headerY + 19,{size:11,align:"center",color:"#fff56d"});
+    drawText(ctx,seasonPickerLabel(season),outerX + (familyWidth / 2),headerY + 39,{size:17,align:"center"});
+    season.variants.forEach((variant,index)=>{
+        const x = outerX + familyWidth + columnGap + (index * (variantWidth + columnGap));
+        fillRoundRect(ctx,x,headerY,variantWidth,64,8,variantGradient(variant,headerY,64),"#78c9ff");
+        drawText(ctx,variant.label,x + (variantWidth / 2),headerY + 25,{
+            size:variant.label.length > 12 ? 13 : 15,
+            align:"center",
+            color:"#111827"
+        });
+        drawText(ctx,"ENABLED",x + (variantWidth / 2),headerY + 46,{size:9,align:"center",color:"#111827"});
+    });
 
     const progress = seasonProgress(state.profile,state.seasonId);
-    season.families.forEach(family=>{
+    season.families.forEach((family,familyIndex)=>{
+        const y = rowsY + (familyIndex * rowHeight);
         const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
         const familyComplete = isFamilyComplete(family);
-        fillRoundRect(ctx,28,y,480,106,8,familyDisabled ? "#31537f" : "#0b55bf",familyComplete ? "#ffe45c" : "#308fe8");
-        fillRoundRect(ctx,42,y + 64,34,30,6,"#10aee8",null);
-        drawText(ctx,"i",59,y + 79,{size:19,align:"center",style:"italic"});
-        drawText(ctx,family.name,270,y + 54,{size:26,align:"center",stroke:"#00123f",strokeWidth:4});
-        fillRoundRect(ctx,404,y + 64,88,24,5,familyDisabled ? "rgba(255,77,109,.22)" : "rgba(103,255,80,.14)",null);
-        drawText(ctx,familyDisabled ? "DISABLED" : "ENABLED",448,y + 76,{size:10,align:"center",color:familyDisabled ? "#ff4d6d" : "#dbffe5"});
+        fillRoundRect(ctx,outerX,y,familyWidth,164,8,familyDisabled ? "#31537f" : "#144fa8",familyComplete ? "#ffe45c" : "#308fe8");
+        fillRoundRect(ctx,outerX + 12,y + 118,34,30,6,"#10aee8",null);
+        drawText(ctx,"i",outerX + 29,y + 133,{size:19,align:"center",style:"italic"});
+        drawText(ctx,family.name,outerX + (familyWidth / 2),y + 79,{
+            size:family.name.length > 13 ? 19 : 23,
+            align:"center",
+            stroke:"#00123f",
+            strokeWidth:4
+        });
+        fillRoundRect(ctx,outerX + familyWidth - 100,y + 122,88,24,5,familyDisabled ? "#f25b70" : "#70db72",null);
+        drawText(ctx,familyDisabled ? "DISABLED" : "ENABLED",outerX + familyWidth - 56,y + 134,{size:10,align:"center",color:"#111"});
         if(familyComplete){
-            fillRoundRect(ctx,42,y + 10,108,20,5,"rgba(255,224,92,.16)",null);
-            drawText(ctx,"SET COMPLETE",96,y + 20,{size:9,align:"center",color:"#ffe45c"});
+            fillRoundRect(ctx,outerX + 12,y + 12,116,22,5,verticalGradient(y + 12,22,["#fff38a","#d6a72b"]),null);
+            drawText(ctx,"SET COMPLETE",outerX + 70,y + 23,{size:10,align:"center",color:"#111"});
         }
         season.variants.forEach((variant,index)=>{
             const sprite = season.sprites.find(item=>
                 item.family === family.name && item.variantId === variant.id
             );
-            const x = 28 + ((index % cardsPerRow) * 164);
-            const cardY = y + 118 + (Math.floor(index / cardsPerRow) * 168);
+            const x = outerX + familyWidth + columnGap + (index * (variantWidth + columnGap));
             const disabled = sprite?.available ? isDisabled(sprite) : false;
             const spriteProgress = sprite?.available ? spriteState(sprite) : "unavailable";
             const stateName = disabled ? "disabled" : spriteProgress;
             fillRoundRect(
                 ctx,
                 x,
-                cardY,
-                152,
-                156,
+                y,
+                variantWidth,
+                164,
                 8,
-                stateName === "disabled" ? "#42376d" : "#0b55bf",
+                stateName === "disabled" ? "#42376d" : stateName === "found" ? "#307eb6" : stateName === "mastered" ? "#9a8a62" : "#0b55bf",
                 stateName === "found" ? "#60ff5a" : stateName === "mastered" ? "#ffe45c" : "#308fe8"
             );
-            drawText(ctx,variant.label.toUpperCase(),x + 7,cardY + 15,{
-                size:10,
+            drawText(ctx,variant.label.toUpperCase(),x + 8,y + 15,{
+                size:variant.label.length > 12 ? 9 : 10,
                 color:variantColor(variant.id),
                 stroke:"#00123f",
                 strokeWidth:2
             });
             if(sprite?.image){
-                drawCenteredImage(ctx,imageMap.get(sprite.id),x + 28,cardY + 30,96,86,{
+                drawCenteredImage(ctx,imageMap.get(sprite.id),x + 24,y + 30,variantWidth - 48,102,{
                     silhouette:!sprite.available
                 });
             }
             if(sprite?.available){
-                drawRarity(ctx,sprite.rarity,x + 8,cardY + 124,136);
+                drawRarity(ctx,sprite.rarity,x + 8,y + 136,variantWidth - 16);
             }
-            drawBadge(ctx,x + 116,cardY + 10,stateName);
+            drawBadge(ctx,x + variantWidth - 36,y + 8,stateName);
         });
-        y += rowHeight;
     });
-    drawText(ctx,"AmericanVampire © 2026",270,height - 32,{
+    drawText(ctx,"AmericanVampire © 2026",width / 2,height - 32,{
         size:20,
         align:"center",
         stroke:"#00123f",
