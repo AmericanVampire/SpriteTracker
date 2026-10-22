@@ -1364,7 +1364,7 @@ function buildImageExportSheet(){
     sheet.appendChild(deck);
     const footer = document.createElement("footer");
     footer.className = "siteFooter";
-    footer.innerHTML = `<div class="footerCopyright">AmericanVampire &copy; 2026</div>`;
+    footer.innerHTML = `<div class="footerCopyright">SpriteTracker.net</div>`;
     sheet.appendChild(footer);
     document.body.appendChild(sheet);
     return sheet;
@@ -1803,7 +1803,7 @@ async function renderMobileExportCanvasBlob(){
             drawBadge(ctx,x + variantWidth - 36,y + 8,stateName);
         });
     });
-    drawText(ctx,"AmericanVampire © 2026",width / 2,height - 32,{
+    drawText(ctx,"SpriteTracker.net",width / 2,height - 32,{
         size:20,
         align:"center",
         stroke:"#00123f",
