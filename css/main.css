@@ -143,7 +143,7 @@ a,
     position:relative;
     z-index:1;
     width:min(1600px,100%);
-    min-width:1460px;
+    min-width:1600px;
     margin:0 auto;
     padding:24px;
 }
@@ -3180,7 +3180,7 @@ body:not([data-season="treasure-hunters"])::after{
     top:calc(var(--topbar-height) + 12px);
     z-index:90;
     margin:12px 0 0;
-    padding:12px;
+    padding:12px 0;
     border:1px solid rgba(240,199,82,.28);
     border-radius:14px;
     background:#181614;
@@ -3188,7 +3188,21 @@ body:not([data-season="treasure-hunters"])::after{
 }
 .siteShell .trackerSticky::before,
 .siteShell .trackerSticky::after{
-    display:none;
+    content:"";
+    position:absolute;
+    top:0;
+    z-index:2;
+    width:18px;
+    height:18px;
+    display:block;
+    pointer-events:auto;
+    background:transparent;
+}
+.siteShell .trackerSticky::before{
+    left:0;
+}
+.siteShell .trackerSticky::after{
+    right:0;
 }
 .siteShell .statsDeck{
     align-items:stretch;
@@ -3199,6 +3213,7 @@ body:not([data-season="treasure-hunters"])::after{
     background:rgba(24,22,20,.76);
     backdrop-filter:blur(14px) saturate(1.05);
     box-shadow:var(--editorial-shadow);
+    margin:0 12px;
 }
 .siteShell .statsGrid{
     column-gap:24px;
@@ -3259,7 +3274,9 @@ body:not([data-season="treasure-hunters"])::after{
     margin-top:16px;
     padding:0 0 8px;
 }
-.siteShell .trackerDeck .gridHeader,
+.siteShell .trackerDeck .gridHeader{
+    grid-template-columns:240px repeat(var(--variant-count), 172px);
+}
 .siteShell .trackerDeck .spriteRow{
     grid-template-columns:240px repeat(var(--variant-count), 172.2857px);
 }
@@ -3391,18 +3408,6 @@ body{
 body{
     background-image:none;
 }
-.siteShell::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:95;
-    pointer-events:none;
-    background:url("../assets/older-seasons-bg.avif") center top / cover no-repeat;
-    clip-path:inset(calc(var(--topbar-height) - 1px) 0 calc(100% - var(--topbar-height) - 14px) 0);
-}
-body[data-season="treasure-hunters"] .siteShell::after{
-    background-image:url("../assets/season-5-map.webp");
-}
 .stickyGapGuard{
     position:fixed;
     top:var(--topbar-height);
@@ -3410,7 +3415,10 @@ body[data-season="treasure-hunters"] .siteShell::after{
     right:0;
     height:12px;
     z-index:96;
-    background:transparent;
+    background:url("../assets/older-seasons-bg.avif") center top / cover no-repeat fixed;
+}
+body[data-season="treasure-hunters"] .stickyGapGuard{
+    background-image:url("../assets/season-5-map.webp");
 }
 dialog{
     padding:0;
@@ -3682,11 +3690,8 @@ dialog::backdrop{
         box-shadow:0 12px 24px rgba(0,0,0,.32);
     }
     .siteShell .trackerSticky::before{
-        top:-8px;
-        height:8px;
-    }
-    .siteShell::after{
-        clip-path:inset(0 0 calc(100% - 9px) 0);
+        top:0;
+        height:18px;
     }
     .stickyGapGuard{
         top:0;
@@ -3695,6 +3700,7 @@ dialog::backdrop{
     .siteShell .statsDeck{
         gap:10px;
         padding:12px;
+        margin:0;
         border-radius:12px;
     }
     .siteShell .statsGrid,
