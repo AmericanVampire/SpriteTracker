@@ -3011,6 +3011,7 @@ body:not([data-season="treasure-hunters"])::after{
 }
 .siteShell > .topBar > .profileMenu{
     flex:0 0 auto;
+    margin-left:6px;
 }
 .siteShell > .topBar > .profileMenu summary{
     min-width:106px;
@@ -3021,7 +3022,8 @@ body:not([data-season="treasure-hunters"])::after{
     min-width:240px;
     max-width:430px;
     height:46px;
-    flex:1 1 430px;
+    flex:0 1 430px;
+    margin-left:auto;
     display:grid;
     grid-template-columns:22px minmax(0,1fr) 24px;
     align-items:center;
@@ -3242,44 +3244,17 @@ body:not([data-season="treasure-hunters"])::after{
 }
 .siteShell .seasonMenuPanel button[data-active="true"]{
     background:#4a4436;
-    box-shadow:inset 3px 0 #f0c752;
+    box-shadow:none;
 }
 .siteShell .trackerGrid{
     margin-top:16px;
     padding:0 0 8px;
-}
-body[data-season="treasure-hunters"] .siteShell .trackerGrid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    align-items:start;
-    gap:16px;
 }
 .siteShell .spriteRow{
     gap:10px;
     margin-bottom:12px;
     padding:0;
     border:0;
-}
-body[data-season="treasure-hunters"] .siteShell .spriteRow{
-    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-    gap:10px;
-    margin:0;
-    padding:10px;
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:16px;
-    background:rgba(28,25,22,.38);
-    backdrop-filter:blur(8px);
-    box-shadow:0 14px 30px rgba(35,23,15,.14);
-}
-body[data-season="treasure-hunters"] .siteShell .familyCell{
-    grid-column:1 / -1;
-    min-height:68px;
-}
-body[data-season="treasure-hunters"] .siteShell .familyMain{
-    padding:14px 58px;
-}
-body[data-season="treasure-hunters"] .siteShell .spriteCard{
-    min-height:180px;
 }
 .siteShell .familyCell,
 .siteShell .spriteCard{
@@ -3713,18 +3688,6 @@ dialog::backdrop{
         gap:7px;
         margin-bottom:14px;
     }
-    body[data-season="treasure-hunters"] .siteShell .trackerGrid{
-        grid-template-columns:1fr;
-        gap:14px;
-        margin-top:12px;
-    }
-    body[data-season="treasure-hunters"] .siteShell .spriteRow{
-        gap:7px;
-        padding:7px;
-    }
-    body[data-season="treasure-hunters"] .siteShell .spriteCard{
-        min-height:134px;
-    }
     .siteShell .familyCell{
         min-height:62px;
         border-radius:10px;
@@ -3764,8 +3727,8 @@ dialog::backdrop{
     background:#f0c752;
     color:#171511;
 }
-.siteShell .trackerGrid{
-    clip-path:inset(var(--tracker-grid-clip-top,0px) 0 0 0);
+.siteShell .spriteRow{
+    clip-path:inset(var(--sprite-row-clip-top,0px) 0 0 0);
 }
 
 body.exportingImage .appGrid,
@@ -3792,6 +3755,9 @@ body[data-season="treasure-hunters"] .imageExportSheet{
 }
 .imageExportSheet .trackerGrid{
     clip-path:none;
+}
+.imageExportSheet .spriteRow{
+    clip-path:none !important;
 }
 .imageExportSheet .trackerSticky{
     padding:12px;

@@ -883,12 +883,14 @@ function updateTrackerGridClip(){
         return;
     }
     const stickyRect = sticky.getBoundingClientRect();
-    const gridRect = els.trackerGrid.getBoundingClientRect();
-    const clippedHeight = Math.max(
-        0,
-        Math.min(gridRect.height,Math.ceil(stickyRect.bottom - gridRect.top))
-    );
-    els.trackerGrid.style.setProperty("--tracker-grid-clip-top",`${clippedHeight}px`);
+    els.trackerGrid.querySelectorAll(".spriteRow").forEach(row=>{
+        const rowRect = row.getBoundingClientRect();
+        const clippedHeight = Math.max(
+            0,
+            Math.min(rowRect.height,Math.ceil(stickyRect.bottom - rowRect.top))
+        );
+        row.style.setProperty("--sprite-row-clip-top",`${clippedHeight}px`);
+    });
 }
 
 function scheduleTrackerGridClip(){
@@ -2300,7 +2302,7 @@ function bindControls(){
         });
     });
     window.addEventListener("resize",updateStickyOffsets);
-    window.addEventListener("scroll",scheduleTrackerGridClip,{passive:true});
+    window.addEventListener("scroll",updateTrackerGridClip,{passive:true});
 }
 
 async function init(){
