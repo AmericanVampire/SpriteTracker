@@ -86,7 +86,7 @@ body::after{
     opacity:.58;
 }
 body[data-season="treasure-hunters"]::before{
-    background:url("../assets/season-5-map.webp") center top / cover fixed;
+    background:url("../assets/season-5-map.webp") center top / cover no-repeat;
     opacity:1;
 }
 body[data-season="treasure-hunters"]::after{
@@ -2991,7 +2991,6 @@ dialog::backdrop{
     border:0;
     border-radius:0 0 8px 8px;
     background:rgba(20,21,24,.97);
-    backdrop-filter:blur(20px) saturate(1.15);
     box-shadow:0 10px 28px rgba(0,0,0,.28);
 }
 .siteShell .brandMark{
@@ -3241,44 +3240,8 @@ dialog::backdrop{
     background:#4a4436;
     box-shadow:inset 3px 0 #f0c752;
 }
-.collectionHeading{
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:20px;
-    padding:18px 4px 12px;
-    color:#fff;
-}
-.collectionHeading span{
-    display:block;
-    margin-bottom:4px;
-    color:#f3d451;
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-}
-.collectionHeading h1{
-    margin:0;
-    font-size:34px;
-    font-style:italic;
-    font-weight:1000;
-    line-height:.95;
-    letter-spacing:-.035em;
-    text-transform:uppercase;
-    text-shadow:0 3px 16px rgba(0,0,0,.38);
-}
-.collectionHeading p{
-    margin:0;
-    padding:7px 10px;
-    border-radius:999px;
-    background:rgba(20,20,20,.64);
-    color:#fff;
-    font-size:12px;
-    font-weight:850;
-    backdrop-filter:blur(8px);
-}
 .siteShell .trackerGrid{
+    margin-top:16px;
     padding:0 0 8px;
 }
 body[data-season="treasure-hunters"] .siteShell .trackerGrid{
@@ -3356,6 +3319,10 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
     height:120px;
     filter:grayscale(.82) brightness(.7) drop-shadow(0 9px 9px rgba(32,20,10,.24));
 }
+.siteShell .spriteCard[data-state="found"] img,
+.siteShell .spriteCard[data-state="mastered"] img{
+    filter:drop-shadow(0 9px 9px rgba(32,20,10,.24));
+}
 .siteShell .spriteCard[data-state="found"]{
     border-color:#67ff50;
     background:linear-gradient(180deg, rgba(221,246,216,.86), rgba(177,218,180,.82));
@@ -3418,6 +3385,18 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
 }
 
 @media (max-width:620px), (max-width:980px) and (max-height:620px) and (orientation:landscape) and (pointer:coarse){
+    .siteShell .topBar,
+    .siteShell .statsDeck,
+    body[data-season="treasure-hunters"] .siteShell .spriteRow,
+    .siteShell .familyCell{
+        -webkit-backdrop-filter:none;
+        backdrop-filter:none;
+    }
+    .navSearch,
+    .navSearch:focus-within{
+        transform:translateZ(0);
+        box-shadow:none;
+    }
     .siteShell{
         padding:8px;
     }
@@ -3511,20 +3490,6 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
     .siteShell .gridHeader{
         padding-top:10px;
     }
-    .collectionHeading{
-        align-items:flex-start;
-        padding:16px 2px 10px;
-    }
-    .collectionHeading h1{
-        font-size:25px;
-    }
-    .collectionHeading span{
-        font-size:9px;
-    }
-    .collectionHeading p{
-        padding:5px 8px;
-        font-size:10px;
-    }
     .siteShell .spriteRow{
         gap:7px;
         margin-bottom:14px;
@@ -3532,6 +3497,7 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
     body[data-season="treasure-hunters"] .siteShell .trackerGrid{
         grid-template-columns:1fr;
         gap:14px;
+        margin-top:12px;
     }
     body[data-season="treasure-hunters"] .siteShell .spriteRow{
         gap:7px;

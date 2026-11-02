@@ -37,7 +37,6 @@ const els = {
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
     spriteSearchInput:document.getElementById("spriteSearchInput"),
-    collectionSearchStatus:document.getElementById("collectionSearchStatus"),
     spriteSearchEmpty:document.getElementById("spriteSearchEmpty"),
     noProfileNotice:document.querySelector(".noProfileNotice"),
     dialog:document.getElementById("dialog"),
@@ -683,12 +682,6 @@ function applySpriteSearch(){
             visible += 1;
         }
     });
-    if(els.collectionSearchStatus){
-        const season = activeSeason();
-        els.collectionSearchStatus.textContent = query
-            ? `${visible} of ${season.families.length} Sprite families`
-            : `${season.families.length} Sprite families`;
-    }
     if(els.spriteSearchEmpty){
         els.spriteSearchEmpty.hidden = !query || visible !== 0;
     }
