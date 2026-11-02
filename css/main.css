@@ -3010,11 +3010,14 @@ body:not([data-season="treasure-hunters"])::after{
     max-height:52px;
 }
 .siteShell > .topBar > .profileMenu{
-    flex:0 0 auto;
+    flex:0 0 156px;
+    width:156px;
     margin-left:6px;
 }
 .siteShell > .topBar > .profileMenu summary{
-    min-width:106px;
+    width:156px;
+    min-width:156px;
+    height:44px;
     min-height:44px;
     padding:10px 14px;
 }
@@ -3086,10 +3089,14 @@ body:not([data-season="treasure-hunters"])::after{
     gap:8px;
 }
 .siteShell .topActions > a{
+    width:156px;
     height:44px;
+    justify-content:center;
 }
 .siteShell .profileStatus{
-    min-width:150px;
+    width:156px;
+    min-width:156px;
+    height:44px;
     min-height:44px;
     padding:5px 11px;
     border:1px solid rgba(255,255,255,.1);
@@ -3297,6 +3304,9 @@ body:not([data-season="treasure-hunters"])::after{
 .siteShell .spriteCard img{
     height:120px;
     filter:grayscale(.82) brightness(.7) drop-shadow(0 9px 9px rgba(32,20,10,.24));
+}
+body[data-season="treasure-hunters"] .siteShell .spriteCard img{
+    height:100px;
 }
 .siteShell .spriteCard[data-state="found"] img,
 .siteShell .spriteCard[data-state="mastered"] img{
@@ -3610,13 +3620,15 @@ dialog::backdrop{
         grid-row:3;
         min-width:0;
     }
-    .siteShell .redbullButton{
+    .siteShell .topActions > .redbullButton{
         grid-column:3;
         grid-row:1;
+        width:42px;
     }
-    .siteShell .discordButton{
+    .siteShell .topActions > .discordButton{
         grid-column:4;
         grid-row:1;
+        width:42px;
     }
     .siteShell .noticeButton{
         grid-column:5;
@@ -3696,6 +3708,10 @@ dialog::backdrop{
         min-height:134px;
         border-radius:10px;
     }
+    body[data-season="treasure-hunters"] .siteShell .spriteCard img{
+        height:72px;
+        max-height:72px;
+    }
     .siteShell .familyName{
         font-size:22px;
         -webkit-text-stroke:1.15px #000;
@@ -3729,6 +3745,7 @@ dialog::backdrop{
 }
 .siteShell .spriteRow{
     clip-path:inset(var(--sprite-row-clip-top,0px) 0 0 0);
+    will-change:clip-path;
 }
 
 body.exportingImage .appGrid,
