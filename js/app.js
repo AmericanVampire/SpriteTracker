@@ -1450,7 +1450,7 @@ function buildImageExportSheet(){
     sheet.style.setProperty("--variant-count", season.variants.length);
     sheet.innerHTML = `
         <div class="exportBrand">
-            <img src="assets/sprite-tracker-title.png" alt="Sprite Tracker">
+            <img src="assets/sprite-tracker-title-season5.png" alt="Sprite Tracker">
         </div>
     `;
     const deck = document.createElement("section");
@@ -1774,7 +1774,7 @@ async function renderMobileExportCanvasBlob(){
     const ctx = canvas.getContext("2d");
     ctx.fillStyle = "#070519";
     ctx.fillRect(0,0,width,height);
-    const title = await loadCanvasImage("assets/sprite-tracker-title.png");
+    const title = await loadCanvasImage("assets/sprite-tracker-title-season5.png");
     const imageEntries = await Promise.all(season.sprites.map(async sprite=>[
         sprite.id,
         await loadCanvasImage(sprite.image)

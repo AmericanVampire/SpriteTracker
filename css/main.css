@@ -2973,6 +2973,13 @@ dialog::backdrop{
     --editorial-line:rgba(255,255,255,.34);
     --editorial-shadow:0 16px 34px rgba(26,18,12,.2);
 }
+body:not([data-season="treasure-hunters"])::before{
+    background:url("../assets/older-seasons-bg.avif") center top / cover no-repeat;
+    opacity:1;
+}
+body:not([data-season="treasure-hunters"])::after{
+    display:none;
+}
 .scanlines{
     display:none;
 }
@@ -3162,14 +3169,15 @@ dialog::backdrop{
     box-shadow:none;
 }
 .siteShell .trackerSticky{
-    position:relative;
-    top:auto;
-    z-index:20;
-    margin:0;
-    padding:20px 0 16px;
+    position:sticky;
+    top:var(--topbar-height);
+    z-index:90;
+    margin:0 -18px;
+    padding:14px 18px 12px;
     border:0;
-    background:transparent;
-    box-shadow:none;
+    border-radius:0 0 14px 14px;
+    background:rgba(24,22,20,.97);
+    box-shadow:0 14px 30px rgba(0,0,0,.28);
 }
 .siteShell .trackerSticky::before,
 .siteShell .trackerSticky::after{
@@ -3451,8 +3459,14 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
         padding:0 8px 10px;
     }
     .siteShell .trackerSticky{
-        margin:0;
-        padding:12px 0 10px;
+        position:sticky;
+        top:0;
+        z-index:90;
+        margin:0 -8px;
+        padding:8px;
+        border-radius:0 0 12px 12px;
+        background:#181719;
+        box-shadow:0 12px 24px rgba(0,0,0,.32);
     }
     .siteShell .statsDeck{
         gap:10px;
