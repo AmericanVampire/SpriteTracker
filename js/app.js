@@ -572,6 +572,10 @@ function renderTracker(){
         "--variant-count",
         season.variants.length
     );
+    els.gridHeader.style.setProperty(
+        "--header-natural-width",
+        `${240 + (season.variants.length * 182)}px`
+    );
     els.trackerDeck.dataset.variantCount = String(season.variants.length);
     els.trackerDeck.dataset.profileLoaded = String(profileLoaded());
     if(state.loading){

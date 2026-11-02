@@ -3180,7 +3180,7 @@ body:not([data-season="treasure-hunters"])::after{
     top:calc(var(--topbar-height) + 12px);
     z-index:90;
     margin:12px 0 0;
-    padding:12px 0;
+    padding:12px;
     border:1px solid rgba(240,199,82,.28);
     border-radius:14px;
     background:#181614;
@@ -3213,7 +3213,7 @@ body:not([data-season="treasure-hunters"])::after{
     background:rgba(24,22,20,.76);
     backdrop-filter:blur(14px) saturate(1.05);
     box-shadow:var(--editorial-shadow);
-    margin:0 12px;
+    margin:0;
 }
 .siteShell .statsGrid{
     column-gap:24px;
@@ -3275,7 +3275,8 @@ body:not([data-season="treasure-hunters"])::after{
     padding:0 0 8px;
 }
 .siteShell .trackerDeck .gridHeader{
-    grid-template-columns:240px repeat(var(--variant-count), 172px);
+    width:min(100%, var(--header-natural-width, 100%));
+    grid-template-columns:240px repeat(var(--variant-count), minmax(0, 1fr));
 }
 .siteShell .trackerDeck .spriteRow{
     grid-template-columns:240px repeat(var(--variant-count), 172.2857px);
