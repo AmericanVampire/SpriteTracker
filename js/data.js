@@ -168,6 +168,28 @@ const OVERRIDE_FAMILIES = [
     { name:"One Wish Willow", rarity:"Mythic", ability:"Extracts enemies' equipped Sprites upon elimination and pushes nearby enemies away when damaged. Removing it marks you on the map.", variants:["base","gold","cheatmaster","loothacker","bountyhunter","tricktreat"] }
 ];
 
+const TREASURE_HUNTERS_VARIANTS = [
+    { id:"base", label:"Base" },
+    { id:"fortune", label:"Fortune", prefix:"fortune-" },
+    { id:"cursed", label:"Cursed", prefix:"cursed-" }
+];
+
+const TREASURE_HUNTERS_FAMILIES = [
+    { name:"Halfpeel'd", rarity:"Rare", ability:"Marks eliminations on the map.", variants:["base","fortune","cursed"] },
+    { name:"Re-Pete", rarity:"Rare", ability:"Increases reload speed, with a chance that reloading refunds ammo.", variants:["base","fortune","cursed"] },
+    { name:"Barry O'Fish", rarity:"Rare", ability:"Reduces tactical sprint stamina drain when in water.", variants:["base","fortune","cursed"] },
+    { name:"Chester", rarity:"Epic", ability:"Grants a chance to spawn extra loot from Treasure Chests and nullifies fall damage.", variants:["base","fortune","cursed"] },
+    { name:"Exmarks", rarity:"Epic", ability:"Reveals Treasure Maps and Wanted Posters.", variants:["base","fortune","cursed"] },
+    { name:"Wayfinder", rarity:"Rare", ability:"Reveals Sprites nearby and grants more items when opening Buried Chests.", variants:["base","fortune","cursed"] },
+    { name:"Kelper", rarity:"Epic", ability:"Restores health over time when in water.", variants:["base","fortune","cursed"] },
+    { name:"Sweet Dreams", rarity:"Mythic", ability:"Grants a random item at each level, exploding with Mythic loot at Max Level.", variants:["base"] },
+    { name:"Lil' Squibbly", rarity:"Epic", ability:"Jumping into a fishing hole fishes it and gives some bonus loot.", variants:["base","fortune","cursed"] },
+    { name:"Lil' Flacko", rarity:"Legendary", ability:"Creates a small shockwave on landing, knocking back enemies.", variants:["base","fortune","cursed"] },
+    { name:"Lil' Uzi Vert Jr.", rarity:"Legendary", ability:"Generates a Chug Splash effect when restoring shields.", variants:["base","fortune","cursed"] },
+    { name:"Plundarrgh", rarity:"Mythic", ability:"Opening a Chest grants increased pickaxe speed and movement speed.", variants:["base","fortune","cursed"] },
+    { name:"Transponder Snail", rarity:"Legendary", ability:"Grants extra resources on pickup. Teammates with this Sprite equipped also receive extra resources.", variants:["base"] }
+];
+
 function slug(text){
     return text.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 }
@@ -212,14 +234,46 @@ function buildOverrideSprites(){
     );
 }
 
+function buildTreasureHuntersSprites(){
+    return TREASURE_HUNTERS_FAMILIES.flatMap(family=>
+        TREASURE_HUNTERS_VARIANTS.map(variant=>{
+            const available = family.variants.includes(variant.id);
+            return {
+                id:`treasure-hunters-${slug(family.name)}-${variant.id}`,
+                family:family.name,
+                variantId:variant.id,
+                variant:variant.label,
+                ability:family.ability,
+                rarity:available && variant.id === "base" ? family.rarity : available ? "Special" : "N/A",
+                available,
+                image:available
+                    ? `sprites/S5/${variant.prefix ?? ""}${slug(family.name)}-sprite.webp`
+                    : `sprites/S5/${slug(family.name)}-sprite.webp`
+            };
+        })
+    );
+}
+
 const SEASONS = [
+    {
+        id:"treasure-hunters",
+        label:"Treasure Hunters",
+        chapter:"Chapter 7",
+        season:"Season 5",
+        title:"Treasure Hunters",
+        kind:"current",
+        summary:"Chapter 7 Season 5: Treasure Hunters, with Fortune and Cursed variants preserved separately from prior collections.",
+        variants:TREASURE_HUNTERS_VARIANTS,
+        families:TREASURE_HUNTERS_FAMILIES,
+        sprites:buildTreasureHuntersSprites()
+    },
     {
         id:"override",
         label:"Override",
         chapter:"Chapter 7",
         season:"Season 4",
         title:"Override",
-        kind:"current",
+        kind:"archive",
         summary:"Chapter 7 Season 4: Override's new generation of retro gaming-inspired Sprites, separated from the archived Runners collection.",
         variants:OVERRIDE_VARIANTS,
         families:OVERRIDE_FAMILIES,

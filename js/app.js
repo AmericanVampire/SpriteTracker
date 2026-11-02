@@ -1,6 +1,6 @@
 const state = {
     profile:null,
-    seasonId:"override",
+    seasonId:"treasure-hunters",
     loading:true
 };
 let suppressNextAbilityCloseClick = false;
@@ -9,7 +9,7 @@ let spriteSaveQueue = Promise.resolve();
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v7";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v8";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -820,6 +820,7 @@ function isFamilyComplete(family){
 }
 
 function render(){
+    document.body.dataset.season = state.seasonId;
     renderProfile();
     renderStats();
     renderTracker();
@@ -897,6 +898,22 @@ function showAppNotice(){
     markAppNoticeRead();
     showDialog("Notifications",`
         <div class="notificationsPanel">
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">Sprite Tracker Update</span>
+                    <strong>Treasure Hunters has arrived</strong>
+                    <p>Chapter 7 Season 5 adds 13 new Sprite families and 35 collectible Base, Fortune, and Cursed variants.</p>
+                    <p>Every previous season, profile, collection record, disabled Sprite, and saved setting remains intact.</p>
+                </div>
+            </article>
             <article class="notificationCard">
                 <div class="notificationIcon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
@@ -1614,6 +1631,12 @@ function variantColor(variantId){
     if(variantId === "quack"){
         return "#fff04a";
     }
+    if(variantId === "fortune"){
+        return "#f4c54e";
+    }
+    if(variantId === "cursed"){
+        return "#66d5d2";
+    }
     return "#eef4ff";
 }
 
@@ -1710,7 +1733,9 @@ async function renderMobileExportCanvasBlob(){
             loothacker:["#d8baff","#9b65d5","#57317d"],
             bountyhunter:["#ff9eb0","#dc4567","#7d1737"],
             tricktreat:["#ffd067","#f47b20","#55206f"],
-            quack:["#f7e9ff","#c083ec","#704298"]
+            quack:["#f7e9ff","#c083ec","#704298"],
+            fortune:["#fff4aa","#efbd3b","#8f5a12"],
+            cursed:["#b9fff2","#42c6c5","#155b73"]
         };
         return verticalGradient(y,gradientHeight,palettes[variant.id] || ["#4ca4ff","#1d55bc","#0b2a72"]);
     };
@@ -1935,7 +1960,7 @@ async function openProfileChooser(){
         button.textContent = profile;
         button.addEventListener("click",async()=>{
             state.profile = await SpriteStore.openProfile(profile);
-            state.seasonId = state.profile.activeSeasonId || "override";
+            state.seasonId = state.profile.activeSeasonId || "treasure-hunters";
             await SpriteStore.setStartupProfile(state.profile.profileName);
             els.dialog.close();
             render();
@@ -1953,7 +1978,7 @@ async function importProfile(file){
         profile.profileName = `${profile.profileName} Imported`;
     }
     state.profile = await SpriteStore.saveProfile(profile);
-    state.seasonId = state.profile.activeSeasonId || "override";
+    state.seasonId = state.profile.activeSeasonId || "treasure-hunters";
     await SpriteStore.setStartupProfile(state.profile.profileName);
     render();
 }
@@ -2002,7 +2027,7 @@ function bindControls(){
     document.getElementById("newProfileButton").addEventListener("click",()=>{
         promptDialog("New Profile","Profile name","",async(name)=>{
             state.profile = await SpriteStore.createProfile(name);
-            state.seasonId = "override";
+            state.seasonId = "treasure-hunters";
             await SpriteStore.setStartupProfile(name);
             render();
         });
@@ -2166,7 +2191,7 @@ async function init(){
     if(startup){
         try{
             state.profile = await SpriteStore.openProfile(startup);
-            state.seasonId = state.profile.activeSeasonId || "override";
+            state.seasonId = state.profile.activeSeasonId || "treasure-hunters";
             await SpriteStore.setStartupProfile(state.profile.profileName);
         }
         catch(error){
@@ -2184,7 +2209,7 @@ async function init(){
         if(profileName){
             try{
                 state.profile = await SpriteStore.openProfile(profileName);
-                state.seasonId = state.profile.activeSeasonId || "override";
+                state.seasonId = state.profile.activeSeasonId || "treasure-hunters";
                 await SpriteStore.setStartupProfile(state.profile.profileName);
             }
             catch(error){

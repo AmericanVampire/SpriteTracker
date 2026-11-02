@@ -87,7 +87,7 @@ const SpriteStore = (() => {
             created:profile.created || now,
             lastOpened:now,
             version:APP_VERSION,
-            activeSeasonId:profile.activeSeasonId || "override",
+            activeSeasonId:profile.activeSeasonId || "treasure-hunters",
             seasons:profile.seasons || {},
             lobbyHacks:profile.lobbyHacks || {},
             sprites:profile.sprites || {},
