@@ -3276,10 +3276,13 @@ body:not([data-season="treasure-hunters"])::after{
 }
 .siteShell .trackerDeck .gridHeader{
     width:min(100%, var(--header-natural-width, 100%));
-    grid-template-columns:240px repeat(var(--variant-count), minmax(0, 1fr));
+    grid-template-columns:240px repeat(var(--variant-count), 168.5625px);
 }
 .siteShell .trackerDeck .spriteRow{
-    grid-template-columns:240px repeat(var(--variant-count), 172.2857px);
+    width:min(calc(100% - 26px), var(--header-natural-width, calc(100% - 26px)));
+    margin-right:13px;
+    margin-left:13px;
+    grid-template-columns:240px repeat(var(--variant-count), 168.5625px);
 }
 body[data-season="runners-archive"] .siteShell{
     width:min(1782px, 100%);
@@ -3735,9 +3738,12 @@ dialog::backdrop{
     .siteShell .gridHeader{
         padding-top:10px;
     }
-    .siteShell .spriteRow{
+    .siteShell .trackerDeck .spriteRow{
+        width:100%;
         gap:7px;
+        margin-right:0;
         margin-bottom:14px;
+        margin-left:0;
     }
     .siteShell .familyCell{
         min-height:62px;
