@@ -3388,6 +3388,24 @@ body[data-season="treasure-hunters"] .siteShell .spriteCard{
 }
 
 /* Editorial overlays and utility controls ----------------------------------- */
+html,
+body{
+    background-color:#211e1b;
+}
+body{
+    background-image:none;
+}
+.siteShell .trackerSticky::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:-12px;
+    height:12px;
+    display:block;
+    pointer-events:auto;
+    background:transparent;
+}
 dialog{
     padding:0;
     border:1px solid rgba(240,199,82,.48);
@@ -3491,6 +3509,46 @@ dialog::backdrop{
 }
 .backToTop:active{
     box-shadow:0 5px 14px rgba(0,0,0,.38);
+}
+.abilityButton{
+    width:30px;
+    height:28px;
+    border:1px solid rgba(240,199,82,.72);
+    border-radius:7px;
+    background:#27241f;
+    color:#171511;
+    box-shadow:0 5px 12px rgba(0,0,0,.28);
+}
+.abilityButton:hover,
+.abilityButton:focus,
+.abilityButton:focus-visible{
+    background:#363126;
+    filter:none;
+}
+.abilityIcon{
+    width:18px;
+    height:18px;
+    background:#f0c752;
+    color:#171511;
+    font-size:13px;
+}
+.abilityPreview{
+    border:1px solid rgba(240,199,82,.7);
+    border-radius:14px;
+    background:#1d1c1a;
+    background-image:none;
+    color:#f7f3e9;
+    box-shadow:0 28px 70px rgba(0,0,0,.62), inset 0 1px rgba(255,255,255,.05);
+}
+.abilityPreview img{
+    filter:drop-shadow(0 8px 10px rgba(0,0,0,.42));
+}
+.abilityDataText strong{
+    color:#f4e8c7;
+    text-shadow:none;
+}
+.abilityDataText span{
+    color:#d8d2c5;
 }
 .spriteCard[data-state="unavailable"] img,
 .mobileExportSprite[data-state="unavailable"] img{
@@ -3609,6 +3667,10 @@ dialog::backdrop{
         border-radius:12px;
         background:#181719;
         box-shadow:0 12px 24px rgba(0,0,0,.32);
+    }
+    .siteShell .trackerSticky::before{
+        top:-8px;
+        height:8px;
     }
     .siteShell .statsDeck{
         gap:10px;
