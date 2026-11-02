@@ -1,7 +1,8 @@
 const state = {
     profile:null,
     seasonId:"treasure-hunters",
-    loading:true
+    loading:true,
+    searchQuery:""
 };
 let suppressNextAbilityCloseClick = false;
 let spriteSaveQueue = Promise.resolve();
@@ -35,6 +36,9 @@ const els = {
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
+    spriteSearchInput:document.getElementById("spriteSearchInput"),
+    collectionSearchStatus:document.getElementById("collectionSearchStatus"),
+    spriteSearchEmpty:document.getElementById("spriteSearchEmpty"),
     noProfileNotice:document.querySelector(".noProfileNotice"),
     dialog:document.getElementById("dialog"),
     dialogTitle:document.getElementById("dialogTitle"),
@@ -626,6 +630,12 @@ function renderTracker(){
     season.families.forEach(family=>{
         const row = document.createElement("div");
         row.className = "spriteRow";
+        row.dataset.searchText = [
+            family.name,
+            ...season.sprites
+                .filter(sprite=>sprite.family === family.name)
+                .flatMap(sprite=>[sprite.variant,sprite.rarity])
+        ].join(" ").toLowerCase();
         const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
         const familyComplete = isFamilyComplete(family);
         const abilitySprite = season.sprites.find(sprite=>
@@ -659,6 +669,30 @@ function renderTracker(){
         });
         els.trackerGrid.appendChild(row);
     });
+    applySpriteSearch();
+}
+
+function applySpriteSearch(){
+    const query = state.searchQuery.trim().toLowerCase();
+    const rows = [...els.trackerGrid.querySelectorAll(".spriteRow")];
+    let visible = 0;
+    rows.forEach(row=>{
+        const match = !query || row.dataset.searchText.includes(query);
+        row.hidden = !match;
+        if(match){
+            visible += 1;
+        }
+    });
+    if(els.collectionSearchStatus){
+        const season = activeSeason();
+        els.collectionSearchStatus.textContent = query
+            ? `${visible} of ${season.families.length} Sprite families`
+            : `${season.families.length} Sprite families`;
+    }
+    if(els.spriteSearchEmpty){
+        els.spriteSearchEmpty.hidden = !query || visible !== 0;
+    }
+    document.body.dataset.searching = String(Boolean(query));
 }
 
 function createSpriteCard(sprite,family){
@@ -2052,6 +2086,30 @@ function bindControls(){
     });
     els.dialog.addEventListener("close",unlockDialogPage);
     updateNoticeButton();
+    if(els.spriteSearchInput){
+        els.spriteSearchInput.addEventListener("input",()=>{
+            state.searchQuery = els.spriteSearchInput.value;
+            applySpriteSearch();
+        });
+        els.spriteSearchInput.addEventListener("keydown",event=>{
+            if(event.key === "Escape" && els.spriteSearchInput.value){
+                els.spriteSearchInput.value = "";
+                state.searchQuery = "";
+                applySpriteSearch();
+            }
+        });
+        document.addEventListener("keydown",event=>{
+            if(event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey){
+                return;
+            }
+            const target = event.target;
+            if(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable){
+                return;
+            }
+            event.preventDefault();
+            els.spriteSearchInput.focus();
+        });
+    }
     if(els.noticeButton){
         els.noticeButton.addEventListener("click",showAppNotice);
     }

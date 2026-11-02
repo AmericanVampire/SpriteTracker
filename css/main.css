@@ -2962,3 +2962,595 @@ dialog::backdrop{
         padding:9px;
     }
 }
+
+/* Professional collection shell ------------------------------------------------ */
+:root{
+    --nav-surface:#17181b;
+    --nav-surface-soft:#24262b;
+    --editorial-ink:#141414;
+    --editorial-paper:rgba(239,234,222,.72);
+    --editorial-paper-strong:rgba(247,243,233,.88);
+    --editorial-line:rgba(255,255,255,.34);
+    --editorial-shadow:0 16px 34px rgba(26,18,12,.2);
+}
+.scanlines{
+    display:none;
+}
+.siteShell{
+    padding:0 24px 28px;
+}
+.siteShell::before{
+    height:0;
+    background:transparent;
+}
+.siteShell .topBar{
+    top:0;
+    min-height:74px;
+    gap:18px;
+    padding:10px 14px;
+    border:0;
+    border-radius:0 0 8px 8px;
+    background:rgba(20,21,24,.97);
+    backdrop-filter:blur(20px) saturate(1.15);
+    box-shadow:0 10px 28px rgba(0,0,0,.28);
+}
+.siteShell .brandMark{
+    flex:0 0 286px;
+    min-width:286px;
+}
+.siteShell .brandMark img{
+    width:286px;
+    max-height:52px;
+}
+.navSearch{
+    min-width:240px;
+    max-width:430px;
+    height:46px;
+    flex:1 1 430px;
+    display:grid;
+    grid-template-columns:22px minmax(0,1fr) 24px;
+    align-items:center;
+    gap:10px;
+    padding:0 14px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:999px;
+    background:#24262b;
+    color:#aeb2bb;
+    transition:border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.navSearch:focus-within{
+    border-color:rgba(255,255,255,.42);
+    background:#2b2d32;
+    box-shadow:0 0 0 3px rgba(255,255,255,.07);
+}
+.navSearch svg{
+    width:20px;
+    height:20px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+    stroke-linecap:round;
+}
+.navSearch input{
+    width:100%;
+    min-width:0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font-size:14px;
+    font-weight:750;
+}
+.navSearch input::placeholder{
+    color:#aeb2bb;
+    opacity:1;
+}
+.navSearch input::-webkit-search-cancel-button{
+    filter:invert(1);
+    opacity:.7;
+}
+.navSearch kbd{
+    display:grid;
+    place-items:center;
+    width:22px;
+    height:22px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:5px;
+    color:#aeb2bb;
+    background:#1b1c20;
+    font:700 12px/1 Inter,"Segoe UI",sans-serif;
+    box-shadow:none;
+}
+.siteShell .topActions{
+    width:auto;
+    flex:0 0 auto;
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+}
+.siteShell .topUtility{
+    gap:8px;
+}
+.siteShell .topProfile{
+    width:auto;
+    display:flex;
+    gap:8px;
+}
+.siteShell .topProfile > a,
+.siteShell .topProfile > .profileMenu{
+    height:44px;
+}
+.siteShell .profileStatus{
+    min-width:150px;
+    min-height:44px;
+    padding:5px 11px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:7px;
+    background:#24262b;
+    box-shadow:none;
+}
+.siteShell .profileStatus span{
+    color:#f0c752;
+    font-size:8px;
+}
+.siteShell .topUtility .profileStatus strong{
+    max-width:170px;
+    color:#fff;
+    font-size:15px;
+}
+.siteShell .noticeButton,
+.siteShell .redbullButton,
+.siteShell .discordButton,
+.siteShell .profileMenu summary{
+    min-height:44px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:7px;
+    box-shadow:none;
+    transform:none;
+}
+.siteShell .noticeButton,
+.siteShell .profileMenu summary{
+    background:#2c2e33;
+}
+.siteShell .noticeButton{
+    width:44px;
+    height:44px;
+}
+.siteShell .redbullButton{
+    background:#34363c;
+    text-shadow:none;
+}
+.siteShell .discordButton{
+    background:#5865f2;
+}
+.siteShell .redbullButton:hover,
+.siteShell .discordButton:hover,
+.siteShell .noticeButton:hover,
+.siteShell .profileMenu summary:hover{
+    filter:brightness(1.12);
+    transform:translateY(-1px);
+}
+.siteShell .topProfile .profileMenu summary{
+    min-width:106px;
+    padding:10px 14px;
+}
+.siteShell .profileMenuPanel,
+.siteShell .seasonMenuPanel{
+    border:1px solid rgba(255,255,255,.16);
+    background:#202125;
+    box-shadow:0 22px 50px rgba(0,0,0,.42);
+}
+.siteShell .profileMenuPanel button,
+.siteShell .seasonMenuPanel button{
+    background:#303238;
+    box-shadow:none;
+}
+.siteShell .menuGroupLabel{
+    color:#f0c752;
+}
+.siteShell .appGrid{
+    grid-template-columns:minmax(0,1fr);
+    min-width:0;
+    margin-top:0;
+}
+.siteShell .trackerDeck{
+    width:100%;
+    min-width:0;
+    padding:0 18px 18px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+}
+.siteShell .trackerSticky{
+    position:relative;
+    top:auto;
+    z-index:20;
+    margin:0;
+    padding:20px 0 16px;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+}
+.siteShell .trackerSticky::before,
+.siteShell .trackerSticky::after{
+    display:none;
+}
+.siteShell .statsDeck{
+    align-items:stretch;
+    gap:14px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:16px;
+    background:rgba(24,22,20,.76);
+    backdrop-filter:blur(14px) saturate(1.05);
+    box-shadow:var(--editorial-shadow);
+}
+.siteShell .statsGrid{
+    column-gap:24px;
+    row-gap:2px;
+}
+.siteShell .statBox{
+    min-height:40px;
+    padding:4px 0;
+    border-color:rgba(255,255,255,.14);
+}
+.siteShell .statBox span{
+    font-size:15px;
+    text-shadow:none;
+}
+.siteShell .statBox strong{
+    font-size:24px;
+    text-shadow:none;
+}
+.siteShell .statIcon{
+    width:25px;
+    height:25px;
+    flex-basis:25px;
+    border-radius:6px;
+    box-shadow:none;
+}
+.siteShell .dropTimerCard,
+.siteShell .intelMenu summary{
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(42,43,46,.94);
+    box-shadow:none;
+}
+.siteShell .dropTimerCard{
+    min-height:82px;
+}
+.siteShell .dropTimerSlot strong{
+    color:#f3d451;
+}
+.siteShell .gridHeader{
+    gap:10px;
+    padding-top:14px;
+}
+.siteShell .gridHeader > div,
+.siteShell .variantToggle,
+.siteShell .seasonMenu summary{
+    min-height:50px;
+    border-radius:9px;
+    box-shadow:0 8px 18px rgba(0,0,0,.16), inset 0 0 0 1px rgba(255,255,255,.16);
+}
+.siteShell .seasonMenu summary{
+    border:1px solid rgba(240,199,82,.72);
+    background:rgba(28,26,23,.9);
+}
+.siteShell .seasonMenuPanel button[data-active="true"]{
+    background:#4a4436;
+    box-shadow:inset 3px 0 #f0c752;
+}
+.collectionHeading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    padding:18px 4px 12px;
+    color:#fff;
+}
+.collectionHeading span{
+    display:block;
+    margin-bottom:4px;
+    color:#f3d451;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+}
+.collectionHeading h1{
+    margin:0;
+    font-size:34px;
+    font-style:italic;
+    font-weight:1000;
+    line-height:.95;
+    letter-spacing:-.035em;
+    text-transform:uppercase;
+    text-shadow:0 3px 16px rgba(0,0,0,.38);
+}
+.collectionHeading p{
+    margin:0;
+    padding:7px 10px;
+    border-radius:999px;
+    background:rgba(20,20,20,.64);
+    color:#fff;
+    font-size:12px;
+    font-weight:850;
+    backdrop-filter:blur(8px);
+}
+.siteShell .trackerGrid{
+    padding:0 0 8px;
+}
+body[data-season="treasure-hunters"] .siteShell .trackerGrid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+    gap:16px;
+}
+.siteShell .spriteRow{
+    gap:10px;
+    margin-bottom:12px;
+    padding:0;
+    border:0;
+}
+body[data-season="treasure-hunters"] .siteShell .spriteRow{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:10px;
+    margin:0;
+    padding:10px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:16px;
+    background:rgba(28,25,22,.38);
+    backdrop-filter:blur(8px);
+    box-shadow:0 14px 30px rgba(35,23,15,.14);
+}
+body[data-season="treasure-hunters"] .siteShell .familyCell{
+    grid-column:1 / -1;
+    min-height:68px;
+}
+body[data-season="treasure-hunters"] .siteShell .familyMain{
+    padding:14px 58px;
+}
+body[data-season="treasure-hunters"] .siteShell .spriteCard{
+    min-height:180px;
+}
+.siteShell .familyCell,
+.siteShell .spriteCard{
+    min-height:158px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:14px;
+    box-shadow:0 12px 24px rgba(31,22,15,.18), inset 0 1px rgba(255,255,255,.38);
+}
+.siteShell .familyCell{
+    background:rgba(25,24,23,.78);
+    backdrop-filter:blur(10px);
+}
+.siteShell .familyCell[data-complete="true"]{
+    background:rgba(25,24,23,.82);
+    box-shadow:0 12px 24px rgba(31,22,15,.18), inset 0 1px rgba(255,255,255,.3);
+}
+.siteShell .familyName{
+    font-size:22px;
+    letter-spacing:-.02em;
+    -webkit-text-stroke:0;
+    text-shadow:0 2px 10px rgba(0,0,0,.52);
+}
+.siteShell .familyStatus,
+.siteShell .familyMastered{
+    border-radius:4px;
+    box-shadow:none;
+}
+.siteShell .abilityButton{
+    box-shadow:none;
+}
+.siteShell .spriteCard{
+    overflow:hidden;
+    background:var(--editorial-paper);
+    box-shadow:var(--editorial-shadow), inset 0 1px rgba(255,255,255,.5);
+}
+.siteShell .spriteCard:hover{
+    filter:brightness(1.04);
+    box-shadow:0 18px 34px rgba(28,19,12,.25), inset 0 1px rgba(255,255,255,.58);
+}
+.siteShell .spriteCard img{
+    height:120px;
+    filter:grayscale(.82) brightness(.7) drop-shadow(0 9px 9px rgba(32,20,10,.24));
+}
+.siteShell .spriteCard[data-state="found"]{
+    border-color:#67ff50;
+    background:linear-gradient(180deg, rgba(221,246,216,.86), rgba(177,218,180,.82));
+    box-shadow:0 14px 28px rgba(24,76,25,.18), inset 0 0 0 2px #67ff50;
+}
+.siteShell .spriteCard[data-state="mastered"]{
+    border-color:#f0c752;
+    background:linear-gradient(180deg, rgba(245,236,202,.92), rgba(211,192,138,.86));
+    box-shadow:0 14px 28px rgba(105,74,11,.2), inset 0 0 0 2px #f0c752;
+}
+.siteShell .spriteCard[data-state="disabled"]{
+    background:rgba(68,57,59,.76);
+}
+.siteShell .spriteCard[data-state="unavailable"]{
+    background:rgba(174,168,159,.5);
+}
+.siteShell .spriteRarity{
+    border-radius:4px;
+    box-shadow:none;
+}
+.siteShell .siteFooter{
+    color:#fff;
+    text-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+.siteShell .footerLinks button{
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(25,25,25,.72);
+    box-shadow:none;
+}
+.siteShell .spriteRow[hidden]{
+    display:none !important;
+}
+.spriteSearchEmpty{
+    margin:0 0 24px;
+    padding:34px 20px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:16px;
+    background:rgba(24,22,20,.76);
+    color:#fff;
+    text-align:center;
+    backdrop-filter:blur(12px);
+}
+.spriteSearchEmpty[hidden]{
+    display:none;
+}
+.spriteSearchEmpty strong,
+.spriteSearchEmpty span{
+    display:block;
+}
+.spriteSearchEmpty strong{
+    font-size:22px;
+    font-weight:950;
+    text-transform:uppercase;
+}
+.spriteSearchEmpty span{
+    margin-top:5px;
+    color:#d5d5d5;
+    font-size:13px;
+    font-weight:750;
+}
+
+@media (max-width:620px), (max-width:980px) and (max-height:620px) and (orientation:landscape) and (pointer:coarse){
+    .siteShell{
+        padding:8px;
+    }
+    .siteShell .topBar{
+        gap:8px;
+        padding:8px;
+        border-radius:10px;
+    }
+    .siteShell .brandMark{
+        width:100%;
+        min-width:0;
+        flex-basis:auto;
+    }
+    .siteShell .brandMark img{
+        width:100%;
+        max-height:82px;
+    }
+    .navSearch{
+        width:100%;
+        max-width:none;
+        min-width:0;
+        height:42px;
+        flex-basis:auto;
+    }
+    .navSearch kbd{
+        display:none;
+    }
+    .siteShell .topActions{
+        display:grid;
+        grid-template-columns:42px 42px minmax(0,1fr) 42px 96px;
+        width:100%;
+        gap:7px;
+    }
+    .siteShell .topUtility{
+        display:contents;
+    }
+    .siteShell .topProfile{
+        display:contents;
+    }
+    .siteShell .profileStatus{
+        min-width:0;
+    }
+    .siteShell .noticeButton,
+    .siteShell .redbullButton,
+    .siteShell .discordButton,
+    .siteShell .profileMenu summary{
+        min-height:42px;
+    }
+    .siteShell .trackerDeck{
+        width:100%;
+        min-width:0;
+        padding:0 8px 10px;
+    }
+    .siteShell .trackerSticky{
+        margin:0;
+        padding:12px 0 10px;
+    }
+    .siteShell .statsDeck{
+        gap:10px;
+        padding:12px;
+        border-radius:12px;
+    }
+    .siteShell .statsGrid,
+    .siteShell .intelDeck,
+    .siteShell .dropTimerCard{
+        width:100%;
+        min-width:0;
+    }
+    .siteShell .statBox,
+    .siteShell .statBox span{
+        min-width:0;
+    }
+    .siteShell .statBox{
+        gap:6px;
+    }
+    .siteShell .statBox span{
+        gap:6px;
+        font-size:12px;
+    }
+    .siteShell .statBox strong{
+        font-size:16px;
+    }
+    .siteShell .dropTimerSlot{
+        min-width:0;
+        padding:0 5px;
+    }
+    .siteShell .dropTimerSlot strong{
+        font-size:15px;
+        letter-spacing:-.02em;
+    }
+    .siteShell .gridHeader{
+        padding-top:10px;
+    }
+    .collectionHeading{
+        align-items:flex-start;
+        padding:16px 2px 10px;
+    }
+    .collectionHeading h1{
+        font-size:25px;
+    }
+    .collectionHeading span{
+        font-size:9px;
+    }
+    .collectionHeading p{
+        padding:5px 8px;
+        font-size:10px;
+    }
+    .siteShell .spriteRow{
+        gap:7px;
+        margin-bottom:14px;
+    }
+    body[data-season="treasure-hunters"] .siteShell .trackerGrid{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+    body[data-season="treasure-hunters"] .siteShell .spriteRow{
+        gap:7px;
+        padding:7px;
+    }
+    body[data-season="treasure-hunters"] .siteShell .spriteCard{
+        min-height:134px;
+    }
+    .siteShell .familyCell{
+        min-height:62px;
+        border-radius:10px;
+    }
+    .siteShell .spriteCard{
+        min-height:134px;
+        border-radius:10px;
+    }
+    .siteShell .familyName{
+        font-size:22px;
+        -webkit-text-stroke:1.15px #000;
+        paint-order:stroke fill;
+    }
+}
