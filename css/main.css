@@ -3588,7 +3588,7 @@ dialog::backdrop{
         box-shadow:none;
     }
     .siteShell{
-        padding:8px;
+        padding:0 8px 8px;
     }
     body[data-season="runners-archive"] .siteShell{
         width:100%;
@@ -3596,11 +3596,13 @@ dialog::backdrop{
     }
     .siteShell .topBar{
         display:grid;
+        width:calc(100% + 16px);
+        margin-left:-8px;
         grid-template-columns:minmax(0,1fr) 68px 42px 42px 42px;
         align-items:center;
         gap:6px;
         padding:8px;
-        border-radius:10px;
+        border-radius:0 0 10px 10px;
     }
     .siteShell .brandMark{
         grid-column:1;
@@ -3615,7 +3617,7 @@ dialog::backdrop{
     }
     .navSearch{
         grid-column:1 / -1;
-        grid-row:2;
+        grid-row:3;
         width:100%;
         max-width:none;
         min-width:0;
@@ -3654,7 +3656,7 @@ dialog::backdrop{
     }
     .siteShell .profileStatus{
         grid-column:1 / -1;
-        grid-row:3;
+        grid-row:2;
         min-width:0;
     }
     .siteShell .topActions > .redbullButton{
@@ -3684,12 +3686,14 @@ dialog::backdrop{
     }
     .siteShell .trackerSticky{
         position:sticky;
-        top:8px;
+        top:0;
         z-index:90;
+        width:calc(100% + 32px);
         margin:10px 0 0;
+        margin-left:-16px;
         padding:8px;
         border:1px solid rgba(240,199,82,.28);
-        border-radius:12px;
+        border-radius:0 0 12px 12px;
         background:#181719;
         box-shadow:0 12px 24px rgba(0,0,0,.32);
     }
@@ -3699,7 +3703,8 @@ dialog::backdrop{
     }
     .stickyGapGuard{
         top:0;
-        height:9px;
+        display:none;
+        height:0;
     }
     .siteShell .statsDeck{
         gap:10px;
@@ -3893,7 +3898,7 @@ body[data-season="treasure-hunters"] .imageExportSheet{
 @media (max-width:700px){
     .siteShell > .topBar > .profileStatus{
         grid-column:1 / -1;
-        grid-row:3;
+        grid-row:2;
         width:100%;
         min-width:0;
         margin:0;
