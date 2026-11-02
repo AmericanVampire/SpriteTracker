@@ -7,6 +7,7 @@ const state = {
 let suppressNextAbilityCloseClick = false;
 let spriteSaveQueue = Promise.resolve();
 let dialogPageScroll = null;
+let trackerGridClipFrame = 0;
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
@@ -866,11 +867,35 @@ function render(){
     renderDropTimer();
     renderLobbyHacks();
     updateStickyOffsets();
+    scheduleTrackerGridClip();
 }
 
 function updateStickyOffsets(){
     const topBarHeight = Math.round(els.topBar.getBoundingClientRect().height);
     document.documentElement.style.setProperty("--topbar-height", `${topBarHeight}px`);
+    scheduleTrackerGridClip();
+}
+
+function updateTrackerGridClip(){
+    trackerGridClipFrame = 0;
+    const sticky = els.trackerDeck?.querySelector(".trackerSticky");
+    if(!sticky || !els.trackerGrid){
+        return;
+    }
+    const stickyRect = sticky.getBoundingClientRect();
+    const gridRect = els.trackerGrid.getBoundingClientRect();
+    const clippedHeight = Math.max(
+        0,
+        Math.min(gridRect.height,Math.ceil(stickyRect.bottom - gridRect.top))
+    );
+    els.trackerGrid.style.setProperty("--tracker-grid-clip-top",`${clippedHeight}px`);
+}
+
+function scheduleTrackerGridClip(){
+    if(trackerGridClipFrame){
+        return;
+    }
+    trackerGridClipFrame = requestAnimationFrame(updateTrackerGridClip);
 }
 
 function lockDialogPage(){
@@ -1772,7 +1797,7 @@ async function renderMobileExportCanvasBlob(){
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#070519";
+    ctx.fillStyle = "#211e1b";
     ctx.fillRect(0,0,width,height);
     const title = await loadCanvasImage("assets/sprite-tracker-title-season5.png");
     const imageEntries = await Promise.all(season.sprites.map(async sprite=>[
@@ -1800,14 +1825,14 @@ async function renderMobileExportCanvasBlob(){
         return verticalGradient(y,gradientHeight,palettes[variant.id] || ["#4ca4ff","#1d55bc","#0b2a72"]);
     };
 
-    fillRoundRect(ctx,outerX,16,contentWidth,100,8,"#0b55bf","#4abfff");
+    fillRoundRect(ctx,outerX,16,contentWidth,100,12,"#17181b","rgba(240,199,82,.72)");
     drawCenteredImage(ctx,title,380,24,760,84);
 
     const summaryY = 130;
     const timerWidth = 528;
     const summaryGap = 18;
     const statsWidth = contentWidth - timerWidth - summaryGap;
-    fillRoundRect(ctx,outerX,summaryY,contentWidth,148,0,"#0b49ad",null);
+    fillRoundRect(ctx,outerX,summaryY,contentWidth,148,12,"#1d1c1a","rgba(240,199,82,.36)");
     [["Found",`${stats.found} / ${stats.totalSprites}`],["Completed Sets",`${stats.completedSets} / ${stats.totalSets}`],["Mastered",`${stats.mastered} / ${stats.totalSprites}`],["Overall Progress",`${stats.percent}%`]].forEach((item,index)=>{
         const col = index % 2;
         const row = Math.floor(index / 2);
@@ -1816,7 +1841,7 @@ async function renderMobileExportCanvasBlob(){
         const yy = summaryY + 40 + (row * 60);
         drawText(ctx,item[0],x,yy,{size:20});
         drawText(ctx,item[1],outerX + ((col + 1) * statColumnWidth) - 18,yy,{size:29,align:"right"});
-        ctx.strokeStyle = "rgba(145,229,255,.28)";
+        ctx.strokeStyle = "rgba(255,255,255,.16)";
         ctx.beginPath();
         ctx.moveTo(x,yy + 22);
         ctx.lineTo(outerX + ((col + 1) * statColumnWidth) - 18,yy + 22);
@@ -1824,8 +1849,8 @@ async function renderMobileExportCanvasBlob(){
     });
 
     const timerX = outerX + statsWidth + summaryGap;
-    fillRoundRect(ctx,timerX,summaryY + 8,timerWidth,92,8,verticalGradient(summaryY + 8,92,["#3085ee","#124aa9"]),"#4abfff");
-    ctx.strokeStyle = "rgba(145,229,255,.32)";
+    fillRoundRect(ctx,timerX,summaryY + 8,timerWidth,92,8,"#292722","rgba(240,199,82,.52)");
+    ctx.strokeStyle = "rgba(240,199,82,.28)";
     ctx.beginPath();
     ctx.moveTo(timerX + (timerWidth / 2),summaryY + 18);
     ctx.lineTo(timerX + (timerWidth / 2),summaryY + 90);
@@ -1836,22 +1861,22 @@ async function renderMobileExportCanvasBlob(){
     ];
     timerPanels.forEach((timer,index)=>{
         const centerX = timerX + ((index + .5) * (timerWidth / 2));
-        drawText(ctx,timer[0],centerX,summaryY + 27,{size:13,align:"center",color:"#d7f6ff"});
-        drawText(ctx,timer[1],centerX,summaryY + 53,{size:25,align:"center",color:"#fff05a"});
-        drawText(ctx,timer[2],centerX,summaryY + 79,{size:9,align:"center"});
+        drawText(ctx,timer[0],centerX,summaryY + 27,{size:13,align:"center",color:"#f4e8c7"});
+        drawText(ctx,timer[1],centerX,summaryY + 53,{size:25,align:"center",color:"#f0c752"});
+        drawText(ctx,timer[2],centerX,summaryY + 79,{size:9,align:"center",color:"#d8d2c5"});
     });
     if(season.id === "override"){
-        fillRoundRect(ctx,timerX,summaryY + 108,timerWidth,32,7,verticalGradient(summaryY + 108,32,["#3288f2","#1747b4"]),"#4abfff");
+        fillRoundRect(ctx,timerX,summaryY + 108,timerWidth,32,7,"#292722","rgba(240,199,82,.52)");
         drawText(ctx,"ADMIN PANEL CODES",timerX + (timerWidth / 2),summaryY + 124,{size:14,align:"center"});
     }
 
     const headerY = 294;
-    fillRoundRect(ctx,outerX,headerY,familyWidth,64,8,verticalGradient(headerY,64,["#418cff","#1542b4"]),"#5fbfff");
-    drawText(ctx,seasonPickerChapter(season),outerX + (familyWidth / 2),headerY + 19,{size:11,align:"center",color:"#fff56d"});
+    fillRoundRect(ctx,outerX,headerY,familyWidth,64,8,"#24221e","rgba(240,199,82,.72)");
+    drawText(ctx,seasonPickerChapter(season),outerX + (familyWidth / 2),headerY + 19,{size:11,align:"center",color:"#f0c752"});
     drawText(ctx,seasonPickerLabel(season),outerX + (familyWidth / 2),headerY + 39,{size:17,align:"center"});
     season.variants.forEach((variant,index)=>{
         const x = outerX + familyWidth + columnGap + (index * (variantWidth + columnGap));
-        fillRoundRect(ctx,x,headerY,variantWidth,64,8,variantGradient(variant,headerY,64),"#78c9ff");
+        fillRoundRect(ctx,x,headerY,variantWidth,64,8,variantGradient(variant,headerY,64),"rgba(255,255,255,.48)");
         drawText(ctx,variant.label,x + (variantWidth / 2),headerY + 25,{
             size:variant.label.length > 12 ? 13 : 15,
             align:"center",
@@ -1865,13 +1890,13 @@ async function renderMobileExportCanvasBlob(){
         const y = rowsY + (familyIndex * rowHeight);
         const familyDisabled = progress.disabledFamilies[slug(family.name)] === true;
         const familyComplete = isFamilyComplete(family);
-        fillRoundRect(ctx,outerX,y,familyWidth,164,8,familyDisabled ? "#31537f" : "#144fa8",familyComplete ? "#ffe45c" : "#308fe8");
-        fillRoundRect(ctx,outerX + 12,y + 118,34,30,6,"#10aee8",null);
-        drawText(ctx,"i",outerX + 29,y + 133,{size:19,align:"center",style:"italic"});
+        fillRoundRect(ctx,outerX,y,familyWidth,164,10,familyDisabled ? "#3f3638" : "#24211e",familyComplete ? "#f0c752" : "rgba(255,255,255,.34)");
+        fillRoundRect(ctx,outerX + 12,y + 118,34,30,6,"#f0c752",null);
+        drawText(ctx,"i",outerX + 29,y + 133,{size:19,align:"center",color:"#171511",style:"italic"});
         drawText(ctx,family.name,outerX + (familyWidth / 2),y + 79,{
             size:family.name.length > 13 ? 19 : 23,
             align:"center",
-            stroke:"#00123f",
+            stroke:"#000000",
             strokeWidth:4
         });
         fillRoundRect(ctx,outerX + familyWidth - 100,y + 122,88,24,5,familyDisabled ? "#f25b70" : "#70db72",null);
@@ -1895,13 +1920,13 @@ async function renderMobileExportCanvasBlob(){
                 variantWidth,
                 164,
                 8,
-                stateName === "disabled" ? "#42376d" : stateName === "found" ? "#307eb6" : stateName === "mastered" ? "#9a8a62" : "#0b55bf",
-                stateName === "found" ? "#60ff5a" : stateName === "mastered" ? "#ffe45c" : "#308fe8"
+                stateName === "disabled" ? "#51494a" : stateName === "found" ? "#c8e5c5" : stateName === "mastered" ? "#d9c78f" : "#e4ded2",
+                stateName === "found" ? "#67ff50" : stateName === "mastered" ? "#f0c752" : "rgba(255,255,255,.62)"
             );
             drawText(ctx,variant.label.toUpperCase(),x + 8,y + 15,{
                 size:variant.label.length > 12 ? 9 : 10,
                 color:variantColor(variant.id),
-                stroke:"#00123f",
+                stroke:"#171511",
                 strokeWidth:2
             });
             if(sprite?.image){
@@ -1918,7 +1943,8 @@ async function renderMobileExportCanvasBlob(){
     drawText(ctx,"SpriteTracker.net",width / 2,height - 32,{
         size:20,
         align:"center",
-        stroke:"#00123f",
+        color:"#f4e8c7",
+        stroke:"#000000",
         strokeWidth:3
     });
     return canvasBlob(canvas);
@@ -2274,6 +2300,7 @@ function bindControls(){
         });
     });
     window.addEventListener("resize",updateStickyOffsets);
+    window.addEventListener("scroll",scheduleTrackerGridClip,{passive:true});
 }
 
 async function init(){

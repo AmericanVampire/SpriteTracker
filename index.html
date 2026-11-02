@@ -22,7 +22,7 @@
     <title>Sprite Tracker</title>
     <link rel="canonical" href="https://spritetracker.net/">
     <link rel="icon" href="assets/favicon.ico">
-    <link rel="stylesheet" href="css/main.css?v=2026-11-02-5">
+    <link rel="stylesheet" href="css/main.css?v=2026-11-02-6">
 </head>
 <body>
     <div class="scanlines" aria-hidden="true"></div>
@@ -50,6 +50,11 @@
                     <button id="deleteProfileButton" type="button" class="danger">Delete Profile</button>
                 </div>
             </details>
+            <div class="profileStatus">
+                <span>Profile</span>
+                <strong id="currentProfileName">No profile loaded</strong>
+                <small id="storageNote">Saved locally with IndexedDB</small>
+            </div>
             <label class="navSearch" for="spriteSearchInput">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="11" cy="11" r="6.5"></circle>
@@ -59,11 +64,6 @@
                 <kbd>/</kbd>
             </label>
             <div class="topActions">
-                <div class="profileStatus">
-                    <span>Profile</span>
-                    <strong id="currentProfileName">No profile loaded</strong>
-                    <small id="storageNote">Saved locally with IndexedDB</small>
-                </div>
                 <a id="donateButton" class="redbullButton" href="#" target="_blank" rel="noopener">
                     <img src="assets/buy-me-a-redbull.png" alt="">
                     <span>Buy me a Red Bull</span>
@@ -198,6 +198,6 @@
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
     <script src="js/data.js?v=2026-11-01-1"></script>
     <script src="js/storage.js?v=2026-11-01-1"></script>
-    <script src="js/app.js?v=2026-11-02-3"></script>
+    <script src="js/app.js?v=2026-11-02-4"></script>
 </body>
 </html>
