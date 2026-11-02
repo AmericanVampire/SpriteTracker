@@ -89,7 +89,7 @@ body[data-season="treasure-hunters"]::before{
     background:
         linear-gradient(180deg, rgba(2,32,89,.4), rgba(0,58,130,.22) 42%, rgba(0,35,94,.5)),
         linear-gradient(90deg, rgba(0,29,82,.58), transparent 20%, transparent 80%, rgba(0,29,82,.58)),
-        url("../assets/season-5-water.webp") center top / cover fixed;
+        url("../assets/season-5-ocean.webp") center top / cover fixed;
     opacity:.9;
 }
 body[data-season="treasure-hunters"]::after{
@@ -103,6 +103,11 @@ button,
 input,
 select{
     font:inherit;
+}
+html.modalOpen,
+body.modalOpen{
+    overflow:hidden;
+    overscroll-behavior:none;
 }
 button{
     border:0;

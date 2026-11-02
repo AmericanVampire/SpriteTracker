@@ -5,6 +5,7 @@ const state = {
 };
 let suppressNextAbilityCloseClick = false;
 let spriteSaveQueue = Promise.resolve();
+let dialogPageScroll = null;
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
@@ -845,6 +846,26 @@ function updateStickyOffsets(){
     document.documentElement.style.setProperty("--topbar-height", `${topBarHeight}px`);
 }
 
+function lockDialogPage(){
+    if(dialogPageScroll){
+        return;
+    }
+    dialogPageScroll = {x:window.scrollX,y:window.scrollY};
+    document.documentElement.classList.add("modalOpen");
+    document.body.classList.add("modalOpen");
+}
+
+function unlockDialogPage(){
+    if(!dialogPageScroll){
+        return;
+    }
+    const {x,y} = dialogPageScroll;
+    dialogPageScroll = null;
+    document.documentElement.classList.remove("modalOpen");
+    document.body.classList.remove("modalOpen");
+    window.scrollTo(x,y);
+}
+
 function showDialog(title,content,actions){
     els.dialogTitle.textContent = title;
     els.dialogContent.innerHTML = "";
@@ -870,6 +891,7 @@ function showDialog(title,content,actions){
         });
         els.dialogActions.appendChild(button);
     });
+    lockDialogPage();
     els.dialog.showModal();
 }
 
@@ -2017,6 +2039,18 @@ function bindSourceDeterrents(){
 
 function bindControls(){
     bindSourceDeterrents();
+    els.dialog.addEventListener("click",event=>{
+        if(event.target !== els.dialog){
+            return;
+        }
+        const bounds = els.dialog.getBoundingClientRect();
+        const outside = event.clientX < bounds.left || event.clientX > bounds.right ||
+            event.clientY < bounds.top || event.clientY > bounds.bottom;
+        if(outside){
+            els.dialog.close();
+        }
+    });
+    els.dialog.addEventListener("close",unlockDialogPage);
     updateNoticeButton();
     if(els.noticeButton){
         els.noticeButton.addEventListener("click",showAppNotice);
