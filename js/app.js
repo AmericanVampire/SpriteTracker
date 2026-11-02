@@ -7,7 +7,6 @@ const state = {
 let suppressNextAbilityCloseClick = false;
 let spriteSaveQueue = Promise.resolve();
 let dialogPageScroll = null;
-let trackerGridClipFrame = 0;
 
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
@@ -867,38 +866,11 @@ function render(){
     renderDropTimer();
     renderLobbyHacks();
     updateStickyOffsets();
-    scheduleTrackerGridClip();
 }
 
 function updateStickyOffsets(){
     const topBarHeight = Math.round(els.topBar.getBoundingClientRect().height);
     document.documentElement.style.setProperty("--topbar-height", `${topBarHeight}px`);
-    scheduleTrackerGridClip();
-}
-
-function updateTrackerGridClip(safetyBuffer=0){
-    trackerGridClipFrame = 0;
-    const sticky = els.trackerDeck?.querySelector(".trackerSticky");
-    if(!sticky || !els.trackerGrid){
-        return;
-    }
-    const stickyRect = sticky.getBoundingClientRect();
-    const clipBoundary = stickyRect.bottom + Math.max(0,Number(safetyBuffer) || 0);
-    els.trackerGrid.querySelectorAll(".spriteRow").forEach(row=>{
-        const rowRect = row.getBoundingClientRect();
-        const clippedHeight = Math.max(
-            0,
-            Math.min(rowRect.height,Math.ceil(clipBoundary - rowRect.top))
-        );
-        row.style.setProperty("--sprite-row-clip-top",`${clippedHeight}px`);
-    });
-}
-
-function scheduleTrackerGridClip(){
-    if(trackerGridClipFrame){
-        return;
-    }
-    trackerGridClipFrame = requestAnimationFrame(updateTrackerGridClip);
 }
 
 function lockDialogPage(){
@@ -2303,29 +2275,6 @@ function bindControls(){
         });
     });
     window.addEventListener("resize",updateStickyOffsets);
-    window.addEventListener("scroll",updateTrackerGridClip,{passive:true});
-    window.addEventListener("wheel",event=>{
-        if(event.deltaY > 0){
-            updateTrackerGridClip(Math.min(window.innerHeight,Math.ceil(event.deltaY) + 24));
-        }
-    },{passive:true});
-    let lastTouchY = null;
-    window.addEventListener("touchstart",event=>{
-        lastTouchY = event.touches[0]?.clientY ?? null;
-    },{passive:true});
-    window.addEventListener("touchmove",event=>{
-        const touchY = event.touches[0]?.clientY;
-        if(lastTouchY !== null && touchY !== undefined){
-            const downwardScroll = lastTouchY - touchY;
-            if(downwardScroll > 0){
-                updateTrackerGridClip(Math.ceil(downwardScroll) + 24);
-            }
-            lastTouchY = touchY;
-        }
-    },{passive:true});
-    window.addEventListener("touchend",()=>{
-        lastTouchY = null;
-    },{passive:true});
 }
 
 async function init(){

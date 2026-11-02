@@ -2033,6 +2033,7 @@ body[data-season="treasure-hunters"] .seasonMenu summary{
     font-weight:950;
     letter-spacing:.08em;
     text-transform:uppercase;
+    margin-bottom:4px;
     box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
 .abilityRarity.rare{
@@ -3087,6 +3088,7 @@ body:not([data-season="treasure-hunters"])::after{
     flex-direction:row;
     align-items:center;
     gap:8px;
+    margin-left:auto;
 }
 .siteShell .topActions > a{
     width:156px;
@@ -3181,7 +3183,7 @@ body:not([data-season="treasure-hunters"])::after{
     padding:12px;
     border:1px solid rgba(240,199,82,.28);
     border-radius:14px;
-    background:rgba(24,22,20,.97);
+    background:#181614;
     box-shadow:0 14px 30px rgba(0,0,0,.28);
 }
 .siteShell .trackerSticky::before,
@@ -3390,7 +3392,10 @@ body{
     height:12px;
     display:block;
     pointer-events:auto;
-    background:transparent;
+    background:#211e1b url("../assets/older-seasons-bg.avif") center top / cover no-repeat fixed;
+}
+body[data-season="treasure-hunters"] .siteShell .trackerSticky::before{
+    background-image:url("../assets/season-5-map.webp");
 }
 dialog{
     padding:0;
@@ -3597,6 +3602,7 @@ dialog::backdrop{
         grid-row:1;
         width:68px;
         min-width:0;
+        margin-left:0;
     }
     .siteShell > .topBar > .profileMenu summary{
         width:68px;
@@ -3743,10 +3749,6 @@ dialog::backdrop{
     background:#f0c752;
     color:#171511;
 }
-.siteShell .spriteRow{
-    clip-path:inset(var(--sprite-row-clip-top,0px) 0 0 0);
-    will-change:clip-path;
-}
 
 body.exportingImage .appGrid,
 body.exportingImage .siteShell{
@@ -3772,9 +3774,6 @@ body[data-season="treasure-hunters"] .imageExportSheet{
 }
 .imageExportSheet .trackerGrid{
     clip-path:none;
-}
-.imageExportSheet .spriteRow{
-    clip-path:none !important;
 }
 .imageExportSheet .trackerSticky{
     padding:12px;
