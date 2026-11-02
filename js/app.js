@@ -30,6 +30,7 @@ const els = {
     masteryMondayCountdown:document.getElementById("masteryMondayCountdown"),
     masteryMondayDate:document.getElementById("masteryMondayDate"),
     hackCodesPanel:document.getElementById("hackCodesPanel"),
+    hackCodesMenu:document.getElementById("hackCodesPanel")?.closest(".intelMenu"),
     trackerDeck:document.querySelector(".trackerDeck"),
     gridHeader:document.getElementById("gridHeader"),
     trackerGrid:document.getElementById("trackerGrid"),
@@ -484,6 +485,16 @@ async function copyText(text){
 
 function renderLobbyHacks(){
     if(!els.hackCodesPanel){
+        return;
+    }
+    const showHackCodes = state.seasonId === "override";
+    if(els.hackCodesMenu){
+        els.hackCodesMenu.hidden = !showHackCodes;
+        if(!showHackCodes){
+            els.hackCodesMenu.removeAttribute("open");
+        }
+    }
+    if(!showHackCodes){
         return;
     }
     const used = state.profile ? lobbyHacks(state.profile) : {};
@@ -1780,8 +1791,10 @@ async function renderMobileExportCanvasBlob(){
         drawText(ctx,timer[1],centerX,summaryY + 53,{size:25,align:"center",color:"#fff05a"});
         drawText(ctx,timer[2],centerX,summaryY + 79,{size:9,align:"center"});
     });
-    fillRoundRect(ctx,timerX,summaryY + 108,timerWidth,32,7,verticalGradient(summaryY + 108,32,["#3288f2","#1747b4"]),"#4abfff");
-    drawText(ctx,"ADMIN PANEL CODES",timerX + (timerWidth / 2),summaryY + 124,{size:14,align:"center"});
+    if(season.id === "override"){
+        fillRoundRect(ctx,timerX,summaryY + 108,timerWidth,32,7,verticalGradient(summaryY + 108,32,["#3288f2","#1747b4"]),"#4abfff");
+        drawText(ctx,"ADMIN PANEL CODES",timerX + (timerWidth / 2),summaryY + 124,{size:14,align:"center"});
+    }
 
     const headerY = 294;
     fillRoundRect(ctx,outerX,headerY,familyWidth,64,8,verticalGradient(headerY,64,["#418cff","#1542b4"]),"#5fbfff");
