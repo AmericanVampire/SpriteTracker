@@ -3689,6 +3689,25 @@ dialog::backdrop{
         min-width:0;
         padding:0 8px 10px;
     }
+    .siteShell .noProfileNotice{
+        position:relative;
+        top:auto;
+        left:auto;
+        z-index:auto;
+        width:100%;
+        margin:12px auto;
+        transform:none;
+        border-color:rgba(240,199,82,.52);
+        background:#24221e;
+        box-shadow:0 8px 20px rgba(0,0,0,.28);
+    }
+    .siteShell .noProfileNotice strong{
+        color:#f0c752;
+        text-shadow:none;
+    }
+    .siteShell .noProfileNotice span{
+        color:#f7f3e9;
+    }
     .siteShell .trackerSticky{
         position:sticky;
         top:0;
