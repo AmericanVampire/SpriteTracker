@@ -351,11 +351,20 @@ function easternWallDateToUtc(wallDate){
 function weeklyEventState(schedule,now = new Date()){
     const parts = easternDateParts(now);
     const wallNow = new Date(Date.UTC(parts.year,parts.month - 1,parts.day,parts.hour,parts.minute,parts.second));
-    const startsToday = new Date(Date.UTC(parts.year,parts.month - 1,parts.day,schedule.hourEt,schedule.minuteEt || 0));
-    const active = wallNow.getUTCDay() === schedule.weekdayEt && wallNow >= startsToday;
+    const startsAt = new Date(Date.UTC(parts.year,parts.month - 1,parts.day,schedule.hourEt,schedule.minuteEt || 0));
+    if(schedule.durationHours){
+        const daysSinceStart = (wallNow.getUTCDay() - schedule.weekdayEt + 7) % 7;
+        startsAt.setUTCDate(startsAt.getUTCDate() - daysSinceStart);
+        if(startsAt > wallNow){
+            startsAt.setUTCDate(startsAt.getUTCDate() - 7);
+        }
+    }
+    const active = schedule.durationHours
+        ? wallNow >= startsAt && wallNow.getTime() < startsAt.getTime() + schedule.durationHours * 3600000
+        : wallNow.getUTCDay() === schedule.weekdayEt && wallNow >= startsAt;
     return {
         active,
-        date:active ? easternWallDateToUtc(startsToday) : nextWeeklyEasternDate(schedule,now)
+        date:active ? easternWallDateToUtc(startsAt) : nextWeeklyEasternDate(schedule,now)
     };
 }
 
@@ -438,7 +447,7 @@ function renderDropTimer(now = new Date()){
         return;
     }
     const events = [
-        { schedule:{weekdayEt:1,hourEt:9,minuteEt:0}, panel:els.masteryMondayTimer, countdown:els.masteryMondayCountdown, date:els.masteryMondayDate, message:"MASTERY MONDAY" },
+        { schedule:{weekdayEt:1,hourEt:9,minuteEt:0,durationHours:24}, panel:els.masteryMondayTimer, countdown:els.masteryMondayCountdown, date:els.masteryMondayDate, message:"MASTERY MONDAY" },
         { schedule:SPRITE_DROP_TIMER, panel:els.spriteDropTimer, countdown:els.spriteDropCountdown, date:els.spriteDropDate, message:"NEW SPRITES TODAY" }
     ];
     events.forEach(event=>{
