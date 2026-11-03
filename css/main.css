@@ -87,7 +87,7 @@ body::after{
     opacity:.58;
 }
 body[data-season="treasure-hunters"]::before{
-    background:url("../assets/season-5-map.webp") center top / cover no-repeat;
+    background:url("../assets/season-5-map-v3.webp") center top / cover no-repeat;
     opacity:1;
 }
 body[data-season="treasure-hunters"]::after{
@@ -3422,7 +3422,7 @@ body{
     background:url("../assets/older-seasons-bg.avif") center top / cover no-repeat fixed;
 }
 body[data-season="treasure-hunters"] .stickyGapGuard{
-    background-image:url("../assets/season-5-map.webp");
+    background-image:url("../assets/season-5-map-v3.webp");
 }
 dialog{
     padding:0;
@@ -3806,7 +3806,7 @@ body.exportingImage .siteShell{
     color:#f7f3e9;
 }
 body[data-season="treasure-hunters"] .imageExportSheet{
-    background-image:linear-gradient(rgba(24,22,20,.16),rgba(24,22,20,.16)),url("../assets/season-5-map.webp");
+    background-image:linear-gradient(rgba(24,22,20,.16),rgba(24,22,20,.16)),url("../assets/season-5-map-v3.webp");
 }
 .imageExportSheet .exportBrand{
     border:1px solid rgba(240,199,82,.58);
