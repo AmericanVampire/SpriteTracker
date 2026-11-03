@@ -3451,6 +3451,27 @@ dialog::backdrop{
     color:#f4e8c7;
     font-size:26px;
 }
+dialog:has(.notificationsPanel){
+    --notifications-height:min(820px,calc(100dvh - 48px));
+    max-height:var(--notifications-height);
+    overflow:hidden;
+}
+dialog:has(.notificationsPanel) .dialogBody{
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    max-height:calc(var(--notifications-height) - 2px);
+    min-height:0;
+}
+dialog:has(.notificationsPanel) #dialogContent{
+    min-height:0;
+    overflow-x:hidden;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scrollbar-gutter:stable;
+    scrollbar-width:thin;
+    scrollbar-color:#b99b50 #22211e;
+    padding:2px 10px 12px 2px;
+}
 .legalInfo{
     color:#e8e3d8;
 }
