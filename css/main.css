@@ -1231,6 +1231,11 @@ body.exportingImage .trackerGrid{
 .imageExportSheetDesktop[data-variant-count="3"]{
     width:920px;
 }
+.imageExportSheetDesktop[data-variant-count="3"] .statsDeck{
+    grid-template-columns:minmax(0, 1fr);
+    gap:12px;
+    padding:12px;
+}
 .imageExportSheetDesktop .trackerDeck[data-variant-count="3"] .gridHeader,
 .imageExportSheetDesktop .trackerDeck[data-variant-count="3"] .spriteRow{
     grid-template-columns:minmax(190px, 240px) repeat(3, minmax(138px, 1fr));

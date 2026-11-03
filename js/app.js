@@ -1472,6 +1472,12 @@ function buildImageExportSheet(){
     footer.innerHTML = `<div class="footerCopyright">SpriteTracker.net</div>`;
     sheet.appendChild(footer);
     document.body.appendChild(sheet);
+    sheet.querySelectorAll(".statIcon path").forEach(path=>{
+        const style = getComputedStyle(path);
+        ["fill","stroke","stroke-width","stroke-linecap","stroke-linejoin"].forEach(property=>{
+            path.setAttribute(property,style.getPropertyValue(property));
+        });
+    });
     return sheet;
 }
 
