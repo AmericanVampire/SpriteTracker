@@ -304,7 +304,7 @@ function nextEasternResetDate(now = new Date()){
 }
 
 function nextWeeklyEasternDate({
-    weekdayEt = 4,
+    weekdayEt = 0,
     hourEt = 9,
     minuteEt = 0
 } = {},now = new Date()){
@@ -1139,7 +1139,7 @@ function showTrackerInfo(){
                     </article>
                     <article>
                         <strong>Weekly Events</strong>
-                        <p>The timers track Mastery Monday and the next Thursday Sprite release, both beginning at 9:00 AM ET.</p>
+                        <p>The timers track Mastery Monday and the next Sunday Sprite release, both beginning at 9:00 AM ET.</p>
                     </article>
                     <article>
                         <strong>Exports</strong>

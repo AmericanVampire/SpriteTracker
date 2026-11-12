@@ -4,10 +4,10 @@ const SPRITE_DROP_TIMER = {
     enabled:true,
     label:"Next Sprite Drop",
     cadence:"weekly",
-    weekdayEt:4,
+    weekdayEt:0,
     hourEt:9,
     minuteEt:0,
-    note:"Thursday at 9:00 AM ET"
+    note:"Sunday at 9:00 AM ET"
 };
 
 const LOBBY_HACK_GROUPS = [
