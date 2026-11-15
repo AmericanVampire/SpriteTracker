@@ -11,7 +11,7 @@ let dialogPageScroll = null;
 const PAYPAL_DONATE_URL = "https://www.paypal.com/ncp/payment/YFKSSWL424586";
 const DISCORD_INVITE_URL = "https://discord.com/invite/yBG6A6bf4W";
 const MICROSOFT_STORE_URL = "https://apps.microsoft.com/detail/9pc2c5hx0tdk";
-const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v8";
+const APP_NOTICE_STORAGE_KEY = "sprite-tracker-app-notice-v9";
 
 const els = {
     topBar:document.querySelector(".topBar"),
@@ -970,6 +970,22 @@ function showAppNotice(){
     markAppNoticeRead();
     showDialog("Notifications",`
         <div class="notificationsPanel">
+            <article class="notificationCard">
+                <div class="notificationIcon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 5h14v14H5z"></path>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+                    </svg>
+                </div>
+                <div class="notificationContent">
+                    <span class="notificationMeta">November 15 Sprite Update</span>
+                    <strong>Squiplash, Mini Miku, and Zee are here</strong>
+                    <p>Track seven new collectibles: Base, Fortune, and Cursed Squiplash and Mini Miku, plus Zee. Treasure Hunters now has 16 Sprite families and 42 collectible forms.</p>
+                    <p>Squiplash provides healing smoke at low health, Mini Miku grants a Friendship Bubble when emoting with other players, and Zee regenerates Zero Point dash charges.</p>
+                </div>
+            </article>
             <article class="notificationCard">
                 <div class="notificationIcon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">

@@ -183,11 +183,14 @@ const TREASURE_HUNTERS_FAMILIES = [
     { name:"Kelper", rarity:"Epic", ability:"Restores health over time when in water.", variants:["base","fortune","cursed"] },
     { name:"Exmarks", rarity:"Epic", ability:"Reveals Treasure Maps and Wanted Posters.", variants:["base","fortune","cursed"] },
     { name:"Lil' Squibbly", rarity:"Epic", ability:"Jumping into a fishing hole fishes it and gives some bonus loot.", variants:["base","fortune","cursed"] },
+    { name:"Squiplash", rarity:"Epic", ability:"Deploys a Healing Smoke Bomb at low health. Cooldown decreases and duration and healing increase with each Level Up.", variants:["base","fortune","cursed"] },
     { name:"Lil' Flacko", rarity:"Legendary", ability:"Creates a small shockwave on landing, knocking back enemies.", variants:["base","fortune","cursed"] },
     { name:"Lil' Uzi Vert Jr.", rarity:"Legendary", ability:"Generates a Chug Splash effect when restoring shields.", variants:["base","fortune","cursed"] },
     { name:"Plundarrgh", rarity:"Mythic", ability:"Opening a Chest grants increased pickaxe speed and movement speed.", variants:["base","fortune","cursed"] },
     { name:"Transponder Snail", rarity:"Legendary", ability:"Grants extra resources on pickup. Teammates with this Sprite equipped also receive extra resources.", variants:["base"] },
-    { name:"Sweet Dreams", rarity:"Mythic", ability:"Grants a random item at each level, exploding with Mythic loot at Max Level.", variants:["base"] }
+    { name:"Sweet Dreams", rarity:"Mythic", ability:"Grants a random item at each level, exploding with Mythic loot at Max Level.", variants:["base"] },
+    { name:"Mini Miku", rarity:"Mythic", ability:"Grants a Friendship Bubble when emoting with other players. Cooldown decreases with each Level Up.", variants:["base","fortune","cursed"] },
+    { name:"Zee", rarity:"Mythic", ability:"Grants regenerating Zero Point dash charges. Maximum charges increase and recharge time decreases with each Level Up.", variants:["base"] }
 ];
 
 function slug(text){
